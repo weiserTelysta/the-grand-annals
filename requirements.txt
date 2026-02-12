@@ -1,1 +1,5 @@
-
+mkdocs-material
+mkdocs-static-i18n
+mkdocs-awesome-pages-plugin
+mkdocs-roamlinks-plugin
+mkdocs-glightbox
