@@ -1,0 +1,73 @@
+site_name: "MUNDUS WEISERI"
+site_url: "https://mundusweiseri.telysta.com"
+site_author: "Weiser"
+site_description: "A world of epic fantasy"
+
+repo_name: "Mundus-Weiseri"
+repo_url: "https://github.com/weiserTelysta/Mundus-Weiseri"
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - content.code.copy
+    - navigation.top
+    
+  palette: 
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+
+plugins:
+  - search
+  - roamlinks
+  - awesome-pages
+  - i18n:
+      docs_structure: folder
+      reconfigure_material: true    # 自动根据语言切换 Material 主题的内置文字
+      fallback_to_default: true     # 如果没有对应语言页面，自动跳回默认语言
+      languages:
+        - build: true
+          default: true             # 默认访问根路径时会优先参考这里
+          locale: zh
+          name: 简体中文
+        - build: true
+          locale: en
+          name: English
+        - build: true
+          locale: ja
+          name: 日本語
+
+  - glightbox:
+      touchNavigation: true   # 支持手机端触摸滑动
+      loop: false             # 是否循环播放文件夹内的图片
+      zoomable: true          # 是否允许缩放（非常适合看大地图）
+      draggable: true         # 是否允许鼠标拖动
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true # 使用交替样式，增强视觉效果
+
+copyright: |
+  Copyright &copy; 2026 Weiser - MUNDUS WEISERI. 
+  All rights reserved.
