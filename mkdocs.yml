@@ -1,10 +1,10 @@
-site_name: "MUNDUS WEISERI"
-site_url: "https://mundusweiseri.telysta.com"
+site_name: "The Grand Annals"
+site_url: https://annals.telysta.com/
 site_author: "Weiser"
 site_description: "A world of epic fantasy"
 
-repo_name: "Mundus-Weiseri"
-repo_url: "https://github.com/weiserTelysta/Mundus-Weiseri"
+repo_name: "the-grand-annals"
+repo_url: "https://github.com/weiserTelysta/the-grand-annals"
 
 theme:
   name: material
