@@ -116,12 +116,42 @@ body:has(.hero-section) {
   height: 100vh;
 }
 
+/* 修改核心布局容器 */
 body:has(.hero-section) .md-container {
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
-    url("/assets/3440465-4.webp") no-repeat center center / cover fixed !important;
-  min-height: 100vh;
-  animation: bg-breathe 8s infinite alternate ease-in-out;
+    min-height: 100vh;
+    animation: bg-breathe 8s infinite alternate ease-in-out;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    /* 关键：增加背景切换时的平滑过渡 */
+    transition: background-image 1.5s ease-in-out !important; 
+}
+
+/* --- 根据 JS 注入的 Class 切换背景路径 --- */
+
+/* 早上 6:00 - 12:00 */
+body.time-morning:has(.hero-section) .md-container {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+    url("../assets/illustration/Telysta&Losalind_Library_day_01.webp") !important;
+}
+
+/* 下午 12:00 - 18:00 */
+body.time-afternoon:has(.hero-section) .md-container {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+    url("../assets/illustration/Telysta&Losalind_Library_day_02.webp") !important;
+}
+
+/* 傍晚 18:00 - 22:00 */
+body.time-evening:has(.hero-section) .md-container {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+    url("../assets/illustration/Telysta&Losalind_Library_night_01.webp") !important;
+}
+
+/* 深夜 22:00 - 6:00 */
+body.time-night:has(.hero-section) .md-container {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+    url("../assets/illustration/Telysta&Losalind_Library_night_02.webp") !important;
 }
 
 @keyframes bg-breathe { from { filter: brightness(1); } to { filter: brightness(1.08); } }

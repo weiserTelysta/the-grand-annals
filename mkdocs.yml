@@ -9,6 +9,9 @@ repo_url: "https://github.com/weiserTelysta/the-grand-annals"
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - stylesheets/extra.js
+
 theme:
   name: material
   language: zh
