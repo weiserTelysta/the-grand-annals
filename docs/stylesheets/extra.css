@@ -1,0 +1,338 @@
+/* ================================================= */
+/* 1. 变量定义与全局重置                              */
+/* ================================================= */
+:root, [data-md-color-scheme="default"] {
+  /* 正文彻底回归无衬线，保证长时间阅读不累 */
+  --md-text-font: "Inter", "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --md-code-font: "JetBrains Mono", "Fira Code", monospace;
+  
+  /* 调色盘 - 浅色模式 (旧羊皮纸与丝绒质感) */
+  --md-default-bg-color:      #F8F4E8; /* 优化为更柔和的纸张色 */
+  --md-default-fg-color:      #2E2424; /* 深褐色文字 */
+  --md-primary-fg-color:      #801A1A; /* 丝绒深红 */
+  --md-primary-fg-color--dark: #5A1212;
+  --md-accent-fg-color:       #B59431; /* 剪刀与链条的古金色 */
+  --md-footer-bg-color:       #2e2424;
+  --md-footer-fg-color:       #dcd3c8;
+
+}
+
+[data-md-color-scheme="slate"] {
+  /* 调色盘 - 深色模式 (灰烬与玫瑰) */
+  --md-default-bg-color:      #161414; /* 接近立绘背影的深黑褐色 */
+  --md-default-fg-color:      #DCD3C8; /* 蕾丝灰白色 */
+  --md-primary-fg-color:      #C0392B; /* 暗夜里的鲜红 */
+  --md-accent-fg-color:       #EBCB6B; /* 黑暗中闪烁的亮金 */
+  --md-footer-bg-color:       #140f0f;
+  --md-footer-fg-color:       #a6a6a6; 
+  --md-typeset-color:         #DCD3C8;
+  --md-typeset-h1-color:      #ffffff;
+  --md-admonition-icon-color: #EBCB6B;
+  --md-typeset-a-color:       #D84C4C; /* 链接特殊色 */
+  
+  /* 深色模式专属页眉背景 */
+  --header-bg-custom:         rgba(35, 15, 15, 0.9);
+}
+
+/* 导航栏增强：磨砂玻璃与细微红边 */
+.md-header {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(128, 26, 26, 0.2) !important;
+}
+
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: rgba(22, 20, 20, 0.85) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 优化搜索框：聚焦时呈现红金渐变 */
+[data-md-color-scheme="slate"] .md-search__form {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(235, 203, 107, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-md-color-scheme="slate"] .md-search__form:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-md-color-scheme="slate"] .md-search__form:focus-within {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 0 8px rgba(235, 203, 107, 0.2);
+}
+
+.md-search__input:focus + .md-search__icon {
+  color: var(--md-accent-fg-color);
+}
+
+[data-md-color-scheme="slate"] .md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+[data-md-color-scheme="slate"] .md-header__button.md-logo img, 
+[data-md-color-scheme="slate"] .md-header__button.md-logo svg {
+  filter: brightness(0.9);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 内页字体全局应用 */
+.md-typeset, .md-nav, .md-footer, .ethereal-btn {
+  font-family: var(--md-text-font) !important;
+}
+
+/* 自定义滚动条 - 契合立绘配色 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb {
+  background: var(--md-primary-fg-color);
+  border: 2px solid var(--md-default-bg-color); /* 增加缝隙，显得更精致 */
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--md-accent-fg-color);
+}
+::-webkit-scrollbar-track { background: var(--md-default-bg-color); }
+
+.md-content {
+  border: none !important; /* 彻底移除边框 */
+  background-color: transparent !important; /* 让内容自然融入背景 */
+
+  min-height: 80vh; 
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================================= */
+/* 2. 首页 (Hero Section) 专用布局                   */
+/* ================================================= */
+body:has(.hero-section) {
+  overflow: hidden !important;
+  height: 100vh;
+}
+
+body:has(.hero-section) .md-container {
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+    url("/assets/3440465-4.webp") no-repeat center center / cover fixed !important;
+  min-height: 100vh;
+  animation: bg-breathe 8s infinite alternate ease-in-out;
+}
+
+@keyframes bg-breathe { from { filter: brightness(1); } to { filter: brightness(1.08); } }
+
+/* 首页隐藏多余组件 */
+body:has(.hero-section) :is(.md-header, .md-tabs, .md-sidebar, .md-footer, .md-header__topic) {
+  display: none !important; 
+}
+
+body:has(.hero-section) :is(.md-main, .md-main__inner, .md-content, article) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.hero-section {
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  height: 100vh; width: 100%; text-align: center;
+}
+
+.epic-title {
+  font-size: clamp(3.5rem, 12vw, 6rem) !important;
+  color: #ffffff !important;
+  font-weight: 300 !important; 
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0 !important;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 5px 30px rgba(0, 0, 0, 0.8);
+  animation: title-fade 2s ease-out;
+}
+
+.epic-subtitle {
+  color: rgba(242, 238, 226, 0.9) !important;
+  font-size: 1.3rem;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  margin: 0.8rem 0 3.5rem !important;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+  animation: title-fade 3s ease-out;
+}
+
+.ethereal-btn {
+  display: inline-block;
+  padding: 1.2rem 5rem;
+  background: rgba(46, 36, 36, 0.4);
+  border: 1px solid rgba(163, 134, 43, 0.4);
+  color: #f2eee2 !important;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  position: relative; /* 必须为 relative 以便伪元素定位 */
+  overflow: hidden;   /* 必须为 hidden 以便裁切划过的亮光 */
+  transition: all 0.4s ease;
+  border-radius: 2px;
+  z-index: 1;         /* 确保文字在亮光之上 */
+}
+
+/* 玻璃亮光划过效果的实现层 */
+.ethereal-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%; /* 初始位置在按钮左侧外 */
+  width: 100%;
+  height: 100%;
+  /* 创建一个斜向的白色线性渐变，模拟玻璃反光 */
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.1), /* 亮光边缘 */
+    rgba(255, 255, 255, 0.4), /* 亮光核心 */
+    rgba(255, 255, 255, 0.1), /* 亮光边缘 */
+    transparent
+  );
+  transition: all 0.6s ease; /* 划过的速度 */
+  z-index: -1;
+  transform: skewX(-25deg);  /* 斜向光束 */
+}
+
+/* 鼠标悬停时触发亮光划过 */
+.ethereal-btn:hover::before {
+  animation: none; /* 停止动画 */
+  left: 150%;      /* 确保亮光停留在右侧不可见区域 */
+  transition: left 0.6s ease; /* 移入时如果有残余亮光，平滑滑出 */
+}
+.ethereal-btn:hover {
+  border-color: rgba(163, 134, 43, 1);
+  background: rgba(107, 36, 36, 0.4); /* 悬停时背景色略深 */
+  color: #ffffff !important;
+  box-shadow: 0 0 25px rgba(163, 134, 43, 0.3);
+  transform: translateY(-3px);
+}
+
+.ethereal-btn span {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.6;
+  margin-top: 4px;
+  letter-spacing: 0.2em;
+}
+
+.ethereal-btn::before {
+  /* 替换之前的 transition，改用 animation */
+  animation: shine-loop 4s infinite ease-in-out;
+}
+
+@keyframes shine-loop {
+  0% { left: -150%; }
+  30% { left: 150%; } /* 前 30% 时间划过 */
+  100% { left: 150%; } /* 剩余 70% 时间停留在右侧，形成间隔间隔 */
+}
+
+@keyframes title-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================================= */
+/* 3. 内页优化与滚动修复                              */
+/* ================================================= */
+/* 确保主容器也能垂直延伸 */
+.md-main__inner {
+  display: flex;
+  align-items: stretch;
+}
+
+.md-content__inner {
+  flex-grow: 1; /* 让内部容器填满 min-height 设置的空间 */
+}
+
+/* 修复标题定位与侧边栏高亮准度 */
+.md-typeset :is(h1, h2, h3, h4, h5, h6), :target {
+  scroll-margin-top: 5.5rem; 
+}
+
+/* 文章底部占位，防止最后一个标题无法激活 */
+.md-content {
+  padding-bottom: 5vh !important;
+}
+
+/* 导航激活项 */
+.md-nav__link--active {
+  color: var(--md-primary-fg-color) !important;
+  background-color: rgba(107, 36, 36, 0.05);
+  border-left: 4px solid var(--md-primary-fg-color);
+  font-weight: 700;
+  padding-left: 0.8rem !important;
+}
+
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: #a65d5d !important; 
+}
+
+/* ================================================= */
+/* 4. 代码块与文本元素                                */
+/* ================================================= */
+
+/* 行内代码 */
+.md-typeset code {
+  background-color: rgba(107, 36, 36, 0.08);
+  color: var(--md-primary-fg-color);
+  border: 1px solid rgba(107, 36, 36, 0.1);
+  font-family: var(--md-code-font);
+}
+
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: rgba(166, 93, 93, 0.12);
+  color: #e8a7a7;
+  border: 1px solid rgba(166, 93, 93, 0.2);
+}
+
+/* 代码块容器 */
+.md-typeset pre > code {
+  white-space: pre-wrap;
+  word-break: break-all;
+  display: block;
+  line-height: 1.8;
+  padding: 1.5rem;
+  border-radius: 4px;
+  font-family: var(--md-code-font);
+  contain: content; /* 性能优化 */
+}
+
+/* 链接动画 */
+.md-typeset a {
+  position: relative;
+  text-decoration: none !important;
+}
+
+.md-typeset a::after {
+  content: "";
+  position: absolute; width: 0; height: 1px; bottom: -1px; left: 0;
+  background-color: var(--md-accent-fg-color);
+  transition: width 0.3s ease;
+}
+
+.md-typeset a:hover::after { width: 100%; }
+
+/* ================================================= */
+/* 5. 页脚微调                                      */
+/* ================================================= */
+.md-footer-meta__inner {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 0.8rem 0 !important;
+}
+
+.md-copyright {
+  margin: 0 !important;
+  opacity: 0.6;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+}

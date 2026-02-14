@@ -150,20 +150,21 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "docs/zh/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "index 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,6 +177,53 @@
       "bases:新建数据库": false
     }
   },
-  "active": "3e73d9940e85f648",
-  "lastOpenFiles": []
+  "active": "6ee384de6c1e63d9",
+  "lastOpenFiles": [
+    "docs/zh/斯佩比亚家族.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/薇儿·艾尔维娜.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/芙刻.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/理查.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/凯恩斯.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物",
+    "docs/zh/埃瑟穆大区/米瑞莉亚总督领地/北境与凯歌/时间线（待修改）.md",
+    "docs/zh/埃瑟穆大区/米瑞莉亚总督领地/北境与凯歌/米瑞莉亚·斯佩比亚.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/格蕾迪丝·莱格普斯.md",
+    "docs/zh/埃瑟穆大区/米瑞莉亚总督领地/北境与凯歌/半岛的凯歌.md",
+    "docs/zh/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/萝莎琳德·斯佩比亚.md",
+    "docs/zh/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/特莉丝塔·斯佩比亚.md",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍",
+    "docs/zh/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/斯佩比亚家族.md",
+    "docs/zh/埃瑟穆大区/米瑞莉亚总督领地/北境与凯歌",
+    "docs/zh/埃瑟穆大区/王冠领地/诺沃相关",
+    "docs/zh/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族",
+    "docs/zh/埃瑟穆大区/米瑞莉亚总督领地",
+    "docs/zh/埃瑟穆大区/王冠领地",
+    "docs/zh/埃瑟穆大区/斯佩比亚大公领地",
+    "docs/zh/埃瑟穆大区/埃瑟穆大区.md",
+    "docs/zh/埃瑟穆大区",
+    "docs/zh/intro/index.md",
+    "docs/zh/intro",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Two Fourth-century Shepherds.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Women's hairstyles of the Byzantine Empire.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Twelfth-century Princess and Court Dignitary.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Twelfth-century Merchant and Monk.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Sixth-century Noble Couple.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Tenth-century Priest.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Sixth-century Men of Rank.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Seventh-century Warrior and Townswoman.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Sixth-century Courtiers.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Seventh-century Courtier and Priest.png",
+    "docs/zh/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/拜占庭风尚.md",
+    "docs/zh/图片与杂项/废弃设定/罗莎林德的废弃设定.md",
+    "docs/zh/图片与杂项/废弃设定/weiser 废弃设定.md",
+    "docs/zh/图片与杂项/人物图/解惑.md",
+    "docs/zh/图片与杂项/随笔.md",
+    "docs/zh/图片与杂项/关于教育的摘录.md",
+    "docs/zh/图片与杂项/Q&A.md",
+    "docs/zh/图片与杂项/Lucia建筑风格.md",
+    "docs/zh/世界设定/战争神相关/战争神相关/战争神信仰.md",
+    "docs/zh/世界设定/战争神相关/战争神相关/战争神.md",
+    "docs/zh/世界设定/战争神相关/战争神相关/卡琳剑.md",
+    "docs/zh/世界设定/战争神相关/战争神相关/“礼魂使”.md"
+  ]
 }

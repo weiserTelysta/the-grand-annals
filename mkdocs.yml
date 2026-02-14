@@ -6,6 +6,9 @@ site_description: "A world of epic fantasy"
 repo_name: "the-grand-annals"
 repo_url: "https://github.com/weiserTelysta/the-grand-annals"
 
+extra_css:
+  - stylesheets/extra.css
+
 theme:
   name: material
   language: zh
@@ -16,19 +19,21 @@ theme:
     - search.suggest
     - content.code.copy
     - navigation.top
+
+  custom_dir: overrides # 用于覆盖 Material 主题的默认模板和样式
     
-  palette: 
+  palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: red       
+      accent: red
       toggle:
         icon: material/brightness-7
         name: 切换到深色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: red
+      accent: red
       toggle:
         icon: material/brightness-4
         name: 切换到浅色模式
@@ -65,9 +70,3 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.tabbed:
-      alternate_style: true # 使用交替样式，增强视觉效果
-
-copyright: |
-  Copyright &copy; 2026 Weiser - MUNDUS WEISERI. 
-  All rights reserved.
