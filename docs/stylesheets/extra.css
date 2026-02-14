@@ -1,22 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
 /* ================================================= */
 /* 1. 变量定义与全局重置                              */
 /* ================================================= */
+
+/* ==========================================================================
+   1. 基础配置与浅色模式 (旧羊皮纸与丝绒质感)
+   ========================================================================== */
 :root, [data-md-color-scheme="default"] {
-  /* 正文彻底回归无衬线，保证长时间阅读不累 */
+  /* 字体设置 - 极致阅读体验 */
   --md-text-font: "Inter", "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
   --md-code-font: "JetBrains Mono", "Fira Code", monospace;
-  
-  /* 调色盘 - 浅色模式 (旧羊皮纸与丝绒质感) */
-  --md-default-bg-color:      #F8F4E8; /* 优化为更柔和的纸张色 */
-  --md-default-fg-color:      #2E2424; /* 深褐色文字 */
-  --md-primary-fg-color:      #801A1A; /* 丝绒深红 */
-  --md-primary-fg-color--dark: #5A1212;
-  --md-accent-fg-color:       #B59431; /* 剪刀与链条的古金色 */
-  --md-footer-bg-color:       #2e2424;
-  --md-footer-fg-color:       #dcd3c8;
 
+  /* 背景与正文 */
+  --md-default-bg-color:      #F8F4E8; /* 柔和纸张色 */
+  --md-default-fg-color:      #2E2424; /* 深褐色文字 */
+  
+  /* 品牌色 - 丝绒深红系列 */
+  --md-primary-fg-color:      #801A1A; 
+  --md-primary-fg-color--dark: #5A1212;
+  --md-accent-fg-color:       #B59431; /* 古金色 */
+
+  /* 页脚与特殊组件 */
+  --md-footer-bg-color:       #2E2424;
+  --md-footer-fg-color:       #DCD3C8;
+  
+  /* 交互细节 */
+  --header-border-color:      rgba(128, 26, 26, 0.2);
+  --search-bg-hover:          rgba(0, 0, 0, 0.05);
 }
 
+/* ==========================================================================
+   2. 深色模式 (灰烬与玫瑰)
+   ========================================================================== */
 [data-md-color-scheme="slate"] {
   /* 调色盘 - 深色模式 (灰烬与玫瑰) */
   --md-default-bg-color:      #161414; /* 接近立绘背影的深黑褐色 */
@@ -43,7 +58,7 @@
 
 [data-md-color-scheme="slate"] .md-header,
 [data-md-color-scheme="slate"] .md-tabs {
-  background-color: rgba(22, 20, 20, 0.85) !important;
+  background-color: rgba(35, 10, 15, 0.9)!important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -64,10 +79,6 @@
   box-shadow: 0 0 8px rgba(235, 203, 107, 0.2);
 }
 
-.md-search__input:focus + .md-search__icon {
-  color: var(--md-accent-fg-color);
-}
-
 [data-md-color-scheme="slate"] .md-search__input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
@@ -75,6 +86,10 @@
 [data-md-color-scheme="slate"] .md-header__button.md-logo img, 
 [data-md-color-scheme="slate"] .md-header__button.md-logo svg {
   filter: brightness(0.9);
+}
+
+.md-search__input:focus + .md-search__icon {
+  color: var(--md-accent-fg-color);
 }
 
 html {
@@ -173,24 +188,54 @@ body:has(.hero-section) :is(.md-main, .md-main__inner, .md-content, article) {
 }
 
 .epic-title {
-  font-size: clamp(3.5rem, 12vw, 6rem) !important;
-  color: #ffffff !important;
-  font-weight: 300 !important; 
-  letter-spacing: 0.25em;
+  font-family: 'Cinzel', serif !important; 
+  font-size: clamp(2.5rem, 8vw, 5.5rem) !important; 
+  font-weight: 700 !important;
+  letter-spacing: 0.2em; 
   text-transform: uppercase;
+  white-space: nowrap; 
   margin: 0 !important;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 5px 30px rgba(0, 0, 0, 0.8);
-  animation: title-fade 2s ease-out;
+
+  /* 核心修改：初始隐藏 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out !important;
+
+  display: block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- 白天：暖金色调 --- */
+body.time-morning .epic-title,
+body.time-afternoon .epic-title {
+  background-image: linear-gradient(to bottom, #ffffff 20%, #EBCB6B 100%);
+  /* 使用 filter 时，不要和 text-shadow 混用，选其一 */
+  filter: drop-shadow(0 0 10px rgba(235, 203, 107, 0.4)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8));
+}
+
+/* --- 夜晚：银色/冷月调 --- */
+body.time-evening .epic-title,
+body.time-night .epic-title {
+  /* 银色渐变 */
+  background-image: linear-gradient(to bottom, #FFFFFF 30%, #B0C4DE 100%); 
+  /* 强化月色发光感 */
+  filter: drop-shadow(0 0 15px rgba(176, 196, 222, 0.5)) drop-shadow(0 5px 20px rgba(0, 0, 0, 0.9));
 }
 
 .epic-subtitle {
   color: rgba(242, 238, 226, 0.9) !important;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-style: italic;
-  letter-spacing: 0.1em;
-  margin: 0.8rem 0 3.5rem !important;
-  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
-  animation: title-fade 3s ease-out;
+  margin: 1rem 0 3.5rem !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.3em;
+
+  /* 核心修改：初始隐藏 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out !important;
 }
 
 .ethereal-btn {
@@ -207,6 +252,14 @@ body:has(.hero-section) :is(.md-main, .md-main__inner, .md-content, article) {
   transition: all 0.4s ease;
   border-radius: 2px;
   z-index: 1;         /* 确保文字在亮光之上 */
+
+  border: 1px solid rgba(181, 148, 49, 0.5); /* 降低透明度的古金色 */
+  backdrop-filter: blur(4px); /* 让按钮有一点点玻璃感 */
+
+  /* 初始隐藏 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out, border-color 0.4s ease, background 0.4s ease !important;
 }
 
 /* 玻璃亮光划过效果的实现层 */
@@ -293,17 +346,11 @@ body:has(.hero-section) :is(.md-main, .md-main__inner, .md-content, article) {
   padding-bottom: 5vh !important;
 }
 
-/* 导航激活项 */
+/* 导航激活项：全模式优化 */
 .md-nav__link--active {
   color: var(--md-primary-fg-color) !important;
-  background-color: rgba(107, 36, 36, 0.05);
-  border-left: 4px solid var(--md-primary-fg-color);
   font-weight: 700;
-  padding-left: 0.8rem !important;
-}
-
-[data-md-color-scheme="slate"] .md-nav__link--active {
-  color: #a65d5d !important; 
+  padding-left: 1.2rem !important;
 }
 
 /* ================================================= */
@@ -365,4 +412,42 @@ body:has(.hero-section) :is(.md-main, .md-main__inner, .md-content, article) {
   opacity: 0.6;
   font-size: 0.65rem;
   letter-spacing: 0.5px;
+}
+
+/* ================================================= */
+/* 6.触发进场动画：当背景图片加载完成后 (JS 注入 Class)  */
+/* ================================================= */
+
+/* 1. 主标题进场 */
+body.content-ready .epic-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s; /* 等待背景完全稳定后 0.4s 进场 */
+}
+
+/* 2. 副标题进场 */
+body.content-ready .epic-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+/* 3. 按钮进场 */
+body.content-ready .ethereal-btn {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1.4s;
+}
+
+/* 进场后，恢复原本的背景渐变和滤镜效果 (针对不同时间段) */
+body.content-ready.time-morning .epic-title,
+body.content-ready.time-afternoon .epic-title {
+  background-image: linear-gradient(to bottom, #ffffff 20%, #EBCB6B 100%);
+  filter: drop-shadow(0 0 10px rgba(235, 203, 107, 0.4)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8));
+}
+
+body.content-ready.time-evening .epic-title,
+body.content-ready.time-night .epic-title {
+  background-image: linear-gradient(to bottom, #FFFFFF 30%, #B0C4DE 100%); 
+  filter: drop-shadow(0 0 15px rgba(176, 196, 222, 0.5)) drop-shadow(0 5px 20px rgba(0, 0, 0, 0.9));
 }

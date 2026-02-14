@@ -36,8 +36,50 @@ function initDynamicBackground() {
     });
 }
 
-// 适配 MkDocs Instant Loading
-document.addEventListener("DOMContentLoaded", initDynamicBackground);
+function checkBackgroundLoaded() {
+    const hour = new Date().getHours();
+    const body = document.body;
+    
+    // 1. 路径映射 (确保路径相对于 HTML 页面是正确的)
+    const bgMap = {
+        morning:   "/assets/illustration/Telysta&Losalind_Library_day_01.webp",
+        afternoon: "/assets/illustration/Telysta&Losalind_Library_day_02.webp",
+        evening:   "/assets/illustration/Telysta&Losalind_Library_night_01.webp",
+        night:     "/assets/illustration/Telysta&Losalind_Library_night_02.webp"
+    };
+
+    let key = 'night';
+    if (hour >= 6 && hour < 12) key = 'morning';
+    else if (hour >= 12 && hour < 18) key = 'afternoon';
+    else if (hour >= 18 && hour < 22) key = 'evening';
+
+    // 立即加上时间类名，否则背景也出不来
+    body.classList.add(`time-${key}`);
+
+    // 2. 预加载当前背景
+    const img = new Image();
+    img.src = bgMap[key];
+    
+    img.onload = () => {
+        body.classList.add('content-ready');
+        console.log("仪式感启动：背景已就绪");
+    };
+
+    // 3. 兜底逻辑：如果图片加载太慢，3秒后强制显示，防止页面永久空白
+    setTimeout(() => {
+        if (!body.classList.contains('content-ready')) {
+            body.classList.add('content-ready');
+            console.log("超时兜底：强制显示内容");
+        }
+    }, 3000);
+}
+
+// 绑定初始化
+document.addEventListener("DOMContentLoaded", checkBackgroundLoaded);
+
+// 适配 MkDocs Instant Loading (修正这里的函数名)
 if (typeof app !== 'undefined') {
-    app.document$.subscribe(initDynamicBackground);
+    app.document$.subscribe(() => {
+        checkBackgroundLoaded();
+    });
 }
