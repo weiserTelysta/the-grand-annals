@@ -1,2 +1,6 @@
 arrange:
-  - intro
+  - index.md
+  - 世界介绍
+  - 规则介绍
+  - 地理介绍
+  - ...

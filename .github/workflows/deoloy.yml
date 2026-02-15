@@ -21,7 +21,43 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          # 确保这里安装了所有必要的插件，比如 mkdocs-awesome-pages-plugin
+          # 如果 requirements.txt 里都有了，就不需要额外命令
 
-      - name: Build and Deploy
+      - name: Build Multi-language Site
         run: |
-          mkdocs gh-deploy --force
+          # ------------------------------------------------------------------
+          # 第一步：构建中文版（主站）
+          # ------------------------------------------------------------------
+          echo "Building Chinese Site (Main)..."
+          mkdocs build --config-file mkdocs.yml
+
+          # ------------------------------------------------------------------
+          # 第二步：资源同步（关键步骤）
+          # 把中文版(zh)的图片和CSS复制到英文版(en)的源目录中
+          # 这样英文版构建时就能找到这些文件了
+          # ------------------------------------------------------------------
+          echo "Syncing Assets from ZH to EN..."
+          
+          # 确保目标文件夹存在
+          mkdir -p docs/en/assets
+          mkdir -p docs/en/stylesheets
+          
+          # 复制文件 (如果文件夹为空可能会报错，所以加了 || true 防止报错中断)
+          cp -r docs/zh/assets/* docs/en/assets/ || true
+          cp -r docs/zh/stylesheets/* docs/en/stylesheets/ || true
+
+          # ------------------------------------------------------------------
+          # 第三步：构建英文版（子站）
+          # 必须指定 --site-dir site/en，把它放进主站的子目录里
+          # ------------------------------------------------------------------
+          echo "Building English Site (Sub-directory)..."
+          mkdocs build --config-file mkdocs.en.yml --site-dir site/en
+
+      - name: Deploy to GitHub Pages
+        # 使用专门的发布 Action，而不是 mkdocs gh-deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site  # 发布刚才生成的整个 site 文件夹
+          force_orphan: true   # 保持 gh-pages 分支干净

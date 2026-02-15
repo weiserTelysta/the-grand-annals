@@ -1,1 +1,4 @@
-title: World View
+arrange:
+    - index.md
+    - world
+    - human

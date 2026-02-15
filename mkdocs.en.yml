@@ -1,14 +1,18 @@
 site_name: "The Grand Annals"
-site_url: https://annals.telysta.com/
+site_url: https://annals.telysta.com/en/
 site_author: "Weiser"
 site_description: "A world of epic fantasy"
 
-docs_dir: docs/zh 
-site_dir: site
+# 【关键修改 1】文档源目录：读取 docs/en 下的 Markdown 和 .pages 文件
+docs_dir: docs/en
+
+# 【关键修改 2】构建输出目录：输出到主站 site 下的 en 子目录
+site_dir: site/en
 
 repo_name: "the-grand-annals"
 repo_url: "https://github.com/weiserTelysta/the-grand-annals"
 
+# 这里保持不变，因为我们的 CI 脚本会把 CSS/JS 从 zh 复制到 en 目录中
 extra_css:
   - stylesheets/extra.css
 
@@ -17,7 +21,7 @@ extra_javascript:
 
 theme:
   name: material
-  language: zh
+  language: en  # 【关键修改 3】界面语言设为英文
   features:
     - navigation.tabs
     - navigation.sections
@@ -26,7 +30,7 @@ theme:
     - content.code.copy
     - navigation.top
 
-  custom_dir: overrides # 用于覆盖 Material 主题的默认模板和样式
+  custom_dir: overrides # 共用根目录下的 HTML 模版
     
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -35,37 +39,38 @@ theme:
       accent: red
       toggle:
         icon: material/brightness-7
-        name: 切换到深色模式
+        name: Switch to Dark Mode # 英文提示
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: red
       accent: red
       toggle:
         icon: material/brightness-4
-        name: 切换到浅色模式
+        name: Switch to Light Mode # 英文提示
 
   icon:
     logo: material/library
 
+# 【关键修改 4】语言切换器（必须和中文版完全一致，才能互相跳转）
 extra:
   alternate:
     - name: 简体中文
-      link: /  # 中文是根路径
+      link: /   # 指向根目录（中文）
       lang: zh
     - name: English
-      link: /en/ # 英文是子路径
+      link: /en/ # 指向子目录（英文）
       lang: en
 
 plugins:
   - search
-  - awesome-pages:
+  - awesome-pages: # 这里会自动读取 docs/en/.pages 进行英文独立排序
       collapse_single_pages: false
   - roamlinks
   - glightbox:
-      touchNavigation: true   # 支持手机端触摸滑动
-      loop: false             # 是否循环播放文件夹内的图片
-      zoomable: true          # 是否允许缩放（非常适合看大地图）
-      draggable: true         # 是否允许鼠标拖动
+      touchNavigation: true   
+      loop: false            
+      zoomable: true          
+      draggable: true         
 
 markdown_extensions:
   - attr_list
