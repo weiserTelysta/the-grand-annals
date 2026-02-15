@@ -41,7 +41,7 @@
   --md-footer-bg-color:       #140f0f;
   --md-footer-fg-color:       #a6a6a6; 
   --md-typeset-color:         #DCD3C8;
-  --md-typeset-h1-color:      #ffffff;
+  --md-typeset-h1-color:      #DCD3C8;
   --md-admonition-icon-color: #EBCB6B;
   --md-typeset-a-color:       #D84C4C; /* 链接特殊色 */
   
@@ -122,7 +122,6 @@ html {
   display: flex;
   flex-direction: column;
 }
-
 /* ================================================= */
 /* 2. 首页 (Hero Section) 专用布局                   */
 /* ================================================= */
@@ -450,4 +449,55 @@ body.content-ready.time-evening .epic-title,
 body.content-ready.time-night .epic-title {
   background-image: linear-gradient(to bottom, #FFFFFF 30%, #B0C4DE 100%); 
   filter: drop-shadow(0 0 15px rgba(176, 196, 222, 0.5)) drop-shadow(0 5px 20px rgba(0, 0, 0, 0.9));
+}
+
+/* ================================================= */
+/* 7. 移动端响应式适配 (配色与布局深度优化)            */
+/* ================================================= */
+
+@media screen and (max-width: 76.25em) {
+  .epic-title {
+    /* 1. 布局修复 */
+    white-space: normal !important; 
+    line-height: 1.1 !important;
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important; /* 稍微调小一点，保证视觉比例 */
+    padding: 0 10% !important;
+    text-align: center;
+    word-break: break-word;
+
+    /* 2. 核心：强化移动端对比度 */
+    /* 在小屏幕上，背景图可能更杂乱，我们要确保渐变色更有“厚度” */
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1); /* 极细微轮廓，增加锐度 */
+  }
+
+  /* 针对不同时间的金色/银色进行移动端加深 */
+  body.time-morning .epic-title,
+  body.time-afternoon .epic-title {
+    background-image: linear-gradient(to bottom, #FFFFFF 10%, #EBCB6B 60%, #B59431 100%) !important;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8)) !important; /* 加深阴影，防止被亮色背景吃掉 */
+  }
+
+  body.time-evening .epic-title,
+  body.time-night .epic-title {
+    background-image: linear-gradient(to bottom, #FFFFFF 20%, #B0C4DE 70%, #778899 100%) !important;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.9)) !important;
+  }
+
+  .epic-subtitle {
+    font-size: 0.85rem !important;
+    letter-spacing: 0.2em !important;
+    padding: 0 15% !important;
+    margin: 1.5rem 0 3rem !important; /* 缩小间距，适配手机屏幕高度 */
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .ethereal-btn {
+    padding: 1rem 0 !important;
+    width: 70% !important; /* 宽度适中，更有点击欲望 */
+    max-width: 280px;
+    font-size: 0.9rem !important;
+    background: rgba(46, 36, 36, 0.6) !important; /* 稍微加深背景，压住底下的图片 */
+    border: 1px solid rgba(181, 148, 49, 0.6) !important;
+  }
 }

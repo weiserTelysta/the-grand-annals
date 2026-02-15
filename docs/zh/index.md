@@ -3,6 +3,8 @@ hide:
   - navigation
   - toc
   - footer
+
+title: 首页
 ---
 
 <div class="hero-section">

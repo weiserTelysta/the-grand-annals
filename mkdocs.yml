@@ -41,6 +41,9 @@ theme:
         icon: material/brightness-4
         name: 切换到浅色模式
 
+  icon:
+    logo: material/library
+
 plugins:
   - search
   - roamlinks
