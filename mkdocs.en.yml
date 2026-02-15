@@ -55,11 +55,14 @@ theme:
 extra:
   alternate:
     - name: 简体中文
-      link: /   # 指向根目录（中文）
+      link: / 
       lang: zh
     - name: English
-      link: /en/ # 指向子目录（英文）
+      link: /en/
       lang: en
+    - name: 日本語
+      link: /ja/
+      lang: ja
 
 plugins:
   - search

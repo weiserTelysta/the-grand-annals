@@ -1,14 +1,18 @@
 site_name: "The Grand Annals"
-site_url: https://annals.telysta.com/
+site_url: https://annals.telysta.com/ja/  # URL 加上 /ja/
 site_author: "Weiser"
 site_description: "A world of epic fantasy"
 
-docs_dir: docs/zh 
-site_dir: site
+# 1. 来源指向 docs/ja
+docs_dir: docs/ja
+
+# 2. 输出指向 site/ja
+site_dir: site/ja
 
 repo_name: "the-grand-annals"
 repo_url: "https://github.com/weiserTelysta/the-grand-annals"
 
+# 3. 样式表（不用改，稍后我们用脚本复制过来）
 extra_css:
   - stylesheets/extra.css
 
@@ -17,7 +21,10 @@ extra_javascript:
 
 theme:
   name: material
-  language: zh
+  language: ja  # 4. 界面语言设为日文
+  font:
+    text: "Noto Sans JP" # 推荐：为日文设置更合适的字体
+    code: "Roboto Mono"
   features:
     - navigation.tabs
     - navigation.sections
@@ -26,7 +33,7 @@ theme:
     - content.code.copy
     - navigation.top
 
-  custom_dir: overrides # 用于覆盖 Material 主题的默认模板和样式
+  custom_dir: overrides
     
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -35,18 +42,19 @@ theme:
       accent: red
       toggle:
         icon: material/brightness-7
-        name: 切换到深色模式
+        name: ダークモードに切り替え
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: red
       accent: red
       toggle:
         icon: material/brightness-4
-        name: 切换到浅色模式
+        name: ライトモードに切り替え
 
   icon:
     logo: material/library
 
+# 5. 【重要】更新语言切换器（加上日文，且必须同步给 zh 和 en）
 extra:
   alternate:
     - name: 简体中文
@@ -60,15 +68,16 @@ extra:
       lang: ja
 
 plugins:
-  - search
+  - search:
+      lang: ['ja'] # 优化日文搜索分词
   - awesome-pages:
       collapse_single_pages: false
   - roamlinks
   - glightbox:
-      touchNavigation: true   # 支持手机端触摸滑动
-      loop: false             # 是否循环播放文件夹内的图片
-      zoomable: true          # 是否允许缩放（非常适合看大地图）
-      draggable: true         # 是否允许鼠标拖动
+      touchNavigation: true   
+      loop: false            
+      zoomable: true          
+      draggable: true         
 
 markdown_extensions:
   - attr_list
