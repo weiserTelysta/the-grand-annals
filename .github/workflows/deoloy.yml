@@ -61,3 +61,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site  # 发布刚才生成的整个 site 文件夹
           force_orphan: true   # 保持 gh-pages 分支干净
+          cname: annals.telysta.com
