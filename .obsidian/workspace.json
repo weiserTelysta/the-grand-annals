@@ -11,10 +11,14 @@
             "id": "3e73d9940e85f648",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/zh/生灵地理/index.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "index"
             }
           }
         ]
@@ -150,12 +154,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "docs/zh/生灵地理/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "index 的大纲"
             }
           }
         ],
@@ -163,7 +168,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,8 +182,15 @@
       "bases:新建数据库": false
     }
   },
-  "active": "3e73d9940e85f648",
+  "active": "115293307df2b63c",
   "lastOpenFiles": [
+    "docs/zh/生灵地理/未命名",
+    "docs/zh/世界观览/index.md",
+    "docs/zh/法则设定/index.md",
+    "docs/zh/assets/illustration/Telysta&Losalind_Library_day_01.webp",
+    "docs/zh/纪元长歌/index.md",
+    "docs/zh/纪元长歌/233.md",
+    "docs/zh/index.md",
     "docs/en/human",
     "docs/en/index.md",
     "docs/en/world",
@@ -193,12 +206,8 @@
     "docs/zh/assets/illustration/Telysta&Losalind_Library_night_02.webp",
     "docs/zh/assets/illustration/Telysta&Losalind_Library_night_01.webp",
     "docs/zh/assets/illustration/Telysta&Losalind_Library_day_02.webp",
-    "docs/zh/assets/illustration/Telysta&Losalind_Library_day_01.webp",
     "docs/zh/assets/illustration",
     "docs/zh/assets",
-    "mkdocs.en.yml",
-    "docs/zh/index.md",
-    "docs/zh/纪元长歌/index.md",
     "docs/zh/索引观览/index.md",
     "docs/zh/源初法则/index.md",
     "docs/zh/星辰微光/index.md",
@@ -215,9 +224,6 @@
     "docs/zh/源初法则/序言.md",
     "docs/zh/1_index/index.md",
     "docs/zh/2_life/序言.md",
-    "docs/zh/b/序言.md",
-    "docs/zh/b/index.md",
-    "docs/zh/a/index.md",
     "docs/assets/illustration/Telysta&Losalind_Library_night_01.webp",
     "docs/assets/illustration/Telysta&Losalind_Library_day_01.webp",
     "docs/assets/illustration/Telysta&Losalind_Library_day_02.webp",
