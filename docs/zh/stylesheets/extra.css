@@ -61,6 +61,11 @@
   --header-bg-custom:         rgba(31, 26, 29, 0.85);
 }
 
+/* 页眉导航颜色设置 */
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #1D171A !important;
+}
+
 /* ==========================================================================
    3. 全局 UI 组件优化 (导航、搜索、滚动条)
    ========================================================================== */
@@ -133,6 +138,7 @@ html {
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
+
   /* 文字渲染优化 */
   text-rendering: optimizeLegibility; 
   -webkit-font-smoothing: antialiased;
