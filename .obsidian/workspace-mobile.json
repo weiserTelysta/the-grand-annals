@@ -165,7 +165,7 @@
         }
       }
     ],
-    "currentTab": 3
+    "currentTab": 0
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,6 +179,6 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "14a7bfe84cc4c30c",
+  "active": "3582b637504ec039",
   "lastOpenFiles": []
 }
