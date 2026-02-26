@@ -27,26 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
+                "file": "docs/zh/法则设定/底层设定/关于魔法体系.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "蕾莉萨·塞勒林"
-            }
-          },
-          {
-            "id": "09357d13694e0772",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "特莉丝塔·塞勒林"
+              "title": "关于魔法体系"
             }
           }
         ],
@@ -183,13 +169,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
+                "file": "docs/zh/法则设定/底层设定/关于魔法体系.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "蕾莉萨·塞勒林 的大纲"
+              "title": "关于魔法体系 的大纲"
             }
           },
           {
@@ -203,11 +189,11 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300.5
+    "width": 399.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -223,8 +209,12 @@
   },
   "active": "860c749a6d2777c5",
   "lastOpenFiles": [
-    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
+    "docs/zh/法则设定/index.md",
+    "docs/zh/法则设定/底层设定/关于魔法体系.md",
+    "docs/zh/法则设定/未命名.md",
+    "docs/zh/法则设定/底层设定",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/蕾莉萨·塞勒林.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/~syncthing~蕾莉萨·塞勒林.md.tmp",
     "docs/weiser/图片与杂项/随笔.md",
@@ -256,13 +246,10 @@
     "docs/weiser/图片与杂项/Q&A.md",
     "docs/weiser/图片与杂项/saimiu.jpg",
     "docs/weiser/图片与杂项/关于教育的摘录.md",
-    "docs/zh/法则设定/index.md",
     "docs/zh/assets/illustration/Telysta&Losalind_Library_day_01.webp",
     "docs/zh/生灵地理/埃瑟穆大区.md",
     "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/芙刻.md",
-    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/薇儿·艾尔维娜.md",
     "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物",
-    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Women's hairstyles of the Byzantine Empire.png",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Two Fourth-century Shepherds.png",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Twelfth-century Princess and Court Dignitary.png",

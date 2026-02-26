@@ -197,8 +197,14 @@ html {
 .md-nav__link--active {
   color: var(--md-primary-fg-color) !important;
   font-weight: 700;
-  padding-left: 1.2rem !important;
-  border-left: 2px solid var(--md-accent-fg-color); /* 增加左侧金线指示 */
+  /* 恢复文字右移效果，0.8rem 比之前的 1.2rem 更精致，不会显得太空 */
+  padding-left: 0.8rem !important; 
+  
+  /* 强制干掉任何粗竖线（包括 MkDocs 原生自带的 TOC 激活竖线） */
+  border-left: none !important;    
+  
+  /* 加上平滑的过渡动画，点击时文字会优雅地滑过去 */
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
 }
 
 /* ==========================================================================
@@ -398,3 +404,71 @@ body.content-ready.time-night .epic-title {
 }
 .md-copyright { margin: 0 !important; opacity: 0.6; font-size: 0.65rem; letter-spacing: 0.5px; }
 
+/* ==========================================================================
+   8. 墨水涂黑 / 机密文本特效 (Redacted Text)
+   ========================================================================== */
+
+/* --- 基础状态：被浓墨覆盖 --- */
+.md-typeset .ink-redacted {
+  background-color: #1A1515; /* 极深的炭黑色，像干涸的墨迹 */
+  color: #1A1515; /* 文字颜色与背景完全一致，完美隐藏 */
+  padding: 0 6px;
+  border-radius: 2px;
+  margin: 0 2px;
+  transition: all 0.4s ease;
+  cursor: crosshair; /* 鼠标放上去会变成十字准星，增加解密感 */
+  user-select: none; /* 默认禁止鼠标划选偷看内容 */
+}
+
+/* 深色模式下的墨水颜色微调，确保比底色更黑 */
+[data-md-color-scheme="slate"] .md-typeset .ink-redacted {
+  background-color: #0A0809; 
+  color: #0A0809;
+}
+
+/* --- 交互状态：鼠标悬停时墨水褪去，浮现血字 --- */
+.md-typeset .ink-redacted:hover {
+  background-color: transparent; /* 背景墨水消散 */
+  color: var(--md-primary-fg-color); /* 浮现出你设定的丝绒酒红色 */
+  text-shadow: 0 0 8px rgba(128, 26, 26, 0.4); /* 带有微弱的血色魔法微光 */
+  user-select: auto; /* 悬停后允许读者复制这段秘密 */
+}
+
+/* ==========================================================================
+   9. 目录树缩进参考线 (Obsidian 风格 - 仅限右侧) 与排版优化
+   ========================================================================== */
+
+/* 1. 放宽全局侧边栏的宽度，给长目录更多空间 */
+:root {
+  --md-sidebar-width: 16rem; 
+}
+
+/* 2. 定义参考线基础颜色 */
+:root, [data-md-color-scheme="default"] {
+  --md-nav-guide-color: rgba(46, 36, 36, 0.12); 
+}
+[data-md-color-scheme="slate"] {
+  --md-nav-guide-color: rgba(220, 211, 200, 0.12); 
+}
+
+/* 3. 核心：仅为【右侧目录】(.md-sidebar--secondary) 添加 Obsidian 竖线 */
+.md-sidebar--secondary .md-nav__item > .md-nav {
+  border-left: 1px solid var(--md-nav-guide-color); /* 画出竖线 */
+  margin-left: 0.5rem;   /* 适当的缩进，不会占用太多横向空间 */
+  padding-left: 0.5rem;  /* 文字与竖线的距离 */
+  border-radius: 0;
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 右侧竖线的悬停高亮特效 */
+.md-sidebar--secondary .md-nav__item > .md-nav:hover {
+  border-left-color: var(--md-accent-fg-color);
+}
+
+/* 4. 右侧目录文字换行与行高优化，告别拥挤 */
+.md-sidebar--secondary .md-nav__link {
+  word-break: break-word; 
+  line-height: 1.4;       
+  padding-top: 0.2rem;    
+  padding-bottom: 0.2rem;
+}
