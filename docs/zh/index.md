@@ -9,7 +9,7 @@ title: 首页
 
 <div class="hero-section">
   <div class="hero-content">
-    <h1 class="epic-title">The Grand Annals</h1>
+    <h1 class="epic-title">龙与花之歌</h1>
     <p class="epic-subtitle">「在此翻开尘封的档案，窥探古老帝国的余晖。」</p>
     
     <div class="action-area">

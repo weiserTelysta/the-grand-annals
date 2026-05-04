@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/zh/法则设定/底层设定/关于魔法体系.md",
+                "file": "docs/zh/世界观览/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "关于魔法体系"
+              "title": "index"
             }
           }
         ],
@@ -169,13 +169,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/zh/法则设定/底层设定/关于魔法体系.md",
+                "file": "docs/zh/世界观览/index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "关于魔法体系 的大纲"
+              "title": "index 的大纲"
             }
           },
           {
@@ -189,11 +189,11 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 399.5
+    "width": 330.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -209,21 +209,30 @@
   },
   "active": "860c749a6d2777c5",
   "lastOpenFiles": [
+    "docs/zh/世界观览/世界基础.md",
+    "docs/zh/世界观览/index.md",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
+    "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
+    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/薇儿·艾尔维娜.md",
+    "docs/zh/世界观览/~syncthing~世界基础.md.tmp",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/共治时代",
     "docs/zh/法则设定/index.md",
+    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/格蕾迪丝·莱格普斯.md",
+    "docs/weiser/weiser/weiser.md",
+    "2026-03-22.md",
+    "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/斯佩比亚家族.md",
+    "docs/zh/法则设定/底层设定/1.md",
     "docs/zh/法则设定/底层设定/关于魔法体系.md",
     "docs/zh/法则设定/未命名.md",
     "docs/zh/法则设定/底层设定",
-    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
-    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/蕾莉萨·塞勒林.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/~syncthing~蕾莉萨·塞勒林.md.tmp",
     "docs/weiser/图片与杂项/随笔.md",
     "docs/zh/生灵地理/地理名词/长域.md",
-    "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/斯佩比亚家族.md",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/特莉丝塔·塞勒林.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/未命名",
-    "docs/zh/世界观览/index.md",
     "docs/zh/assets/character art/Telysta/Telysta-Design-Sheet.png",
     "docs/zh/assets/character art/Telysta/Telysta-Full-body.png",
     "docs/zh/assets/character art/Telysta",
@@ -233,23 +242,14 @@
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区",
     "docs/zh/index.md",
     "docs/weiser/图片与杂项/人物图/解惑.md",
-    "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
-    "docs/zh/星辰微光/塔莫拉广域",
     "docs/weiser/weiser/双海纪行：一位古灵学者的长日留痕/《行过茉瑞莎》.md",
     "docs/zh/生灵地理/index.md",
     "docs/zh/纪元长歌/index.md",
     "docs/zh/文明秩序/index.md",
     "docs/weiser/世界设定/大陆西北方的半人马们.md",
-    "docs/weiser/世界设定/灰山银.md",
     "docs/weiser/图片与杂项/林歌城-工程巨獭狸.jpeg",
-    "docs/weiser/图片与杂项/Lucia建筑风格.md",
-    "docs/weiser/图片与杂项/Q&A.md",
     "docs/weiser/图片与杂项/saimiu.jpg",
-    "docs/weiser/图片与杂项/关于教育的摘录.md",
     "docs/zh/assets/illustration/Telysta&Losalind_Library_day_01.webp",
-    "docs/zh/生灵地理/埃瑟穆大区.md",
-    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/芙刻.md",
-    "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Women's hairstyles of the Byzantine Empire.png",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Two Fourth-century Shepherds.png",
     "docs/weiser/图片与杂项/拜占庭服饰特色文献翻译/拜占庭风尚/图库/Twelfth-century Princess and Court Dignitary.png",

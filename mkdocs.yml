@@ -63,6 +63,7 @@ extra:
 
 plugins:
   - search
+  - callouts
   - awesome-pages:
       collapse_single_pages: false
   - roamlinks

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/蕾莉萨·塞勒林.md",
+                "file": "docs/zh/世界观览/世界基础.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "蕾莉萨·塞勒林"
+              "title": "世界基础"
             }
           }
         ]
@@ -40,7 +40,7 @@
             "autoReveal": false
           },
           "icon": "lucide-folder-closed",
-          "title": "Files"
+          "title": "文件列表"
         }
       },
       {
@@ -169,22 +169,25 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false
     }
   },
   "active": "3582b637504ec039",
   "lastOpenFiles": [
-    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
-    "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/蕾莉萨·塞勒林.md",
+    "docs/zh/世界观览/世界基础.md",
+    "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/斯佩比亚家族.md",
+    "docs/weiser/weiser/weiser的游记/北国游记/《绯红之册》.md",
+    "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/蕾莉萨·塞勒林.md",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
     "docs/weiser/埃瑟穆大区/米瑞莉亚总督领地/北境与凯歌/半岛的凯歌.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地",
