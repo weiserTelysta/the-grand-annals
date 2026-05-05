@@ -1,7 +1,8 @@
-site_name: "The Grand Annals"
+site_name: "The Annals of Wyrm and Wreath"
 site_url: https://annals.telysta.com/
 site_author: "Weiser"
-site_description: "A world of epic fantasy"
+site_description: "An epic fantasy world of ancient crowns, elder wyrms, fading empires, and new bloom."
+
 
 docs_dir: docs/zh 
 site_dir: site
