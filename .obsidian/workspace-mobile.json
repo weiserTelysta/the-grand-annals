@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/zh/世界观览/世界基础.md",
+                "file": "docs/zh/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "世界基础"
+              "title": "index"
             }
           }
         ]
@@ -181,8 +181,9 @@
   },
   "active": "3582b637504ec039",
   "lastOpenFiles": [
-    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
+    "docs/zh/assets/character art/Telysta/Telysta-Design-Sheet.png",
     "docs/zh/世界观览/世界基础.md",
+    "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
     "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
     "docs/weiser/埃瑟穆大区/斯佩比亚大公领地/斯佩比亚家族/斯佩比亚家族.md",
     "docs/weiser/weiser/weiser的游记/北国游记/《绯红之册》.md",
