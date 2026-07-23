@@ -11,12 +11,14 @@
             "id": "860c749a6d2777c5",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "docs/weiser/图片与杂项/人物图/薇瑟-透明底.png"
+                "file": "docs/zh/法则设定/魔法/魔法体系.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "薇瑟-透明底"
+              "icon": "lucide-file",
+              "title": "魔法体系"
             }
           }
         ]
@@ -153,13 +155,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/weiser/图片与杂项/人物图/薇瑟-透明底.png",
+                "file": "docs/zh/法则设定/魔法/魔法体系.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "薇瑟-透明底 的大纲"
+              "title": "魔法体系 的大纲"
             }
           },
           {
@@ -191,8 +193,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7096116dd3a46e42",
+  "active": "860c749a6d2777c5",
   "lastOpenFiles": [
+    "docs/weiser/weiser/双海纪行：一位古灵学者的长日留痕/《行过茉瑞莎》.md",
+    "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
+    "docs/weiser/图片与杂项/人物图/薇瑟-透明底.png",
     "requirements.txt.baiduyun.uploading.cfg",
     "overrides/partials/copyright.html.baiduyun.uploading.cfg",
     "mkdocs.en.yml.baiduyun.uploading.cfg",
@@ -203,11 +208,9 @@
     "docs/zh/法则设定/index.md.baiduyun.uploading.cfg",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md.baiduyun.uploading.cfg",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md.baiduyun.uploading.cfg",
-    "docs/zh/文明秩序/index.md.baiduyun.uploading.cfg",
     "docs/weiser/图片与杂项/人物图/薇瑟-二视图透明底.png",
     "docs/weiser/世界设定/大陆西北方的半人马们.md",
-    "docs/weiser/图片与杂项/人物图/薇瑟-透明底.png",
-    "docs/zh/法则设定/底层设定/魔法体系.md",
+    "docs/zh/法则设定/魔法/魔法体系.md",
     "docs/zh/法则设定/底层设定/魔法体系（内部参考）.md",
     "docs/zh/法则设定/底层设定/魔法体系（旧版）.md",
     "docs/zh/法则设定/底层设定/关于魔法体系.md",
@@ -218,7 +221,6 @@
     "docs/zh/世界观览/index.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/蕾莉萨·塞勒林.md",
     "docs/zh/星辰微光/塔莫拉广域/埃瑟穆大区/塞勒林大公爵领地/塞勒林家族/特莉丝塔·塞勒林.md",
-    "docs/weiser/埃瑟穆大区/埃瑟穆大区.md",
     "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/归乡卫戍/归乡军团人物/薇儿·艾尔维娜.md",
     "docs/weiser/埃瑟穆大区/王冠领地/诺沃相关/格蕾迪丝·莱格普斯.md",
     "docs/weiser/weiser/weiser.md",
