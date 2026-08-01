@@ -68,6 +68,6 @@ python -m mkdocs build --strict --clean --config-file mkdocs.yml
 
 1. 安装锁定版本的依赖；
 2. 以严格模式构建中文站点；
-3. 上传并部署 GitHub Pages 制品。
+3. 将静态站点发布到 `gh-pages` 分支。
 
-仓库的 GitHub Pages 发布来源应设置为 **GitHub Actions**。自定义域名由 `docs/zh/CNAME` 保留。
+仓库的 GitHub Pages 发布来源保持为 `gh-pages` 分支。自定义域名由 `docs/zh/CNAME` 与部署工作流共同保留。
