@@ -1,85 +1,197 @@
-function initDynamicBackground() {
-    const hour = new Date().getHours();
-    const body = document.body;
-    
-    // 1. 定义时间段和对应的图片路径
-    const timeConfigs = {
-        morning:   { range: [6, 12],  path: "../assets/illustration/Telysta&Losalind_Library_day_01.webp" },
-        afternoon: { range: [12, 18], path: "../assets/illustration/Telysta&Losalind_Library_day_02.webp" },
-        evening:   { range: [18, 22], path: "../assets/illustration/Telysta&Losalind_Library_night_01.webp" },
-        night:     { range: [22, 6],  path: "../assets/illustration/Telysta&Losalind_Library_night_02.webp" }
-    };
+(() => {
+  document.documentElement.classList.add("has-js");
 
-    // 2. 立即应用当前时间段的 Class (保证首屏背景立刻显示)
-    let currentPeriod = 'night';
-    for (const [period, config] of Object.entries(timeConfigs)) {
-        const [start, end] = config.range;
-        if (start < end ? (hour >= start && hour < end) : (hour >= start || hour < end)) {
-            currentPeriod = period;
-            break;
-        }
+  const scriptUrl = document.currentScript
+    ? new URL(document.currentScript.src, window.location.href)
+    : new URL("stylesheets/extra.js", document.baseURI);
+
+  const periods = {
+    morning: {
+      range: [6, 12],
+      file: "Telysta&Losalind_Library_day_01.webp"
+    },
+    afternoon: {
+      range: [12, 18],
+      file: "Telysta&Losalind_Library_day_02.webp"
+    },
+    evening: {
+      range: [18, 22],
+      file: "Telysta&Losalind_Library_night_01.webp"
+    },
+    night: {
+      range: [22, 6],
+      file: "Telysta&Losalind_Library_night_02.webp"
     }
-    body.classList.add(`time-${currentPeriod}`);
+  };
 
-    // 3. 异步预加载：等页面闲置时再下载其余图片
-    window.addEventListener('load', () => {
-        // 延迟 2 秒执行，确保不竞争首屏资源
-        setTimeout(() => {
-            Object.entries(timeConfigs).forEach(([period, config]) => {
-                if (period !== currentPeriod) {
-                    const img = new Image();
-                    img.src = config.path;
-                    console.log(`后台静默预加载: ${period} 壁纸`);
-                }
-            });
-        }, 2000);
-    });
-}
+  function getCurrentPeriod(hour) {
+    return Object.entries(periods).find(([, config]) => {
+      const [start, end] = config.range;
+      return start < end
+        ? hour >= start && hour < end
+        : hour >= start || hour < end;
+    })?.[0] || "night";
+  }
 
-function checkBackgroundLoaded() {
-    const hour = new Date().getHours();
+  function revealHero(body) {
+    window.requestAnimationFrame(() => body.classList.add("hero-ready"));
+  }
+
+  function initializeHero() {
+    const hero = document.querySelector("[data-hero]");
+    if (!hero || hero.dataset.initialized === "true") return;
+
+    hero.dataset.initialized = "true";
     const body = document.body;
-    
-    // 1. 路径映射 (确保路径相对于 HTML 页面是正确的)
-    const bgMap = {
-        morning:   "/assets/illustration/Telysta&Losalind_Library_day_01.webp",
-        afternoon: "/assets/illustration/Telysta&Losalind_Library_day_02.webp",
-        evening:   "/assets/illustration/Telysta&Losalind_Library_night_01.webp",
-        night:     "/assets/illustration/Telysta&Losalind_Library_night_02.webp"
+    const period = getCurrentPeriod(new Date().getHours());
+    const imageUrl = new URL(
+      `../assets/illustration/${periods[period].file}`,
+      scriptUrl
+    );
+
+    Object.keys(periods).forEach((key) => body.classList.remove(`time-${key}`));
+    body.classList.add(`time-${period}`);
+
+    const image = new Image();
+    image.decoding = "async";
+    image.fetchPriority = "high";
+    image.src = imageUrl.href;
+
+    const applyImage = () => {
+      hero.style.setProperty("--hero-image", `url("${imageUrl.href}")`);
+      revealHero(body);
     };
 
-    let key = 'night';
-    if (hour >= 6 && hour < 12) key = 'morning';
-    else if (hour >= 12 && hour < 18) key = 'afternoon';
-    else if (hour >= 18 && hour < 22) key = 'evening';
+    if (image.complete) applyImage();
+    else {
+      image.addEventListener("load", applyImage, { once: true });
+      image.addEventListener("error", () => revealHero(body), { once: true });
+    }
 
-    // 立即加上时间类名，否则背景也出不来
-    body.classList.add(`time-${key}`);
+    window.setTimeout(() => revealHero(body), 1600);
+  }
 
-    // 2. 预加载当前背景
-    const img = new Image();
-    img.src = bgMap[key];
-    
-    img.onload = () => {
-        body.classList.add('content-ready');
-        console.log("仪式感启动：背景已就绪");
-    };
+  function resetArchiveTransition() {
+    const body = document.body;
+    const hero = document.querySelector("[data-hero]");
+    const trigger = document.querySelector("[data-archive-entry]");
 
-    // 3. 兜底逻辑：如果图片加载太慢，3秒后强制显示，防止页面永久空白
-    setTimeout(() => {
-        if (!body.classList.contains('content-ready')) {
-            body.classList.add('content-ready');
-            console.log("超时兜底：强制显示内容");
-        }
-    }, 3000);
-}
+    if (body) body.classList.remove("is-opening-archive");
+    if (hero) hero.removeAttribute("aria-busy");
+    if (trigger) {
+      trigger.removeAttribute("aria-disabled");
+      trigger.dataset.transitionState = "idle";
+    }
+  }
 
-// 绑定初始化
-document.addEventListener("DOMContentLoaded", checkBackgroundLoaded);
+  function enhanceAccessibility() {
+    const searchDialog = document.querySelector(
+      '.md-search[role="dialog"]'
+    );
+    const breadcrumb = document.querySelector('.md-path[aria-label="导航栏"]');
 
-// 适配 MkDocs Instant Loading (修正这里的函数名)
-if (typeof app !== 'undefined') {
-    app.document$.subscribe(() => {
-        checkBackgroundLoaded();
+    if (searchDialog && !searchDialog.hasAttribute("aria-label")) {
+      searchDialog.setAttribute("aria-label", "站内搜索");
+    }
+
+    if (breadcrumb) breadcrumb.setAttribute("aria-label", "面包屑");
+
+    document.querySelectorAll("nav.md-nav[aria-labelledby]").forEach((nav) => {
+      const labelId = nav.getAttribute("aria-labelledby");
+      const label = labelId ? document.getElementById(labelId) : null;
+      if (label?.textContent.trim()) return;
+
+      const title = nav.querySelector(":scope > .md-nav__title");
+      const titleText = title?.textContent.trim();
+      if (!titleText) return;
+
+      nav.removeAttribute("aria-labelledby");
+      nav.setAttribute("aria-label", `导航分组：${titleText}`);
     });
-}
+  }
+
+  function initializeArchiveTransition() {
+    const hero = document.querySelector("[data-hero]");
+    const trigger = document.querySelector("[data-archive-entry]");
+    if (!hero || !trigger || trigger.dataset.transitionReady === "true") return;
+
+    trigger.dataset.transitionReady = "true";
+    trigger.dataset.transitionState = "idle";
+
+    trigger.addEventListener("click", (event) => {
+      const isModifiedClick =
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      const supportsPageTurn =
+        window.CSS &&
+        CSS.supports("transform", "perspective(1000px) rotateY(-45deg)");
+      const destination = new URL(trigger.href, window.location.href);
+
+      if (
+        event.defaultPrevented ||
+        isModifiedClick ||
+        trigger.target.toLowerCase() === "_blank" ||
+        trigger.hasAttribute("download") ||
+        destination.origin !== window.location.origin ||
+        prefersReducedMotion ||
+        !supportsPageTurn
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      if (trigger.dataset.transitionState === "opening") return;
+
+      trigger.dataset.transitionState = "opening";
+      trigger.setAttribute("aria-disabled", "true");
+      hero.setAttribute("aria-busy", "true");
+      document.body.classList.add("is-opening-archive");
+
+      let hasNavigated = false;
+      let fallbackTimer;
+      const navigate = () => {
+        if (hasNavigated) return;
+        hasNavigated = true;
+        hero.removeEventListener("animationend", handleAnimationEnd);
+        if (fallbackTimer) window.clearTimeout(fallbackTimer);
+        window.location.assign(destination.href);
+      };
+      const handleAnimationEnd = (animationEvent) => {
+        if (
+          animationEvent.target !== hero ||
+          animationEvent.animationName !== "archive-page-turn"
+        ) {
+          return;
+        }
+        navigate();
+      };
+
+      hero.addEventListener("animationend", handleAnimationEnd);
+      fallbackTimer = window.setTimeout(navigate, 1150);
+    });
+  }
+
+  function initializePage() {
+    enhanceAccessibility();
+    initializeHero();
+    initializeArchiveTransition();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializePage, { once: true });
+  } else {
+    initializePage();
+  }
+
+  window.addEventListener("pageshow", resetArchiveTransition);
+
+  if (typeof document$ !== "undefined") {
+    document$.subscribe(initializePage);
+  }
+})();

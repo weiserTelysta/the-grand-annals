@@ -1,87 +1,33 @@
 site_name: "The Grand Annals"
-site_url: https://annals.telysta.com/ja/  # URL 加上 /ja/
+site_url: https://annals.telysta.com/ja/
 site_author: "Weiser"
-site_description: "A world of epic fantasy"
+site_description: "The reserved Japanese edition of The Grand Annals."
 
-# 1. 来源指向 docs/ja
 docs_dir: docs/ja
-
-# 2. 输出指向 site/ja
 site_dir: site/ja
+strict: true
 
-repo_name: "the-grand-annals"
-repo_url: "https://github.com/weiserTelysta/the-grand-annals"
-
-# 3. 样式表（不用改，稍后我们用脚本复制过来）
-extra_css:
-  - stylesheets/extra.css
-
-extra_javascript:
-  - stylesheets/extra.js
+nav:
+  - Home: index.md
 
 theme:
   name: material
-  language: ja  # 4. 界面语言设为日文
-  font:
-    text: "Noto Sans JP" # 推荐：为日文设置更合适的字体
-    code: "Roboto Mono"
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - search.suggest
-    - content.code.copy
-    - navigation.top
-
+  language: ja
   custom_dir: overrides
-    
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: red       
-      accent: red
-      toggle:
-        icon: material/brightness-7
-        name: ダークモードに切り替え
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: red
-      accent: red
-      toggle:
-        icon: material/brightness-4
-        name: ライトモードに切り替え
+  features:
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
 
-  icon:
-    logo: material/library
-
-# 5. 【重要】更新语言切换器（加上日文，且必须同步给 zh 和 en）
 extra:
-  alternate:
-    - name: 简体中文
-      link: / 
-      lang: zh
-    - name: English
-      link: /en/
-      lang: en
-    - name: 日本語
-      link: /ja/
-      lang: ja
+  generator: false
 
 plugins:
-  - search:
-      lang: ['ja'] # 优化日文搜索分词
-  - awesome-pages:
-      collapse_single_pages: false
-  - roamlinks
-  - glightbox:
-      touchNavigation: true   
-      loop: false            
-      zoomable: true          
-      draggable: true         
+  - search
 
 markdown_extensions:
   - attr_list
   - md_in_html
-  - pymdownx.superfences
-  - pymdownx.tasklist:
-      custom_checkbox: true
+  - toc:
+      permalink: true

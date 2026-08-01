@@ -1,83 +1,58 @@
 site_name: "The Grand Annals"
 site_url: https://annals.telysta.com/en/
 site_author: "Weiser"
-site_description: "A world of epic fantasy"
+site_description: "The future English edition of The Grand Annals."
 
-# 【关键修改 1】文档源目录：读取 docs/en 下的 Markdown 和 .pages 文件
 docs_dir: docs/en
-
-# 【关键修改 2】构建输出目录：输出到主站 site 下的 en 子目录
 site_dir: site/en
+strict: true
 
-repo_name: "the-grand-annals"
-repo_url: "https://github.com/weiserTelysta/the-grand-annals"
-
-# 这里保持不变，因为我们的 CI 脚本会把 CSS/JS 从 zh 复制到 en 目录中
-extra_css:
-  - stylesheets/extra.css
-
-extra_javascript:
-  - stylesheets/extra.js
+nav:
+  - Home: index.md
+  - World: world/index.md
+  - People: human/index.md
 
 theme:
   name: material
-  language: en  # 【关键修改 3】界面语言设为英文
+  language: en
+  custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.sections
-    - navigation.expand
-    - search.suggest
-    - content.code.copy
+    - navigation.path
+    - navigation.indexes
     - navigation.top
-
-  custom_dir: overrides # 共用根目录下的 HTML 模版
-    
+    - toc.follow
+    - search.suggest
+    - search.highlight
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: red       
+      primary: red
       accent: red
-      toggle:
-        icon: material/brightness-7
-        name: Switch to Dark Mode # 英文提示
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: red
       accent: red
-      toggle:
-        icon: material/brightness-4
-        name: Switch to Light Mode # 英文提示
 
-  icon:
-    logo: material/library
-
-# 【关键修改 4】语言切换器（必须和中文版完全一致，才能互相跳转）
 extra:
+  generator: false
   alternate:
     - name: 简体中文
-      link: / 
+      link: /
       lang: zh
     - name: English
       link: /en/
       lang: en
-    - name: 日本語
-      link: /ja/
-      lang: ja
 
 plugins:
   - search
-  - awesome-pages: # 这里会自动读取 docs/en/.pages 进行英文独立排序
-      collapse_single_pages: false
-  - roamlinks
-  - glightbox:
-      touchNavigation: true   
-      loop: false            
-      zoomable: true          
-      draggable: true         
 
 markdown_extensions:
   - attr_list
   - md_in_html
+  - admonition
   - pymdownx.superfences
-  - pymdownx.tasklist:
-      custom_checkbox: true
+  - pymdownx.details
+  - toc:
+      permalink: true

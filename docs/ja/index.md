@@ -1,22 +1,9 @@
 ---
-hide:
-  - navigation
-  - toc
-  - footer
-
-title: 首页
+title: The Grand Annals
 ---
 
-<div class="hero-section">
-  <div class="hero-content">
-    <h1 class="epic-title">The Grand Annals</h1>
-    <p class="epic-subtitle">「在此翻开尘封的档案，窥探古老帝国的余晖。」</p>
-    
-    <div class="action-area">
-      <a href="world/" class="ethereal-btn">
-        开启档案库 <span>ENTER ARCHIVES</span>
-      </a>
-    </div>
-  </div>
-</div>
+# The Grand Annals
 
+日本語版は現在公開準備中です。現行の正式版は簡体字中国語です。
+
+[中国語版を読む](https://annals.telysta.com/)

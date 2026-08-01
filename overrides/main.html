@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block htmltitle %}
+  {% if page and page.is_homepage %}
+    <title>{{ config.site_name }}</title>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if page %}
+    {% set social_title = config.site_name if page.is_homepage else page.meta.title | d(page.title, true) %}
+    {% set social_description = page.meta.description | d(config.site_description, true) %}
+    <meta property="og:type" content="{{ 'website' if page.is_homepage else 'article' }}">
+    <meta property="og:title" content="{{ social_title | striptags | e }}">
+    {% if social_description %}
+      <meta property="og:description" content="{{ social_description | e }}">
+    {% endif %}
+    {% if page.canonical_url %}
+      <meta property="og:url" content="{{ page.canonical_url }}">
+    {% endif %}
+    <meta property="og:site_name" content="{{ config.site_name | e }}">
+    <meta name="twitter:card" content="summary">
+    {% if page.file and page.file.src_uri == "404.md" %}
+      <meta name="robots" content="noindex, nofollow">
+    {% endif %}
+  {% endif %}
+{% endblock %}

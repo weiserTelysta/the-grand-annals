@@ -1,0 +1,23 @@
+# MkDocs build output
+site/
+
+# Python tooling
+__pycache__/
+*.py[cod]
+.venv/
+
+# Syncthing folder markers
+.stfolder/
+**/.stfolder/
+**/syncthing-folder-*.txt
+
+# Obsidian machine-local state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache/
+.obsidian/plugins/obsidian-git/obsidian_askpass.sh
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.tmp

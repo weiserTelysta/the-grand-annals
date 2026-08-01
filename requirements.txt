@@ -1,6 +1,5 @@
-mkdocs-material
-# mkdocs-static-i18n
-mkdocs-awesome-pages-plugin
-mkdocs-roamlinks-plugin
-mkdocs-glightbox
-mkdocs-callouts
+# Keep the current MkDocs stack reproducible while Material is in maintenance mode.
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+mkdocs-glightbox==0.5.2
+mkdocs-callouts==1.16.1
