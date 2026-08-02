@@ -54,10 +54,12 @@ extra_javascript:
 theme:
   name: material
   language: zh
+  font: false
   custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - navigation.tracking
     - navigation.sections
     - navigation.path
     - navigation.indexes

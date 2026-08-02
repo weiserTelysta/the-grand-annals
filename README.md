@@ -10,15 +10,20 @@
 
 ## 本地预览
 
+Windows 首次运行：
+
 ```powershell
-python -m pip install -r requirements.txt
-python -m mkdocs serve --config-file mkdocs.yml
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m mkdocs serve --config-file mkdocs.yml
 ```
+
+项目中的 `.venv` 已存在时，只需要执行最后一行，然后打开终端显示的本地地址。
 
 发布前使用严格模式检查导航与链接：
 
 ```powershell
-python -m mkdocs build --strict --clean --config-file mkdocs.yml
+.\.venv\Scripts\python.exe -m mkdocs build --strict --clean --config-file mkdocs.yml
 ```
 
 ## 内容架构
@@ -31,7 +36,7 @@ python -m mkdocs build --strict --clean --config-file mkdocs.yml
 - “条目索引”收录所有已经公开的条目；草稿不必为了填满目录而发布。
 - 条目之间使用正文链接和人工维护的“相关条目”，暂不生成反向链接或知识图谱。
 
-首页主入口采用零依赖的“暗金档案翻页”进入仪式。完整的产品目标、技术对比、交互时序与验收标准见 [`PRODUCT_DESIGN.md`](PRODUCT_DESIGN.md)。
+首页主入口采用无按钮感的文字链接；站内导航以浏览器原生跨文档转场渐进增强，不接管链接或延迟跳转。完整的产品目标、技术对比与验收标准见 [`PRODUCT_DESIGN.md`](PRODUCT_DESIGN.md)。
 
 ## 新条目发布
 

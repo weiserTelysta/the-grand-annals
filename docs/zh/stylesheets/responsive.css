@@ -1,9 +1,3 @@
-@media screen and (max-width: 76.234375em) {
-  .md-content__inner {
-    max-width: 54rem;
-  }
-}
-
 @media screen and (max-width: 48em) {
   .md-main,
   .md-main__inner,
@@ -18,52 +12,47 @@
 
   .md-content__inner {
     margin-inline: 0.8rem;
+    padding-bottom: 3.5rem;
     width: auto;
   }
 
   .md-typeset {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    line-height: 1.7;
   }
 
   .md-typeset h1 {
-    font-size: clamp(1.9rem, 10vw, 2.45rem);
-    line-height: 1.24;
+    font-size: clamp(1.5rem, 7vw, 1.7rem);
+    line-height: 1.28;
     overflow-wrap: anywhere;
     word-break: break-word;
   }
 
-  .entry-summary {
-    box-sizing: border-box;
-    max-width: 100% !important;
-    overflow-wrap: anywhere;
-    width: 100%;
+  .md-typeset h2 {
+    margin-top: 2rem;
   }
 
-  .portal-grid,
+  .page-lead,
+  .entry-summary {
+    font-size: 0.8rem;
+    max-width: 100% !important;
+  }
+
+  .md-typeset .topic-heading + ul,
   .related-entries {
     grid-template-columns: 1fr;
   }
 
-  .portal-card {
-    min-height: 8.8rem;
-  }
-
-  .reading-step {
-    gap: 0.7rem;
-    grid-template-columns: 2.4rem 1fr auto;
-    padding-inline: 0.4rem;
+  .md-typeset .reading-heading + ol > li {
+    padding-left: 2.55rem;
   }
 
   .hero-section {
     padding:
-      max(1rem, env(safe-area-inset-top))
+      max(0.9rem, env(safe-area-inset-top))
       max(1rem, env(safe-area-inset-right))
-      max(1.5rem, env(safe-area-inset-bottom))
+      max(1.2rem, env(safe-area-inset-bottom))
       max(1rem, env(safe-area-inset-left));
-  }
-
-  .archive-reveal__mark strong {
-    font-size: 1.65rem;
   }
 
   .hero-section::before {
@@ -72,55 +61,37 @@
 
   .hero-content {
     max-width: 100%;
-    min-width: 0;
-    width: 100%;
   }
 
   .hero-kicker {
-    gap: 0.55rem;
-    margin-bottom: 1.1rem !important;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem !important;
   }
 
   .hero-kicker span + span::before {
-    margin-right: 0.55rem;
+    margin-right: 0.5rem;
   }
 
   .md-typeset .epic-title {
-    font-size: clamp(2.55rem, 13vw, 3.2rem);
-    letter-spacing: 0.025em;
+    font-size: clamp(2.2rem, 11vw, 2.7rem);
+    letter-spacing: 0.035em;
     max-width: 100%;
-    overflow-wrap: normal;
-    padding-left: 0.025em;
-    white-space: nowrap;
-  }
-
-  .epic-english {
-    letter-spacing: 0.18em;
+    padding-left: 0.035em;
   }
 
   .epic-subtitle {
-    font-size: 0.86rem;
-    letter-spacing: 0.04em;
+    font-size: 0.8rem;
+    letter-spacing: 0.015em;
+    margin: 1.1rem 0 1.3rem !important;
     max-width: min(21rem, 100%) !important;
   }
 
-  .hero-actions {
-    width: min(100%, 22rem);
-  }
-
-  .archive-entry {
-    gap: 0.65rem;
-    min-height: 3.8rem;
-    padding-inline: 0.9rem;
-  }
-
-  .archive-entry__label {
-    font-size: 0.86rem;
-    letter-spacing: 0.04em;
+  .hero-enter-link__label {
+    font-size: 0.74rem;
   }
 
   .hero-colophon {
-    bottom: max(1.35rem, env(safe-area-inset-bottom));
+    bottom: max(1.15rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -130,15 +101,7 @@
   }
 
   .md-typeset .epic-title {
-    font-size: 2.35rem;
-  }
-
-  .archive-entry__index {
-    display: none;
-  }
-
-  .archive-entry {
-    grid-template-columns: 1fr auto;
+    font-size: 2.05rem;
   }
 }
 
@@ -162,10 +125,8 @@
     transform: none;
   }
 
-  body.is-opening-archive .archive-reveal,
-  body.is-opening-archive .archive-reveal__mark,
-  body.is-opening-archive .hero-section,
-  body.is-opening-archive .hero-page-edge {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
     animation: none !important;
   }
 }

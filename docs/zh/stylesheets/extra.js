@@ -68,20 +68,7 @@
       image.addEventListener("error", () => revealHero(body), { once: true });
     }
 
-    window.setTimeout(() => revealHero(body), 1600);
-  }
-
-  function resetArchiveTransition() {
-    const body = document.body;
-    const hero = document.querySelector("[data-hero]");
-    const trigger = document.querySelector("[data-archive-entry]");
-
-    if (body) body.classList.remove("is-opening-archive");
-    if (hero) hero.removeAttribute("aria-busy");
-    if (trigger) {
-      trigger.removeAttribute("aria-disabled");
-      trigger.dataset.transitionState = "idle";
-    }
+    window.setTimeout(() => revealHero(body), 180);
   }
 
   function enhanceAccessibility() {
@@ -110,77 +97,9 @@
     });
   }
 
-  function initializeArchiveTransition() {
-    const hero = document.querySelector("[data-hero]");
-    const trigger = document.querySelector("[data-archive-entry]");
-    if (!hero || !trigger || trigger.dataset.transitionReady === "true") return;
-
-    trigger.dataset.transitionReady = "true";
-    trigger.dataset.transitionState = "idle";
-
-    trigger.addEventListener("click", (event) => {
-      const isModifiedClick =
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey;
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      const supportsPageTurn =
-        window.CSS &&
-        CSS.supports("transform", "perspective(1000px) rotateY(-45deg)");
-      const destination = new URL(trigger.href, window.location.href);
-
-      if (
-        event.defaultPrevented ||
-        isModifiedClick ||
-        trigger.target.toLowerCase() === "_blank" ||
-        trigger.hasAttribute("download") ||
-        destination.origin !== window.location.origin ||
-        prefersReducedMotion ||
-        !supportsPageTurn
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      if (trigger.dataset.transitionState === "opening") return;
-
-      trigger.dataset.transitionState = "opening";
-      trigger.setAttribute("aria-disabled", "true");
-      hero.setAttribute("aria-busy", "true");
-      document.body.classList.add("is-opening-archive");
-
-      let hasNavigated = false;
-      let fallbackTimer;
-      const navigate = () => {
-        if (hasNavigated) return;
-        hasNavigated = true;
-        hero.removeEventListener("animationend", handleAnimationEnd);
-        if (fallbackTimer) window.clearTimeout(fallbackTimer);
-        window.location.assign(destination.href);
-      };
-      const handleAnimationEnd = (animationEvent) => {
-        if (
-          animationEvent.target !== hero ||
-          animationEvent.animationName !== "archive-page-turn"
-        ) {
-          return;
-        }
-        navigate();
-      };
-
-      hero.addEventListener("animationend", handleAnimationEnd);
-      fallbackTimer = window.setTimeout(navigate, 1150);
-    });
-  }
-
   function initializePage() {
     enhanceAccessibility();
     initializeHero();
-    initializeArchiveTransition();
   }
 
   if (document.readyState === "loading") {
@@ -188,8 +107,6 @@
   } else {
     initializePage();
   }
-
-  window.addEventListener("pageshow", resetArchiveTransition);
 
   if (typeof document$ !== "undefined") {
     document$.subscribe(initializePage);
