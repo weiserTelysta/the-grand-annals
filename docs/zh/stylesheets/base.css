@@ -1,4 +1,5 @@
 html {
+  background-color: var(--annals-canvas, #f8f4e8);
   font-size: 125%;
   max-width: 100%;
   overflow-x: clip;
@@ -6,7 +7,7 @@ html {
 }
 
 body {
-  background: var(--md-default-bg-color);
+  background: var(--annals-canvas, #f8f4e8);
   color: var(--md-default-fg-color);
   font-family: var(--annals-font-body);
   max-width: 100%;
@@ -19,46 +20,54 @@ body {
   }
 }
 
+::view-transition {
+  background-color: var(--annals-canvas, #f8f4e8);
+}
+
 ::view-transition-group(root),
-::view-transition-group(annals-header) {
-  animation-duration: 270ms;
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-annals-page="content"] .md-content {
+  view-transition-name: annals-content;
+}
+
+::view-transition-group(annals-content) {
+  animation-duration: 220ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-::view-transition-old(root) {
-  animation: annals-page-out 160ms cubic-bezier(0.4, 0, 1, 1) both;
+::view-transition-old(annals-content) {
+  animation: annals-content-out 140ms cubic-bezier(0.4, 0, 1, 1) both;
   mix-blend-mode: normal;
 }
 
-::view-transition-new(root) {
-  animation: annals-page-in 240ms 30ms cubic-bezier(0.22, 1, 0.36, 1) both;
+::view-transition-new(annals-content) {
+  animation: annals-content-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
   mix-blend-mode: normal;
 }
 
-@keyframes annals-page-out {
+@keyframes annals-content-out {
   from {
     opacity: 1;
-    transform: translateY(0);
   }
   to {
-    opacity: 0.72;
-    transform: translateY(-0.1rem);
+    opacity: 0;
   }
 }
 
-@keyframes annals-page-in {
+@keyframes annals-content-in {
   from {
     opacity: 0;
-    transform: translateY(0.3rem);
+    transform: translateY(0.2rem);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.md-header {
-  view-transition-name: annals-header;
 }
 
 .md-main__inner,

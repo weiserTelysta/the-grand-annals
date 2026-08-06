@@ -43,7 +43,8 @@
 
     hero.dataset.initialized = "true";
     const body = document.body;
-    const period = getCurrentPeriod(new Date().getHours());
+    const period = document.documentElement.dataset.annalsPeriod
+      || getCurrentPeriod(new Date().getHours());
     const imageUrl = new URL(
       `../assets/illustration/${periods[period].file}`,
       scriptUrl
@@ -97,7 +98,32 @@
     });
   }
 
+  function synchronizeColorScheme() {
+    const scheme = document.body?.dataset.mdColorScheme === "slate"
+      ? "slate"
+      : "default";
+
+    document.documentElement.dataset.annalsScheme = scheme;
+    document.documentElement.style.colorScheme = scheme === "slate"
+      ? "dark"
+      : "light";
+  }
+
+  function observeColorScheme() {
+    const body = document.body;
+    if (!body || body.dataset.annalsSchemeObserver === "true") return;
+
+    body.dataset.annalsSchemeObserver = "true";
+    synchronizeColorScheme();
+
+    new MutationObserver(synchronizeColorScheme).observe(body, {
+      attributes: true,
+      attributeFilter: ["data-md-color-scheme"]
+    });
+  }
+
   function initializePage() {
+    observeColorScheme();
     enhanceAccessibility();
     initializeHero();
   }

@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block content %}
+  {% if config.theme.language == "zh" %}
+    <h1>这页档案尚未寻得</h1>
+    <p>它可能被移动、改名，或者还没有对外公开。</p>
+    <ul>
+      <li><a href="{{ base_url }}/">返回首页</a></li>
+      <li><a href="{{ base_url }}/索引/">前往条目索引</a></li>
+    </ul>
+  {% else %}
+    <h1>Page not found</h1>
+    <p>This page may have moved, been renamed, or not yet been published.</p>
+    <p><a href="{{ base_url }}/">Return to the homepage</a></p>
+  {% endif %}
+{% endblock %}

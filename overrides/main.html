@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block htmltitle %}
-  {% if page and page.is_homepage %}
+  {% if not page %}
+    <title>{{ '档案未寻得' if config.theme.language == 'zh' else 'Page not found' }}｜{{ config.site_name }}</title>
+  {% elif page.meta and page.meta.annals_cover %}
+    <title>{{ config.site_name }}｜原创幻想世界观与架空文明纪年</title>
+  {% elif page.is_homepage %}
     <title>{{ config.site_name }}</title>
   {% else %}
     {{ super() }}
@@ -10,21 +14,185 @@
 
 {% block extrahead %}
   {{ super() }}
+  {% set is_annals_cover = page and page.meta and page.meta.annals_cover %}
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const systemScheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "slate"
+        : "default";
+      let scheme = systemScheme;
+
+      try {
+        const palette = typeof __md_get === "function" ? __md_get("__palette") : null;
+        const saved = palette && palette.color ? palette.color : null;
+
+        if (saved && saved.media !== "(prefers-color-scheme)" && saved.scheme) {
+          scheme = saved.scheme;
+        }
+      } catch (_) {
+        // Local storage can be unavailable; the system preference is a safe fallback.
+      }
+
+      root.dataset.annalsScheme = scheme === "slate" ? "slate" : "default";
+      root.dataset.annalsPage = "{{ 'home' if is_annals_cover else 'content' }}";
+      root.style.colorScheme = scheme === "slate" ? "dark" : "light";
+
+      {% if is_annals_cover %}
+        const coverImages = {
+          morning: "Telysta&Losalind_Library_day_01.webp",
+          afternoon: "Telysta&Losalind_Library_day_02.webp",
+          evening: "Telysta&Losalind_Library_night_01.webp",
+          night: "Telysta&Losalind_Library_night_02.webp"
+        };
+        const hour = new Date().getHours();
+        const coverPeriod = hour >= 6 && hour < 12
+          ? "morning"
+          : hour >= 12 && hour < 18
+            ? "afternoon"
+            : hour >= 18 && hour < 22
+              ? "evening"
+              : "night";
+        const coverImageBase = "{{ 'assets/illustration/' | url }}".replace(/\/?$/, "/");
+        const coverImagePreload = document.createElement("link");
+
+        root.dataset.annalsPeriod = coverPeriod;
+        coverImagePreload.rel = "preload";
+        coverImagePreload.as = "image";
+        coverImagePreload.type = "image/webp";
+        coverImagePreload.fetchPriority = "high";
+        coverImagePreload.href = new URL(
+          `${coverImageBase}${coverImages[coverPeriod]}`,
+          document.baseURI
+        ).href;
+        document.head.append(coverImagePreload);
+      {% endif %}
+    })();
+  </script>
+  {% if is_annals_cover %}
+    <link
+      rel="preload"
+      href="{{ 'assets/fonts/noto-serif-sc-cover-600.woff2' | url }}"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+  {% endif %}
   {% if page %}
     {% set social_title = config.site_name if page.is_homepage else page.meta.title | d(page.title, true) %}
     {% set social_description = page.meta.description | d(config.site_description, true) %}
-    <meta property="og:type" content="{{ 'website' if page.is_homepage else 'article' }}">
+    {% set canonical_url = page.canonical_url | d(config.site_url, true) %}
+    {% set social_image = 'https://annals.telysta.com/assets/images/social-card.png' %}
+    {% set theme_language = config.theme.language | d('zh', true) %}
+    {% set default_language = 'zh-CN' if theme_language == 'zh' else theme_language %}
+    {% set page_language = page.meta.lang | d(default_language, true) %}
+    {% set social_locale = 'zh_CN' if page_language == 'zh-CN' else ('ja_JP' if page_language == 'ja' else 'en_US') %}
+    {% set social_image_alt = '《龙冠枯荣》世界观网站封面' if page_language == 'zh-CN' else 'Cover of The Grand Annals' %}
+    {% set is_collection = page.is_homepage or (page.file and page.file.src_uri.endswith('index.md')) %}
+    {% set schema_page_type = 'CollectionPage' if is_collection else 'WebPage' %}
+    <meta property="og:type" content="{{ 'website' if is_collection else 'article' }}">
     <meta property="og:title" content="{{ social_title | striptags | e }}">
     {% if social_description %}
-      <meta property="og:description" content="{{ social_description | e }}">
+      <meta property="og:description" content="{{ social_description | striptags | e }}">
     {% endif %}
-    {% if page.canonical_url %}
-      <meta property="og:url" content="{{ page.canonical_url }}">
+    {% if canonical_url %}
+      <meta property="og:url" content="{{ canonical_url | e }}">
     {% endif %}
     <meta property="og:site_name" content="{{ config.site_name | e }}">
-    <meta name="twitter:card" content="summary">
-    {% if page.file and page.file.src_uri == "404.md" %}
-      <meta name="robots" content="noindex, nofollow">
+    <meta property="og:locale" content="{{ social_locale }}">
+    <meta property="og:image" content="{{ social_image | e }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ social_image_alt | e }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ social_title | striptags | e }}">
+    {% if social_description %}
+      <meta name="twitter:description" content="{{ social_description | striptags | e }}">
     {% endif %}
+    <meta name="twitter:image" content="{{ social_image | e }}">
+    <meta name="twitter:image:alt" content="{{ social_image_alt | e }}">
+    {% if page.file and page.file.src_uri == "404.md" %}
+      <meta name="robots" content="noindex, follow">
+    {% else %}
+      <meta name="robots" content="index, follow, max-image-preview:large">
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": {{ (config.site_url ~ '#website') | tojson }},
+              "url": {{ config.site_url | tojson }},
+              "name": {{ config.site_name | tojson }},
+              "alternateName": "The Grand Annals",
+              "description": {{ config.site_description | striptags | tojson }},
+              "inLanguage": {{ page_language | tojson }},
+              "publisher": {
+                "@type": "Person",
+                "name": {{ config.site_author | tojson }}
+              }
+            },
+            {
+              "@type": {{ schema_page_type | tojson }},
+              "@id": {{ (canonical_url ~ '#webpage') | tojson }},
+              "url": {{ canonical_url | tojson }},
+              "name": {{ social_title | striptags | tojson }},
+              "description": {{ social_description | striptags | tojson }},
+              "inLanguage": {{ page_language | tojson }},
+              "isPartOf": {
+                "@id": {{ (config.site_url ~ '#website') | tojson }}
+              },
+              "author": {
+                "@type": "Person",
+                "name": {{ config.site_author | tojson }}
+              },
+              "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": {{ social_image | tojson }},
+                "width": 1200,
+                "height": 630
+              }{% if not page.is_homepage %},
+              "breadcrumb": {
+                "@id": {{ (canonical_url ~ '#breadcrumb') | tojson }}
+              }{% endif %}
+            }{% if not page.is_homepage %},
+            {
+              "@type": "BreadcrumbList",
+              "@id": {{ (canonical_url ~ '#breadcrumb') | tojson }},
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": {{ config.site_name | tojson }},
+                  "item": {{ config.site_url | tojson }}
+                }
+                {% set breadcrumb = namespace(position=1) %}
+                {% for ancestor in page.ancestors | reverse %}
+                  {% if ancestor.url and (not nav.homepage or ancestor.url != nav.homepage.url) %}
+                    {% set breadcrumb.position = breadcrumb.position + 1 %},
+                    {
+                      "@type": "ListItem",
+                      "position": {{ breadcrumb.position }},
+                      "name": {{ ancestor.title | striptags | tojson }},
+                      "item": {{ (config.site_url ~ ancestor.url) | tojson }}
+                    }
+                  {% endif %}
+                {% endfor %},
+                {
+                  "@type": "ListItem",
+                  "position": {{ breadcrumb.position + 1 }},
+                  "name": {{ social_title | striptags | tojson }},
+                  "item": {{ canonical_url | tojson }}
+                }
+              ]
+            }{% endif %}
+          ]
+        }
+      </script>
+    {% endif %}
+  {% else %}
+    <meta name="robots" content="noindex, follow">
   {% endif %}
 {% endblock %}

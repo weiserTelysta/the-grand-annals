@@ -1,14 +1,13 @@
 site_name: "龙冠枯荣"
 site_url: https://annals.telysta.com/
 site_author: "Weiser"
-site_description: "《龙冠枯荣》是一部以架空文明史、世界法则与人物命运为核心的中文幻想世界档案。"
+site_description: "《龙冠枯荣》是一部以架空文明史、世界法则与人物命运为核心的中文幻想纪年。"
 
 docs_dir: docs/zh
 site_dir: site
 strict: true
-not_in_nav: |
-  404.md
 exclude_docs: |
+  404.md
   assets/character art/Telysta/*.png
 
 repo_name: "the-grand-annals"
