@@ -1,0 +1,91 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - not:
+        - 'file.inFolder("_templates")'
+
+formulas:
+  section: 'if(file.inFolder("zh/星辰微光"), "人物档案", if(file.inFolder("zh/山河地理"), "山河地理", if(file.inFolder("zh/法则设定"), "世界法则", if(file.inFolder("zh/历史纪元"), "历史纪元", if(file.inFolder("zh/文明诸邦"), "文明诸邦", if(file.inFolder("zh/众生谱系"), "众生谱系", "其他"))))))'
+  completeness: 'if(description, if(related, "就绪", "可补关联"), "缺少简介")'
+
+properties:
+  file.name:
+    displayName: 条目
+  formula.section:
+    displayName: 栏目
+  formula.completeness:
+    displayName: 完整度
+  description:
+    displayName: 一句话简介
+  type:
+    displayName: 类型
+  status:
+    displayName: 状态
+  tags:
+    displayName: 标签
+  related:
+    displayName: 相关条目
+  file.mtime:
+    displayName: 最近修改
+
+views:
+  - type: table
+    name: 公开内容
+    filters:
+      and:
+        - 'file.inFolder("zh")'
+    order:
+      - file.name
+      - formula.section
+      - formula.completeness
+      - description
+      - tags
+      - related
+      - file.mtime
+
+  - type: table
+    name: 待补简介
+    filters:
+      and:
+        - 'file.inFolder("zh")'
+        - 'description.isEmpty()'
+    order:
+      - file.name
+      - formula.section
+      - description
+      - file.mtime
+
+  - type: table
+    name: 待补关联
+    filters:
+      and:
+        - 'file.inFolder("zh")'
+        - 'related.isEmpty()'
+    order:
+      - file.name
+      - formula.section
+      - related
+      - file.mtime
+
+  - type: table
+    name: 私人草稿
+    filters:
+      and:
+        - 'file.inFolder("weiser")'
+    order:
+      - file.name
+      - status
+      - tags
+      - file.mtime
+
+  - type: table
+    name: 最近修改
+    limit: 50
+    filters:
+      and:
+        - 'file.mtime > now() - "30d"'
+    order:
+      - file.name
+      - formula.section
+      - status
+      - file.mtime

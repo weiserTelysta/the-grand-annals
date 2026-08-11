@@ -22,14 +22,14 @@
   }
 
   .md-typeset h1 {
-    font-size: clamp(1.5rem, 7vw, 1.7rem);
+    font-size: clamp(1.55rem, 7vw, 1.78rem);
     line-height: 1.28;
     overflow-wrap: anywhere;
     word-break: break-word;
   }
 
   .md-typeset h2 {
-    margin-top: 2rem;
+    margin-top: 2.1rem;
   }
 
   .page-lead,
@@ -39,12 +39,19 @@
   }
 
   .md-typeset .topic-heading + ul,
-  .related-entries {
+  .related-entries,
+  .md-typeset .index-heading + ul {
     grid-template-columns: 1fr;
   }
 
   .md-typeset .reading-heading + ol > li {
-    padding-left: 2.55rem;
+    padding-left: 2.6rem;
+  }
+
+  .md-typeset .admonition[class],
+  .md-typeset details[class] {
+    inline-size: auto;
+    margin-inline: 0;
   }
 
   .hero-section {
@@ -68,27 +75,31 @@
   }
 
   .md-typeset .epic-title {
-    font-size: clamp(2.2rem, 11vw, 2.7rem);
+    font-size: clamp(2.25rem, 11vw, 2.8rem);
     letter-spacing: 0.055em;
     max-width: 100%;
-    padding-left: 0.035em;
+    padding-left: 0.04em;
   }
 
   .epic-subtitle {
     font-size: 0.8rem;
-    letter-spacing: 0.015em;
-    margin: 1.1rem 0 1.3rem !important;
+    letter-spacing: 0.012em;
+    margin: 1.1rem 0 0.95rem !important;
     max-width: min(21rem, 100%) !important;
   }
 
-  .hero-enter-link__label {
-    font-size: 0.9rem;
+  .hero-actions {
+    gap: 1rem;
+  }
+
+  .hero-enter-link {
+    font-size: 0.94rem;
   }
 }
 
 @media screen and (max-width: 23.5em) {
   .md-typeset .epic-title {
-    font-size: 2.05rem;
+    font-size: 2.08rem;
   }
 }
 

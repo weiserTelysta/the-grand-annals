@@ -12,6 +12,11 @@
   {% endif %}
 {% endblock %}
 
+{% block content %}
+  {{ super() }}
+  {% include "partials/related.html" %}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   {% set is_annals_cover = page and page.meta and page.meta.annals_cover %}
@@ -47,7 +52,7 @@
       const resolvedCanvas = pageIsCover
         ? "#0c1119"
         : scheme === "slate"
-          ? "#1f1d1e"
+          ? "#1d191a"
           : "#f8f4e8";
       root.style.backgroundColor = resolvedCanvas;
       const themeColor = document.querySelector("meta[data-annals-theme-color]");

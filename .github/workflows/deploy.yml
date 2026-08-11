@@ -32,6 +32,9 @@ jobs:
       - name: Build Chinese site
         run: mkdocs build --strict --clean --config-file mkdocs.yml
 
+      - name: Validate generated site
+        run: python tools/validate_site.py site
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

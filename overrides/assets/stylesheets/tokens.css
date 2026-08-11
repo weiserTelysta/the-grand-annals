@@ -1,0 +1,143 @@
+@font-face {
+  font-display: swap;
+  font-family: "Annals Cover Serif";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/noto-serif-sc-cover-600.woff2") format("woff2");
+  unicode-range: U+51A0, U+67AF, U+8363, U+9F99;
+}
+
+:root,
+[data-md-color-scheme="default"] {
+  /* Typography: reading stays sans-serif; the custom serif is reserved for the cover title. */
+  --annals-font-body: "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --annals-font-display: var(--annals-font-body);
+  --annals-font-cover: "Annals Cover Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --annals-font-latin: "Segoe UI", Arial, sans-serif;
+
+  /* Crimson Archive — light roles. */
+  --annals-canvas: #f8f4e8;
+  --annals-surface: #fffdf7;
+  --annals-surface-container: #f1e9e1;
+  --annals-surface-container-high: #eae0da;
+  --annals-text: #332a2a;
+  --annals-text-strong: #291f20;
+  --annals-text-muted: #6c6060;
+  --annals-primary: #8b2428;
+  --annals-primary-hover: #a33330;
+  --annals-primary-container: #f7dedc;
+  --annals-on-primary-container: #3a090c;
+  --annals-ceremonial: #816718;
+  --annals-ceremonial-soft: #c6a85d;
+  --annals-outline: #d2c4be;
+  --annals-outline-soft: rgba(82, 65, 65, 0.14);
+  --annals-shadow-soft: 0 10px 30px rgba(51, 42, 42, 0.07);
+
+  /* Layout and interaction tokens. */
+  --annals-radius-xs: 0.2rem;
+  --annals-radius-sm: 0.4rem;
+  --annals-radius-md: 0.65rem;
+  --annals-reading-measure: 38ic;
+  --annals-content-width: 46rem;
+  --annals-reading-size: 0.85rem;
+  --annals-reading-leading: 1.8;
+  --annals-sticky-offset: 5.2rem;
+  --annals-motion-fast: 140ms;
+  --annals-motion-content: 200ms;
+  --annals-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --annals-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Compatibility aliases used by the existing templates. */
+  --annals-paper: var(--annals-canvas);
+  --annals-paper-raised: var(--annals-surface);
+  --annals-ink: var(--annals-text);
+  --annals-ink-heading: var(--annals-text-strong);
+  --annals-ink-muted: var(--annals-text-muted);
+  --annals-crimson: var(--annals-primary);
+  --annals-crimson-bright: var(--annals-primary-hover);
+  --annals-gold: var(--annals-ceremonial);
+  --annals-gold-text: var(--annals-ceremonial);
+  --annals-gold-bright: var(--annals-ceremonial-soft);
+  --annals-rule: var(--annals-outline-soft);
+  --annals-shadow: var(--annals-shadow-soft);
+  --annals-radius: var(--annals-radius-sm);
+
+  --md-text-font: var(--annals-font-body);
+  --md-code-font: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --md-default-bg-color: var(--annals-canvas);
+  --md-default-fg-color: var(--annals-text);
+  --md-default-fg-color--light: rgba(51, 42, 42, 0.68);
+  --md-default-fg-color--lighter: rgba(51, 42, 42, 0.45);
+  --md-default-fg-color--lightest: rgba(51, 42, 42, 0.12);
+  --md-primary-fg-color: var(--annals-primary);
+  --md-primary-fg-color--dark: #641a1d;
+  --md-accent-fg-color: var(--annals-primary);
+  --md-typeset-a-color: var(--annals-primary);
+  --md-typeset-color: var(--annals-text);
+  --md-code-bg-color: rgba(234, 224, 218, 0.72);
+  --md-code-fg-color: #443637;
+  --md-footer-bg-color: #291f20;
+  --md-footer-fg-color: #e9e0dc;
+  --md-sidebar-width: 16rem;
+}
+
+html[data-annals-scheme="default"] {
+  --annals-canvas: #f8f4e8;
+}
+
+[data-md-color-scheme="slate"],
+html[data-annals-scheme="slate"] {
+  color-scheme: dark;
+  --annals-canvas: #1d191a;
+  --annals-surface: #252122;
+  --annals-surface-container: #302b2c;
+  --annals-surface-container-high: #3a3435;
+  --annals-text: #e9e0dc;
+  --annals-text-strong: #fff7f3;
+  --annals-text-muted: #b3a6a3;
+  --annals-primary: #e58a86;
+  --annals-primary-hover: #f1a19c;
+  --annals-primary-container: #642225;
+  --annals-on-primary-container: #ffdad7;
+  --annals-ceremonial: #d6bc76;
+  --annals-ceremonial-soft: #e3cc90;
+  --annals-outline: #514748;
+  --annals-outline-soft: rgba(233, 224, 220, 0.13);
+  --annals-moonlight: #8793b2;
+  --annals-shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.26);
+
+  --annals-paper: var(--annals-canvas);
+  --annals-paper-raised: var(--annals-surface);
+  --annals-ink: var(--annals-text);
+  --annals-ink-heading: var(--annals-text-strong);
+  --annals-ink-muted: var(--annals-text-muted);
+  --annals-crimson: var(--annals-primary);
+  --annals-crimson-bright: var(--annals-primary-hover);
+  --annals-gold: var(--annals-ceremonial);
+  --annals-gold-text: var(--annals-ceremonial);
+  --annals-gold-bright: var(--annals-ceremonial-soft);
+  --annals-rule: var(--annals-outline-soft);
+  --annals-shadow: var(--annals-shadow-soft);
+
+  --md-default-bg-color: var(--annals-canvas);
+  --md-default-fg-color: var(--annals-text);
+  --md-default-fg-color--light: rgba(233, 224, 220, 0.74);
+  --md-default-fg-color--lighter: rgba(233, 224, 220, 0.5);
+  --md-default-fg-color--lightest: rgba(233, 224, 220, 0.13);
+  --md-primary-fg-color: var(--annals-primary);
+  --md-primary-fg-color--dark: #b85f5e;
+  --md-accent-fg-color: var(--annals-primary);
+  --md-typeset-a-color: var(--annals-primary);
+  --md-typeset-color: var(--annals-text);
+  --md-code-bg-color: #302b2c;
+  --md-code-fg-color: #efe5e0;
+  --md-footer-bg-color: #141112;
+  --md-footer-fg-color: #d8cfcb;
+}
+
+html[data-annals-page="home"] {
+  --annals-canvas: #0c1119;
+  --annals-cover-accent: #d5b66e;
+  --annals-cover-text: #fff8e9;
+  --annals-cover-title: #f4dfb7;
+}

@@ -7,6 +7,16 @@ docs_dir: docs/en
 site_dir: site/en
 strict: true
 
+extra_css:
+  - assets/stylesheets/tokens.css
+  - assets/stylesheets/base.css
+  - assets/stylesheets/components.css
+  - assets/stylesheets/home.css
+  - assets/stylesheets/responsive.css
+
+extra_javascript:
+  - assets/javascripts/annals.js
+
 nav:
   - Home: index.md
   - World: world/index.md
@@ -30,10 +40,16 @@ theme:
       scheme: default
       primary: red
       accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: red
       accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 extra:
   generator: false

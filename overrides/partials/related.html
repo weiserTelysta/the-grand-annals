@@ -1,0 +1,11 @@
+{% if annals_related %}
+  <nav class="related-entries" aria-label="相关条目">
+    <p class="related-entries__heading">相关条目</p>
+    {% for entry in annals_related %}
+      <a class="related-entry" href="{{ entry.url | e }}">
+        <span class="related-entry__type">{{ entry.type | e }}</span>
+        <strong class="related-entry__title">{{ entry.title | e }}</strong>
+      </a>
+    {% endfor %}
+  </nav>
+{% endif %}

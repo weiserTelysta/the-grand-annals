@@ -3,7 +3,7 @@
 
   const scriptUrl = document.currentScript
     ? new URL(document.currentScript.src, window.location.href)
-    : new URL("stylesheets/extra.js", document.baseURI);
+    : new URL("assets/javascripts/annals.js", document.baseURI);
 
   const periods = {
     morning: {
@@ -55,7 +55,7 @@
     const variant = document.documentElement.dataset.annalsImageVariant
       || getHeroImageVariant();
     const imageUrl = new URL(
-      `../assets/illustration/${periods[period].file}-${variant}.webp`,
+      `../illustration/${periods[period].file}-${variant}.webp`,
       scriptUrl
     );
 
@@ -112,7 +112,7 @@
       ? "slate"
       : "default";
     const isCover = document.documentElement.dataset.annalsPage === "home";
-    const canvas = isCover ? "#0c1119" : scheme === "slate" ? "#1f1d1e" : "#f8f4e8";
+    const canvas = isCover ? "#0c1119" : scheme === "slate" ? "#1d191a" : "#f8f4e8";
     const themeColor = document.querySelector("meta[data-annals-theme-color]");
 
     document.documentElement.dataset.annalsScheme = scheme;

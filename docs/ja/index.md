@@ -1,5 +1,6 @@
 ---
 title: The Grand Annals
+description: 『The Grand Annals』日本語版は現在準備中です。
 ---
 
 # The Grand Annals

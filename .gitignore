@@ -1,5 +1,6 @@
 # MkDocs build output
 site/
+site-*/
 
 # Python tooling
 __pycache__/
@@ -16,6 +17,9 @@ __pycache__/
 .obsidian/workspace-mobile.json
 .obsidian/cache/
 .obsidian/plugins/obsidian-git/obsidian_askpass.sh
+docs/.obsidian/workspace.json
+docs/.obsidian/workspace-mobile.json
+docs/.obsidian/cache/
 
 # OS and editor noise
 .DS_Store
