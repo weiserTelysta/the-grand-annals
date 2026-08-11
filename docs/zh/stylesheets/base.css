@@ -3,7 +3,8 @@ html {
   font-size: 125%;
   max-width: 100%;
   overflow-x: clip;
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--annals-sticky-offset);
 }
 
 body {
@@ -36,17 +37,17 @@ html[data-annals-page="content"] .md-content {
 }
 
 ::view-transition-group(annals-content) {
-  animation-duration: 220ms;
+  animation-duration: 180ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 ::view-transition-old(annals-content) {
-  animation: annals-content-out 140ms cubic-bezier(0.4, 0, 1, 1) both;
+  animation: annals-content-out 110ms cubic-bezier(0.4, 0, 1, 1) both;
   mix-blend-mode: normal;
 }
 
 ::view-transition-new(annals-content) {
-  animation: annals-content-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: annals-content-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
   mix-blend-mode: normal;
 }
 
@@ -62,7 +63,7 @@ html[data-annals-page="content"] .md-content {
 @keyframes annals-content-in {
   from {
     opacity: 0;
-    transform: translateY(0.2rem);
+    transform: translateY(0.1rem);
   }
   to {
     opacity: 1;
@@ -132,15 +133,15 @@ html[data-annals-page="content"] .md-content {
 
 .md-content__inner {
   margin-inline: auto;
-  max-width: 50rem;
+  max-width: var(--annals-content-width);
   padding-bottom: clamp(3rem, 6vw, 4.5rem);
 }
 
 .md-typeset {
   color: var(--annals-ink);
-  font-size: 0.8rem;
+  font-size: var(--annals-reading-size);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--annals-reading-leading);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -157,24 +158,24 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-typeset h1 {
-  font-size: clamp(1.6rem, 2.4vw, 1.75rem);
+  font-size: clamp(1.65rem, 2.4vw, 1.9rem);
   line-height: 1.25;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.3rem;
   max-width: 100%;
   overflow-wrap: anywhere;
 }
 
 .md-typeset h2 {
   border-bottom: 1px solid var(--annals-rule);
-  font-size: clamp(1.1rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.28rem);
   line-height: 1.4;
-  margin-bottom: 0.75rem;
-  margin-top: 2.2rem;
-  padding-bottom: 0.35rem;
+  margin-bottom: 0.85rem;
+  margin-top: 2.45rem;
+  padding-bottom: 0.4rem;
 }
 
 .md-typeset h3 {
-  font-size: 1rem;
+  font-size: 1.02rem;
   line-height: 1.5;
   margin-bottom: 0.55rem;
   margin-top: 1.75rem;
@@ -190,7 +191,11 @@ html[data-annals-page="content"] .md-content {
 .md-typeset p,
 .md-typeset li {
   max-width: 42em;
-  max-width: 40ic;
+  max-width: var(--annals-reading-measure);
+}
+
+.md-typeset p {
+  margin-block: 0 1.05em;
 }
 
 .md-typeset strong {
@@ -213,10 +218,10 @@ html[data-annals-page="content"] .md-content {
   border-left: 2px solid color-mix(in srgb, var(--annals-gold) 72%, transparent);
   color: var(--annals-ink-muted);
   font-family: var(--annals-font-body);
-  font-size: 0.8rem;
-  line-height: 1.72;
+  font-size: var(--annals-reading-size);
+  line-height: var(--annals-reading-leading);
   margin-block: 1.25rem 1.75rem;
-  max-width: 41em;
+  max-width: var(--annals-reading-measure);
   padding: 0.1rem 0 0.1rem 1rem;
 }
 
@@ -240,7 +245,7 @@ html[data-annals-page="content"] .md-content {
 .md-nav__link {
   color: var(--annals-ink-muted);
   line-height: 1.45;
-  transition: color 150ms ease, transform 150ms ease;
+  transition: color 150ms ease;
 }
 
 .md-nav__link--active,
@@ -273,8 +278,11 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-sidebar--secondary .md-nav__link--active {
+  box-shadow: inset 2px 0 color-mix(in srgb, var(--annals-gold) 72%, transparent);
   color: var(--annals-crimson) !important;
   font-weight: 600;
+  margin-left: -0.55rem;
+  padding-left: 0.55rem;
 }
 
 [data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__link--active {
@@ -282,8 +290,15 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-sidebar--secondary .md-sidebar__scrollwrap {
+  max-height: calc(100vh - var(--annals-sticky-offset) - 1rem);
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+@supports (height: 100dvh) {
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    max-height: calc(100dvh - var(--annals-sticky-offset) - 1rem);
+  }
 }
 
 .md-path {
@@ -312,6 +327,11 @@ html[data-annals-page="content"] .md-content {
 
 [data-md-color-scheme="slate"] .md-search__form {
   background: color-mix(in srgb, var(--annals-paper-raised) 86%, black 14%);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--annals-gold) 30%, transparent);
+  color: var(--annals-ink-heading);
 }
 
 .md-footer-meta__inner {

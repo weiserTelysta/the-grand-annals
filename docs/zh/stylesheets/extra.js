@@ -8,19 +8,19 @@
   const periods = {
     morning: {
       range: [6, 12],
-      file: "Telysta&Losalind_Library_day_01.webp"
+      file: "Telysta&Losalind_Library_day_01"
     },
     afternoon: {
       range: [12, 18],
-      file: "Telysta&Losalind_Library_day_02.webp"
+      file: "Telysta&Losalind_Library_day_02"
     },
     evening: {
       range: [18, 22],
-      file: "Telysta&Losalind_Library_night_01.webp"
+      file: "Telysta&Losalind_Library_night_01"
     },
     night: {
       range: [22, 6],
-      file: "Telysta&Losalind_Library_night_02.webp"
+      file: "Telysta&Losalind_Library_night_02"
     }
   };
 
@@ -37,6 +37,13 @@
     window.requestAnimationFrame(() => body.classList.add("hero-ready"));
   }
 
+  function getHeroImageVariant() {
+    if (window.matchMedia("(max-width: 48em)").matches) return "mobile-960";
+
+    const pixelWidth = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+    return pixelWidth > 1800 ? "desktop-2560" : "desktop-1600";
+  }
+
   function initializeHero() {
     const hero = document.querySelector("[data-hero]");
     if (!hero || hero.dataset.initialized === "true") return;
@@ -45,8 +52,10 @@
     const body = document.body;
     const period = document.documentElement.dataset.annalsPeriod
       || getCurrentPeriod(new Date().getHours());
+    const variant = document.documentElement.dataset.annalsImageVariant
+      || getHeroImageVariant();
     const imageUrl = new URL(
-      `../assets/illustration/${periods[period].file}`,
+      `../assets/illustration/${periods[period].file}-${variant}.webp`,
       scriptUrl
     );
 
@@ -102,11 +111,16 @@
     const scheme = document.body?.dataset.mdColorScheme === "slate"
       ? "slate"
       : "default";
+    const isCover = document.documentElement.dataset.annalsPage === "home";
+    const canvas = isCover ? "#0c1119" : scheme === "slate" ? "#1f1d1e" : "#f8f4e8";
+    const themeColor = document.querySelector("meta[data-annals-theme-color]");
 
     document.documentElement.dataset.annalsScheme = scheme;
     document.documentElement.style.colorScheme = scheme === "slate"
       ? "dark"
       : "light";
+    document.documentElement.style.backgroundColor = canvas;
+    if (themeColor) themeColor.content = canvas;
   }
 
   function observeColorScheme() {

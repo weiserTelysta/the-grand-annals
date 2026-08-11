@@ -9,6 +9,11 @@ strict: true
 exclude_docs: |
   404.md
   assets/character art/Telysta/*.png
+  assets/illustration/Telysta&Losalind_Library_day_01.webp
+  assets/illustration/Telysta&Losalind_Library_day_02.webp
+  assets/illustration/Telysta&Losalind_Library_night_01.webp
+  assets/illustration/Telysta&Losalind_Library_night_02.webp
+  assets/images/social-card.png
 
 repo_name: "the-grand-annals"
 repo_url: "https://github.com/weiserTelysta/the-grand-annals"

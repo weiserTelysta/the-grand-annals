@@ -16,6 +16,11 @@
   {{ super() }}
   {% set is_annals_cover = page and page.meta and page.meta.annals_cover %}
   <meta name="color-scheme" content="light dark">
+  <meta
+    name="theme-color"
+    content="{{ '#0c1119' if is_annals_cover else '#f8f4e8' }}"
+    data-annals-theme-color
+  >
   <script>
     (() => {
       const root = document.documentElement;
@@ -38,13 +43,22 @@
       root.dataset.annalsScheme = scheme === "slate" ? "slate" : "default";
       root.dataset.annalsPage = "{{ 'home' if is_annals_cover else 'content' }}";
       root.style.colorScheme = scheme === "slate" ? "dark" : "light";
+      const pageIsCover = {% if is_annals_cover %}true{% else %}false{% endif %};
+      const resolvedCanvas = pageIsCover
+        ? "#0c1119"
+        : scheme === "slate"
+          ? "#1f1d1e"
+          : "#f8f4e8";
+      root.style.backgroundColor = resolvedCanvas;
+      const themeColor = document.querySelector("meta[data-annals-theme-color]");
+      if (themeColor) themeColor.content = resolvedCanvas;
 
       {% if is_annals_cover %}
         const coverImages = {
-          morning: "Telysta&Losalind_Library_day_01.webp",
-          afternoon: "Telysta&Losalind_Library_day_02.webp",
-          evening: "Telysta&Losalind_Library_night_01.webp",
-          night: "Telysta&Losalind_Library_night_02.webp"
+          morning: "Telysta&Losalind_Library_day_01",
+          afternoon: "Telysta&Losalind_Library_day_02",
+          evening: "Telysta&Losalind_Library_night_01",
+          night: "Telysta&Losalind_Library_night_02"
         };
         const hour = new Date().getHours();
         const coverPeriod = hour >= 6 && hour < 12
@@ -55,15 +69,23 @@
               ? "evening"
               : "night";
         const coverImageBase = "{{ 'assets/illustration/' | url }}".replace(/\/?$/, "/");
+        const coverIsMobile = window.matchMedia("(max-width: 48em)").matches;
+        const coverPixelWidth = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+        const coverVariant = coverIsMobile
+          ? "mobile-960"
+          : coverPixelWidth > 1800
+            ? "desktop-2560"
+            : "desktop-1600";
         const coverImagePreload = document.createElement("link");
 
         root.dataset.annalsPeriod = coverPeriod;
+        root.dataset.annalsImageVariant = coverVariant;
         coverImagePreload.rel = "preload";
         coverImagePreload.as = "image";
         coverImagePreload.type = "image/webp";
         coverImagePreload.fetchPriority = "high";
         coverImagePreload.href = new URL(
-          `${coverImageBase}${coverImages[coverPeriod]}`,
+          `${coverImageBase}${coverImages[coverPeriod]}-${coverVariant}.webp`,
           document.baseURI
         ).href;
         document.head.append(coverImagePreload);
@@ -80,10 +102,10 @@
     >
   {% endif %}
   {% if page %}
-    {% set social_title = config.site_name if page.is_homepage else page.meta.title | d(page.title, true) %}
+    {% set social_title = (config.site_name ~ '｜原创幻想世界观与架空文明纪年') if is_annals_cover else (config.site_name if page.is_homepage else page.meta.title | d(page.title, true)) %}
     {% set social_description = page.meta.description | d(config.site_description, true) %}
     {% set canonical_url = page.canonical_url | d(config.site_url, true) %}
-    {% set social_image = 'https://annals.telysta.com/assets/images/social-card.png' %}
+    {% set social_image = 'https://annals.telysta.com/assets/images/social-card.jpg' %}
     {% set theme_language = config.theme.language | d('zh', true) %}
     {% set default_language = 'zh-CN' if theme_language == 'zh' else theme_language %}
     {% set page_language = page.meta.lang | d(default_language, true) %}
@@ -102,7 +124,7 @@
     <meta property="og:site_name" content="{{ config.site_name | e }}">
     <meta property="og:locale" content="{{ social_locale }}">
     <meta property="og:image" content="{{ social_image | e }}">
-    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="{{ social_image_alt | e }}">

@@ -38,6 +38,7 @@ body:has([data-hero]) .md-content__inner::before {
   color: #f5f1e8;
   display: grid;
   height: 100vh;
+  height: 100svh;
   height: 100dvh;
   isolation: isolate;
   justify-items: center;
@@ -115,7 +116,7 @@ body:has([data-hero]) .md-content__inner::before {
 .has-js body.hero-ready .hero-content {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 220ms ease-out, transform 220ms ease-out;
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
 }
 
 .hero-kicker {
@@ -133,7 +134,6 @@ body:has([data-hero]) .md-content__inner::before {
 
 .md-typeset .epic-title {
   color: var(--annals-cover-title);
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.62));
   font-family: var(--annals-font-cover);
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 600;
@@ -142,6 +142,7 @@ body:has([data-hero]) .md-content__inner::before {
   margin: 0 !important;
   max-width: none;
   padding-left: 0.06em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.64);
   white-space: nowrap;
 }
 
@@ -241,5 +242,19 @@ body.time-afternoon .hero-section::before {
   .hero-section {
     height: auto;
     min-height: 100dvh;
+  }
+}
+
+@media screen and (max-height: 42rem) and (min-width: 48.01em) {
+  .hero-kicker {
+    margin-bottom: 0.65rem !important;
+  }
+
+  .md-typeset .epic-title {
+    font-size: clamp(2.35rem, 8vh, 3.25rem);
+  }
+
+  .epic-subtitle {
+    margin-block: 0.9rem 1rem !important;
   }
 }

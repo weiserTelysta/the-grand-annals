@@ -17,8 +17,8 @@
   }
 
   .md-typeset {
-    font-size: 0.8rem;
-    line-height: 1.7;
+    font-size: var(--annals-reading-size);
+    line-height: var(--annals-reading-leading);
   }
 
   .md-typeset h1 {
@@ -34,7 +34,7 @@
 
   .page-lead,
   .entry-summary {
-    font-size: 0.8rem;
+    font-size: var(--annals-reading-size);
     max-width: 100% !important;
   }
 

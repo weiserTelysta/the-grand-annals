@@ -1,11 +1,11 @@
 .page-lead,
 .entry-summary {
   color: var(--annals-ink-muted);
-  font-size: 0.82rem;
-  line-height: 1.72;
+  font-size: 0.84rem;
+  line-height: var(--annals-reading-leading);
   margin: -0.1rem 0 1.75rem;
   max-width: 40em !important;
-  max-width: 38ic !important;
+  max-width: var(--annals-reading-measure) !important;
 }
 
 body:has(.reading-heading) .md-content__inner {
@@ -18,7 +18,7 @@ body:has(.reading-heading) .md-content__inner {
   list-style: none;
   margin: 1rem 0 2.35rem;
   max-width: 42em;
-  max-width: 40ic;
+  max-width: var(--annals-reading-measure);
   padding: 0;
 }
 
@@ -83,7 +83,7 @@ body:has(.reading-heading) .md-content__inner {
   list-style: none;
   margin: 1rem 0 2.35rem;
   max-width: 42em;
-  max-width: 40ic;
+  max-width: var(--annals-reading-measure);
   padding: 0;
 }
 
@@ -101,7 +101,7 @@ body:has(.reading-heading) .md-content__inner {
   list-style: none;
   margin: 1rem 0 2.35rem;
   max-width: 42em;
-  max-width: 40ic;
+  max-width: var(--annals-reading-measure);
   padding: 0;
 }
 
@@ -167,7 +167,7 @@ body:has(.reading-heading) .md-content__inner {
   box-shadow: none;
   font-size: inherit;
   inline-size: 100%;
-  max-inline-size: 40ic;
+  max-inline-size: var(--annals-reading-measure);
   padding: 0 0 0 0.8rem;
   transition: border-color 180ms ease;
 }

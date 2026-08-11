@@ -27,6 +27,11 @@
   --annals-rule: rgba(46, 36, 36, 0.14);
   --annals-shadow: 0 14px 42px rgba(46, 36, 36, 0.08);
   --annals-radius: 0.35rem;
+  --annals-reading-measure: 38ic;
+  --annals-content-width: 44rem;
+  --annals-reading-size: 0.82rem;
+  --annals-reading-leading: 1.76;
+  --annals-sticky-offset: 5.15rem;
 
   --md-text-font: var(--annals-font-body);
   --md-code-font: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
@@ -53,7 +58,7 @@ html[data-annals-scheme="default"] {
 }
 
 html[data-annals-scheme="slate"] {
-  --annals-canvas: #1b191b;
+  --annals-canvas: #1f1d1e;
 }
 
 html[data-annals-page="home"] {
@@ -64,30 +69,30 @@ html[data-annals-page="home"] {
 }
 
 [data-md-color-scheme="slate"] {
-  --annals-paper: #1b191b;
-  --annals-paper-raised: #242124;
-  --annals-ink: #c9c2bb;
-  --annals-ink-heading: #e2dcd4;
-  --annals-ink-muted: #9c948f;
+  --annals-paper: #1f1d1e;
+  --annals-paper-raised: #282526;
+  --annals-ink: #d2cbc4;
+  --annals-ink-heading: #eee6df;
+  --annals-ink-muted: #aaa19b;
   --annals-crimson: #d78980;
   --annals-crimson-bright: #e9a59c;
   --annals-gold: #c1ad70;
   --annals-gold-text: #c1ad70;
   --annals-gold-bright: #d9c88e;
-  --annals-rule: rgba(226, 220, 212, 0.12);
+  --annals-rule: rgba(238, 230, 223, 0.13);
   --annals-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
 
   --md-default-bg-color: var(--annals-paper);
   --md-default-fg-color: var(--annals-ink);
-  --md-default-fg-color--light: rgba(201, 194, 187, 0.72);
-  --md-default-fg-color--lighter: rgba(201, 194, 187, 0.48);
-  --md-default-fg-color--lightest: rgba(201, 194, 187, 0.12);
+  --md-default-fg-color--light: rgba(210, 203, 196, 0.74);
+  --md-default-fg-color--lighter: rgba(210, 203, 196, 0.5);
+  --md-default-fg-color--lightest: rgba(210, 203, 196, 0.13);
   --md-primary-fg-color: var(--annals-crimson);
   --md-accent-fg-color: var(--annals-gold);
   --md-typeset-a-color: var(--annals-crimson);
   --md-typeset-color: var(--annals-ink);
-  --md-code-bg-color: #242124;
-  --md-code-fg-color: #d8d1ca;
+  --md-code-bg-color: #292627;
+  --md-code-fg-color: #ded6cf;
   --md-footer-bg-color: #141214;
   --md-footer-fg-color: #c9c2bb;
 }
