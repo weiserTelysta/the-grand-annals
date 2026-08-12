@@ -1,5 +1,6 @@
 .page-lead,
-.entry-summary {
+.entry-summary,
+.annals-lead-page > h1 + p {
   color: var(--annals-text-muted);
   font-size: 0.88rem;
   line-height: 1.78;
@@ -7,12 +8,11 @@
   max-width: var(--annals-reading-measure) !important;
 }
 
-body:has(.reading-heading) .md-content__inner {
+html[data-annals-lead-page="true"] .md-content__inner {
   max-width: 38rem;
 }
 
 .md-typeset .reading-heading + ol {
-  border-top: 1px solid var(--annals-outline-soft);
   counter-reset: reading-step;
   list-style: none;
   margin: 1rem 0 2.5rem;
@@ -85,7 +85,7 @@ body:has(.reading-heading) .md-content__inner {
 }
 
 .md-typeset .topic-heading + ul > li {
-  border-top: 1px solid var(--annals-outline-soft);
+  border-bottom: 1px solid var(--annals-outline-soft);
   color: var(--annals-text-muted);
   margin: 0;
   max-width: none;
@@ -94,7 +94,6 @@ body:has(.reading-heading) .md-content__inner {
 }
 
 .md-typeset .catalog-heading + ul {
-  border-top: 1px solid var(--annals-outline-soft);
   list-style: none;
   margin: 1rem 0 2.5rem;
   max-width: none;
@@ -198,7 +197,7 @@ body:has(.reading-heading) .md-content__inner {
   inline-size: 100%;
   max-inline-size: none;
   overflow: hidden;
-  padding: 0 0 0 0.85rem;
+  padding: 0 0.9rem 0 0.85rem;
   transition: background-color var(--annals-motion-fast) var(--annals-ease-standard), border-color var(--annals-motion-fast) var(--annals-ease-standard);
 }
 
@@ -220,6 +219,18 @@ body:has(.reading-heading) .md-content__inner {
   min-height: 2.2rem;
   padding: 0.55rem 1.8rem 0.55rem 2rem;
   transition: border-color var(--annals-motion-fast) var(--annals-ease-standard), color var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+/* The left rail already communicates a static note; the Material icon is redundant. */
+.md-typeset .admonition[class] > .admonition-title {
+  line-height: 1.55;
+  min-height: 0;
+  padding: 0.6rem 0 0.28rem;
+}
+
+.md-typeset .admonition[class] > .admonition-title::before {
+  content: none;
+  display: none;
 }
 
 .md-typeset details[class][open] > summary {

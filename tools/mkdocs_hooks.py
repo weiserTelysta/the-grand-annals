@@ -20,6 +20,9 @@ log = logging.getLogger("mkdocs.hooks.annals")
 
 _FRONT_MATTER = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|\Z)", re.DOTALL)
 _HEADING = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
+_HEADING_LINE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+_ATTRIBUTE_ONLY = re.compile(r"^\{\s*:?\s*\.[^}]+\}\s*$")
+_MARKDOWN_IMAGE = re.compile(r"!\[[^\]]*\]\(")
 _INDEX_MARKER = "<!-- annals:index -->"
 
 _CATEGORY_ORDER = (
@@ -47,6 +50,16 @@ _TYPE_BY_ROOT = {
     "历史纪元": "历史纪元",
     "众生谱系": "众生谱系",
     "星辰微光": "人物档案",
+}
+
+_LEAD_PAGES = {
+    "开始阅读/index.md",
+    "索引/index.md",
+    "历史纪元/index.md",
+    "山河地理/index.md",
+    "文明诸邦/index.md",
+    "星辰微光/index.md",
+    "法则设定/index.md",
 }
 
 _entries: list[dict[str, Any]] = []
@@ -119,6 +132,60 @@ def _escape_markdown(text: str) -> str:
     return text.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
 
 
+def _enhance_markdown(markdown: str, page) -> str:
+    """Add presentation hooks without leaking CSS syntax into authored notes."""
+    src_uri = page.file.src_uri.replace("\\", "/")
+    lines = [line for line in markdown.splitlines() if not _ATTRIBUTE_ONLY.match(line.strip())]
+
+    heading_classes: dict[str, str] = {}
+    if src_uri == "开始阅读/index.md":
+        heading_classes = {
+            "建议阅读顺序": "reading-heading",
+            "按兴趣探索": "topic-heading",
+        }
+    elif src_uri == "索引/index.md":
+        heading_classes = {}
+    elif PurePosixPath(src_uri).name == "index.md":
+        heading_classes = {
+            "当前公开": "catalog-heading",
+            "当前公开的人物": "catalog-heading",
+            "地理名词": "catalog-heading",
+        }
+
+    for index, line in enumerate(lines):
+        match = _HEADING_LINE.match(line)
+        if not match:
+            continue
+        heading_text = re.sub(r"\s+\{[^}]+\}\s*$", "", match.group(2)).strip()
+        css_class = heading_classes.get(heading_text)
+        if css_class:
+            lines[index] = f"{match.group(1)} {heading_text} {{ .{css_class} }}"
+
+    # The first block quote after H1 is a page epigraph. Classify it from its
+    # content at build time so authors can keep plain, Obsidian-friendly Markdown.
+    h1_index = next((i for i, line in enumerate(lines) if line.startswith("# ")), None)
+    if h1_index is not None:
+        quote_start = next(
+            (i for i in range(h1_index + 1, len(lines)) if lines[i].lstrip().startswith(">")),
+            None,
+        )
+        if quote_start is not None:
+            quote_end = quote_start
+            quote_lines: list[str] = []
+            while quote_end < len(lines) and (
+                lines[quote_end].lstrip().startswith(">") or not lines[quote_end].strip()
+            ):
+                quote_lines.append(lines[quote_end])
+                quote_end += 1
+            if quote_end < len(lines) and lines[quote_end].startswith("## "):
+                epigraph_class = "epigraph" if any("——" in item for item in quote_lines) else "character-epigraph"
+                # Python-Markdown's block-level attr_list form follows the
+                # block directly and uses ``{ .class }`` rather than ``{:``.
+                lines.insert(quote_end, f"{{ .{epigraph_class} }}")
+
+    return "\n".join(lines)
+
+
 def on_files(files, config):
     """Collect a stable registry before pages are rendered."""
     global _entries, _entries_by_title, _entries_by_path
@@ -137,7 +204,6 @@ def on_files(files, config):
         metadata, body = _read_page(docs_dir / file.src_uri)
         title = _infer_title(metadata, body, src_uri)
         root = PurePosixPath(src_uri).parts[0]
-        status = str(metadata.get("status", "公开"))
         entry_type = str(metadata.get("type") or _TYPE_BY_ROOT.get(root, "世界条目"))
         if entry_type == "人物":
             entry_type = "人物档案"
@@ -146,7 +212,6 @@ def on_files(files, config):
             "title": title,
             "description": str(metadata.get("description", "")).strip(),
             "type": entry_type,
-            "status": status,
             "category": _CATEGORY_BY_ROOT.get(root, "其他条目"),
             "src_uri": src_uri,
             "src_path": src_uri[:-3] if src_uri.endswith(".md") else src_uri,
@@ -156,7 +221,17 @@ def on_files(files, config):
         entries.append(entry)
 
     _entries = entries
-    _entries_by_title = {_lookup_key(entry["title"]): entry for entry in entries}
+    title_groups: dict[str, list[dict[str, Any]]] = {}
+    for entry in entries:
+        title_groups.setdefault(_lookup_key(entry["title"]), []).append(entry)
+    for key, group in title_groups.items():
+        if len(group) > 1:
+            log.warning(
+                "Duplicate public title %r: %s",
+                group[0]["title"],
+                ", ".join(item["src_uri"] for item in group),
+            )
+    _entries_by_title = {key: group[0] for key, group in title_groups.items() if len(group) == 1}
     _entries_by_path = {_path_key(entry["src_path"]): entry for entry in entries}
     return files
 
@@ -186,11 +261,19 @@ def on_page_context(context, page, config, nav):
         related = [related]
 
     resolved: list[dict[str, str]] = []
+    resolved_sources: set[str] = set()
     for value in related:
         entry = _resolve_related(value)
         if entry is None:
             log.warning("Unknown related entry %r in %s", value, page.file.src_uri)
             continue
+        if entry["src_uri"] == page.file.src_uri.replace("\\", "/"):
+            log.warning("Self-related entry %r in %s", value, page.file.src_uri)
+            continue
+        if entry["src_uri"] in resolved_sources:
+            log.warning("Duplicate related entry %r in %s", value, page.file.src_uri)
+            continue
+        resolved_sources.add(entry["src_uri"])
         resolved.append(
             {
                 "title": entry["title"],
@@ -200,22 +283,35 @@ def on_page_context(context, page, config, nav):
         )
 
     context["annals_related"] = resolved
+    context["annals_lead_page"] = page.file.src_uri.replace("\\", "/") in _LEAD_PAGES
     return context
 
 
 def on_page_markdown(markdown, page, config, files):
-    """Replace the index marker with all public content, grouped for readers."""
+    """Enhance authored Markdown and generate the public index."""
+    aliases = page.meta.get("aliases") or []
+    if isinstance(aliases, str):
+        aliases = [aliases]
+    if isinstance(aliases, list) and aliases:
+        tags = page.meta.get("tags") or []
+        if isinstance(tags, str):
+            tags = [tags]
+        page.meta["tags"] = list(dict.fromkeys([*tags, *aliases]))
+
+    # The lightbox plugin otherwise injects its CSS and JavaScript into every
+    # page. Derive the opt-in from authored Markdown so writers need no UI meta.
+    page.meta["glightbox"] = bool(_MARKDOWN_IMAGE.search(markdown))
+    markdown = _enhance_markdown(markdown, page)
     if page.file.src_uri.replace("\\", "/") != "索引/index.md":
         return markdown
     if _INDEX_MARKER not in markdown:
         log.warning("Missing automatic index marker in %s", page.file.src_uri)
         return markdown
 
-    public_entries = [
-        entry
-        for entry in _entries
-        if entry["status"].casefold() in {"公开", "published", "public"}
-    ]
+    # The source directory is the publication boundary: everything in
+    # ``docs/zh`` is public, while drafts live outside it in ``docs/weiser``.
+    # This avoids overloading Material's reserved ``status`` navigation field.
+    public_entries = list(_entries)
     lines: list[str] = []
 
     categories = list(_CATEGORY_ORDER)
@@ -238,3 +334,19 @@ def on_page_markdown(markdown, page, config, files):
         lines.append("")
 
     return markdown.replace(_INDEX_MARKER, "\n".join(lines).rstrip())
+
+
+def on_post_build(config):
+    """Remove development source maps from the production artifact."""
+    site_dir = Path(config.site_dir)
+    for source_map in site_dir.rglob("*.map"):
+        source_map.unlink()
+    for asset in (
+        site_dir / "assets/stylesheets/glightbox.min.css",
+        site_dir / "assets/javascripts/glightbox.min.js",
+    ):
+        if not asset.is_file():
+            continue
+        relative_url = asset.relative_to(site_dir).as_posix()
+        if not any(relative_url in page.read_text(encoding="utf-8") for page in site_dir.rglob("*.html")):
+            asset.unlink()

@@ -1,4 +1,8 @@
 @media screen and (max-width: 48em) {
+  :root {
+    --annals-gutter: clamp(1rem, 5vw, 1.25rem);
+  }
+
   .md-main,
   .md-main__inner,
   .md-content,
@@ -11,9 +15,9 @@
   }
 
   .md-content__inner {
-    margin-inline: 0.8rem;
+    margin-inline: auto;
     padding-bottom: 3.5rem;
-    width: auto;
+    width: 100%;
   }
 
   .md-typeset {
@@ -30,6 +34,10 @@
 
   .md-typeset h2 {
     margin-top: 2.1rem;
+  }
+
+  .md-typeset h1 + blockquote + h2 {
+    margin-top: 1.7rem;
   }
 
   .page-lead,
@@ -94,6 +102,18 @@
 
   .hero-enter-link {
     font-size: 0.94rem;
+  }
+}
+
+@media screen and (min-width: 48.01em) and (max-width: 76.234375em) {
+  :root {
+    --annals-gutter: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .md-content {
+    padding-inline:
+      max(var(--annals-gutter), env(safe-area-inset-left))
+      max(var(--annals-gutter), env(safe-area-inset-right));
   }
 }
 

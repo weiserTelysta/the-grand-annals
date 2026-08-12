@@ -1,6 +1,6 @@
 {
   "alwaysUpdateLinks": true,
-  "attachmentFolderPath": "_attachments",
+  "attachmentFolderPath": "zh/assets/uploads",
   "newFileLocation": "current",
   "newLinkFormat": "relative",
   "showUnsupportedFiles": true,

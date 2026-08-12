@@ -2,7 +2,6 @@ html {
   background: var(--annals-canvas, #f8f4e8);
   font-size: 125%;
   max-width: 100%;
-  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: var(--annals-sticky-offset);
 }
@@ -12,7 +11,6 @@ body {
   color: var(--annals-text);
   font-family: var(--annals-font-body);
   max-width: 100%;
-  overflow-x: clip;
 }
 
 /* Keep the saved dark canvas in place during Material's early palette handoff. */
@@ -82,9 +80,20 @@ html[data-annals-page="content"] .md-content {
   min-width: 0;
 }
 
+.md-content {
+  padding-inline:
+    max(var(--annals-gutter), env(safe-area-inset-left))
+    max(var(--annals-gutter), env(safe-area-inset-right));
+}
+
+/* The template keeps the TOC wrapper even when the TOC itself is suppressed. */
+.md-sidebar--secondary:not(:has(.md-nav--secondary)) {
+  display: none !important;
+}
+
 .md-header,
 .md-tabs {
-  background: color-mix(in srgb, var(--annals-surface) 92%, transparent);
+  background: color-mix(in srgb, var(--annals-chrome) 94%, transparent);
   border-bottom: 1px solid var(--annals-outline-soft);
   box-shadow: none;
   color: var(--annals-text);
@@ -96,6 +105,11 @@ html[data-annals-page="content"] .md-content {
 .md-header__title,
 .md-tabs__link {
   color: var(--annals-text);
+}
+
+.md-header__button {
+  min-height: var(--annals-control-size);
+  min-width: var(--annals-control-size);
 }
 
 .md-tabs__link {
@@ -118,7 +132,7 @@ html[data-annals-page="content"] .md-content {
 
 /* Low-boundary search field: a tinted surface at rest, a crimson state on focus. */
 .md-search__form {
-  background: color-mix(in srgb, var(--annals-surface-container) 72%, transparent);
+  background: color-mix(in srgb, var(--annals-chrome-field) 78%, transparent);
   border: 1px solid transparent;
   border-radius: var(--annals-radius-md);
   box-shadow: inset 0 -1px var(--annals-outline-soft);
@@ -161,10 +175,19 @@ html[data-annals-page="content"] .md-content {
   background: var(--annals-primary-container);
 }
 
+.md-search-result__article {
+  color: var(--annals-text-muted);
+}
+
+.md-search-result__title {
+  color: var(--annals-text-strong);
+}
+
 .md-content__inner {
   margin-inline: auto;
   max-width: var(--annals-content-width);
   padding-bottom: clamp(3rem, 6vw, 4.5rem);
+  width: 100%;
 }
 
 .md-typeset {
@@ -224,6 +247,10 @@ html[data-annals-page="content"] .md-content {
   max-width: var(--annals-reading-measure);
 }
 
+.md-typeset > :is(h1, h2, h3, h4, p, ul, ol, blockquote, table, .tabbed-set, .admonition, details) {
+  margin-inline-start: 0;
+}
+
 .md-typeset p {
   margin-block: 0 1.08em;
 }
@@ -233,37 +260,52 @@ html[data-annals-page="content"] .md-content {
   font-weight: 600;
 }
 
-.md-typeset a:not(.hero-enter-link):not(.hero-index-link) {
+.md-typeset a:not(.hero-enter-link) {
   text-decoration-color: color-mix(in srgb, currentColor 32%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   transition: color var(--annals-motion-fast) var(--annals-ease-standard), text-decoration-color var(--annals-motion-fast) var(--annals-ease-standard);
 }
 
-.md-typeset a:not(.hero-enter-link):not(.hero-index-link):hover {
+.md-typeset a:not(.hero-enter-link):hover {
   color: var(--annals-primary-hover);
   text-decoration-color: currentColor;
 }
 
-.md-typeset blockquote {
+[dir] .md-typeset blockquote {
   border: 0;
+  border-inline-start: 3px solid color-mix(in srgb, var(--annals-primary) 72%, transparent);
   color: var(--annals-text-muted);
   font-family: var(--annals-font-body);
   font-size: var(--annals-reading-size);
   line-height: var(--annals-reading-leading);
   margin-block: 1.35rem 1.9rem;
   max-width: var(--annals-reading-measure);
-  padding: 0.2rem 0 0.2rem 1.15rem;
-  position: relative;
+  padding: 0.2rem 0;
+  padding-inline-start: 1.15rem;
 }
 
-.md-typeset blockquote::before {
-  background: color-mix(in srgb, var(--annals-primary) 72%, transparent);
-  border-radius: 1px;
-  content: "";
-  inset: 0.18rem auto 0.18rem 0;
-  position: absolute;
-  width: 3px;
+.md-typeset h1 + blockquote {
+  margin-top: -0.2rem;
+}
+
+.md-typeset h1 + blockquote + h2 {
+  margin-top: 2rem;
+}
+
+.md-typeset h1 + blockquote > p {
+  font-size: 0.9rem;
+}
+
+.md-typeset h1 + blockquote > p.epigraph,
+.md-typeset h1 + blockquote > p:last-child:not(:first-child).epigraph {
+  color: var(--annals-text-muted);
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.md-typeset h1 + blockquote > p.character-epigraph {
+  margin-top: 0.5rem;
 }
 
 .md-typeset blockquote > p {
@@ -302,6 +344,11 @@ html[data-annals-page="content"] .md-content {
   color: var(--annals-text-muted);
   line-height: 1.45;
   transition: color var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+/* ``status`` is editorial metadata, never a public navigation decoration. */
+.md-nav .md-status {
+  display: none;
 }
 
 .md-nav__link--active,
@@ -354,6 +401,19 @@ html[data-annals-page="content"] .md-content {
   letter-spacing: 0.02em;
 }
 
+.md-path__link--section,
+.md-path__link--current {
+  color: var(--annals-text-muted);
+}
+
+.md-path__link--current {
+  font-weight: 550;
+}
+
+.md-path__item[aria-current="page"] {
+  max-width: min(16rem, 34vw);
+}
+
 .md-footer {
   border-top: 1px solid var(--annals-outline-soft);
 }
@@ -398,20 +458,4 @@ html[data-annals-page="content"] .md-content {
 
 ::-webkit-scrollbar-track {
   background: transparent;
-}
-
-.md-typeset .ink-redacted {
-  background: #171314;
-  border-radius: 0.12rem;
-  color: #171314;
-  cursor: help;
-  padding: 0 0.35rem;
-  transition: background var(--annals-motion-fast) var(--annals-ease-standard), color var(--annals-motion-fast) var(--annals-ease-standard);
-  user-select: none;
-}
-
-.md-typeset .ink-redacted:hover {
-  background: transparent;
-  color: var(--annals-primary);
-  user-select: auto;
 }

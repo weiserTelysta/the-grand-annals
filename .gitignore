@@ -1,5 +1,7 @@
 # MkDocs build output
 site/
+.layout-artifacts/
+.layout-artifacts-final/
 site-*/
 
 # Python tooling

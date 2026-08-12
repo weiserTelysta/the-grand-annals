@@ -18,6 +18,8 @@
   /* Crimson Archive — light roles. */
   --annals-canvas: #f8f4e8;
   --annals-surface: #fffdf7;
+  --annals-chrome: #f3ede3;
+  --annals-chrome-field: #ebe3da;
   --annals-surface-container: #f1e9e1;
   --annals-surface-container-high: #eae0da;
   --annals-text: #332a2a;
@@ -42,6 +44,8 @@
   --annals-reading-size: 0.85rem;
   --annals-reading-leading: 1.8;
   --annals-sticky-offset: 5.2rem;
+  --annals-gutter: clamp(1rem, 2.2vw, 1.6rem);
+  --annals-control-size: 2.2rem;
   --annals-motion-fast: 140ms;
   --annals-motion-content: 200ms;
   --annals-ease-standard: cubic-bezier(0.2, 0, 0, 1);
@@ -90,6 +94,8 @@ html[data-annals-scheme="slate"] {
   color-scheme: dark;
   --annals-canvas: #1d191a;
   --annals-surface: #252122;
+  --annals-chrome: #242021;
+  --annals-chrome-field: #302b2c;
   --annals-surface-container: #302b2c;
   --annals-surface-container-high: #3a3435;
   --annals-text: #e9e0dc;

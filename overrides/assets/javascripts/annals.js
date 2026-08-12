@@ -85,13 +85,10 @@
     const searchDialog = document.querySelector(
       '.md-search[role="dialog"]'
     );
-    const breadcrumb = document.querySelector('.md-path[aria-label="导航栏"]');
 
     if (searchDialog && !searchDialog.hasAttribute("aria-label")) {
       searchDialog.setAttribute("aria-label", "站内搜索");
     }
-
-    if (breadcrumb) breadcrumb.setAttribute("aria-label", "面包屑");
 
     document.querySelectorAll("nav.md-nav[aria-labelledby]").forEach((nav) => {
       const labelId = nav.getAttribute("aria-labelledby");
@@ -113,6 +110,7 @@
       : "default";
     const isCover = document.documentElement.dataset.annalsPage === "home";
     const canvas = isCover ? "#0c1119" : scheme === "slate" ? "#1d191a" : "#f8f4e8";
+    const chrome = isCover ? "#0c1119" : scheme === "slate" ? "#242021" : "#f3ede3";
     const themeColor = document.querySelector("meta[data-annals-theme-color]");
 
     document.documentElement.dataset.annalsScheme = scheme;
@@ -120,7 +118,7 @@
       ? "dark"
       : "light";
     document.documentElement.style.backgroundColor = canvas;
-    if (themeColor) themeColor.content = canvas;
+    if (themeColor) themeColor.content = chrome;
   }
 
   function observeColorScheme() {

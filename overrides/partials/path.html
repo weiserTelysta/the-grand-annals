@@ -1,0 +1,49 @@
+{# Keep breadcrumbs semantic: non-clickable sections stay text and never inherit
+   the URL of their first descendant. The current page is announced separately
+   so the trail is useful to readers and valid for assistive technology. #}
+{% if page.meta and page.meta.hide %}
+  {% set hidden = "hidden" if "path" in page.meta.hide %}
+{% endif %}
+{% set trail = page.ancestors | reverse | list %}
+{% if nav.homepage or trail %}
+  <nav class="md-path" aria-label="面包屑" {{ hidden }}>
+    <ol class="md-path__list">
+      {% if nav.homepage and page != nav.homepage %}
+        <li class="md-path__item">
+          <a href="{{ nav.homepage.url | url }}" class="md-path__link">
+            <span class="md-ellipsis">首页</span>
+          </a>
+        </li>
+      {% endif %}
+      {% for nav_item in trail %}
+        {% set section_landing = nav_item.children | first if nav_item.is_section and nav_item.children else none %}
+        {% if nav_item.is_page and nav_item.url %}
+          <li class="md-path__item">
+            <a href="{{ nav_item.url | url }}" class="md-path__link">
+              <span class="md-ellipsis">{{ nav_item.title }}</span>
+            </a>
+          </li>
+        {% elif section_landing and section_landing.is_page and section_landing.file and section_landing.file.src_uri.endswith('index.md') and section_landing.url != page.url %}
+          <li class="md-path__item">
+            <a href="{{ section_landing.url | url }}" class="md-path__link">
+              <span class="md-ellipsis">{{ nav_item.title }}</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="md-path__item">
+            <span class="md-path__link md-path__link--section">
+              <span class="md-ellipsis">{{ nav_item.title }}</span>
+            </span>
+          </li>
+        {% endif %}
+      {% endfor %}
+      {% if page != nav.homepage %}
+        <li class="md-path__item" aria-current="page">
+          <span class="md-path__link md-path__link--current">
+            <span class="md-ellipsis">{{ page.title }}</span>
+          </span>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endif %}

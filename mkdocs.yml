@@ -49,14 +49,14 @@ theme:
       primary: red
       accent: red
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-night
         name: 切换到深色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: red
       accent: red
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-sunny
         name: 切换到浅色模式
   icon:
     logo: material/book-open-page-variant
@@ -106,6 +106,9 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 4
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
 
 hooks:
   - tools/mkdocs_hooks.py

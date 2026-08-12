@@ -1,19 +1,19 @@
-html:has([data-hero]),
-body:has([data-hero]) {
+html[data-annals-page="home"],
+html[data-annals-page="home"] body {
   height: 100%;
   overflow: hidden !important;
   overscroll-behavior: none;
 }
 
-body:has([data-hero]) {
+html[data-annals-page="home"] body {
   background: #0c1119;
 }
 
-body:has([data-hero]) :is(.md-header, .md-tabs, .md-sidebar, .md-footer, .md-path) {
+html[data-annals-page="home"] :is(.md-header, .md-tabs, .md-sidebar, .md-footer, .md-path) {
   display: none !important;
 }
 
-body:has([data-hero]) :is(.md-container, .md-main, .md-main__inner, .md-content, .md-content__inner, article) {
+html[data-annals-page="home"] :is(.md-container, .md-main, .md-main__inner, .md-content, .md-content__inner, article) {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -26,7 +26,7 @@ body:has([data-hero]) :is(.md-container, .md-main, .md-main__inner, .md-content,
   width: 100% !important;
 }
 
-body:has([data-hero]) .md-content__inner::before {
+html[data-annals-page="home"] .md-content__inner::before {
   display: none !important;
 }
 
@@ -163,8 +163,7 @@ body:has([data-hero]) .md-content__inner::before {
   justify-content: center;
 }
 
-.hero-enter-link,
-.hero-index-link {
+.hero-enter-link {
   align-items: center;
   display: inline-flex;
   justify-content: center;
@@ -181,8 +180,7 @@ body:has([data-hero]) .md-content__inner::before {
   letter-spacing: 0.035em;
 }
 
-.hero-enter-link::after,
-.hero-index-link::after {
+.hero-enter-link::after {
   background: currentColor;
   bottom: 0.18rem;
   content: "";
@@ -200,21 +198,9 @@ body:has([data-hero]) .md-content__inner::before {
   color: #ffffff !important;
 }
 
-.hero-enter-link:is(:hover, :focus-visible)::after,
-.hero-index-link:is(:hover, :focus-visible)::after {
+.hero-enter-link:is(:hover, :focus-visible)::after {
   opacity: 1;
   transform: scaleX(1);
-}
-
-.hero-index-link {
-  color: rgba(255, 248, 233, 0.7) !important;
-  font-size: 0.7rem;
-  font-weight: 450;
-  letter-spacing: 0.035em;
-}
-
-.hero-index-link:hover {
-  color: #fffaf0 !important;
 }
 
 body.time-morning .hero-section::before,
@@ -226,8 +212,8 @@ body.time-afternoon .hero-section::before {
 }
 
 @media screen and (max-height: 30rem) {
-  html:has([data-hero]),
-  body:has([data-hero]) {
+  html[data-annals-page="home"],
+  html[data-annals-page="home"] body {
     height: auto;
     overflow-y: auto !important;
   }

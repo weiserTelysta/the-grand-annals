@@ -13,7 +13,9 @@
 {% endblock %}
 
 {% block content %}
-  {{ super() }}
+  {% if annals_lead_page %}<div class="annals-lead-page">{% endif %}
+    {{ super() }}
+  {% if annals_lead_page %}</div>{% endif %}
   {% include "partials/related.html" %}
 {% endblock %}
 
@@ -23,7 +25,7 @@
   <meta name="color-scheme" content="light dark">
   <meta
     name="theme-color"
-    content="{{ '#0c1119' if is_annals_cover else '#f8f4e8' }}"
+    content="{{ '#0c1119' if is_annals_cover else '#f3ede3' }}"
     data-annals-theme-color
   >
   <script>
@@ -47,6 +49,7 @@
 
       root.dataset.annalsScheme = scheme === "slate" ? "slate" : "default";
       root.dataset.annalsPage = "{{ 'home' if is_annals_cover else 'content' }}";
+      root.dataset.annalsLeadPage = "{{ 'true' if annals_lead_page else 'false' }}";
       root.style.colorScheme = scheme === "slate" ? "dark" : "light";
       const pageIsCover = {% if is_annals_cover %}true{% else %}false{% endif %};
       const resolvedCanvas = pageIsCover
@@ -54,9 +57,14 @@
         : scheme === "slate"
           ? "#1d191a"
           : "#f8f4e8";
+      const resolvedChrome = pageIsCover
+        ? "#0c1119"
+        : scheme === "slate"
+          ? "#242021"
+          : "#f3ede3";
       root.style.backgroundColor = resolvedCanvas;
       const themeColor = document.querySelector("meta[data-annals-theme-color]");
-      if (themeColor) themeColor.content = resolvedCanvas;
+      if (themeColor) themeColor.content = resolvedChrome;
 
       {% if is_annals_cover %}
         const coverImages = {
@@ -197,19 +205,23 @@
                 }
                 {% set breadcrumb = namespace(position=1) %}
                 {% for ancestor in page.ancestors | reverse %}
-                  {% if ancestor.url and (not nav.homepage or ancestor.url != nav.homepage.url) %}
+                  {% set section_landing = ancestor.children | first if ancestor.is_section and ancestor.children else none %}
+                  {% set breadcrumb_page = ancestor if ancestor.is_page else section_landing %}
+                  {% set is_section_index = ancestor.is_section and breadcrumb_page and breadcrumb_page.is_page and breadcrumb_page.file and breadcrumb_page.file.src_uri.endswith('index.md') %}
+                  {% if breadcrumb_page and breadcrumb_page.is_page and breadcrumb_page.url and (ancestor.is_page or is_section_index) and breadcrumb_page.url != page.url and (not nav.homepage or breadcrumb_page.url != nav.homepage.url) %}
                     {% set breadcrumb.position = breadcrumb.position + 1 %},
                     {
                       "@type": "ListItem",
                       "position": {{ breadcrumb.position }},
                       "name": {{ ancestor.title | striptags | tojson }},
-                      "item": {{ (config.site_url ~ ancestor.url) | tojson }}
+                      "item": {{ (config.site_url ~ breadcrumb_page.url) | tojson }}
                     }
                   {% endif %}
                 {% endfor %},
+                {% set breadcrumb.position = breadcrumb.position + 1 %}
                 {
                   "@type": "ListItem",
-                  "position": {{ breadcrumb.position + 1 }},
+                  "position": {{ breadcrumb.position }},
                   "name": {{ social_title | striptags | tojson }},
                   "item": {{ canonical_url | tojson }}
                 }

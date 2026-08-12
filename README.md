@@ -6,7 +6,7 @@
 - 正式英文名：The Grand Annals
 - 公开站点：<https://annals.telysta.com/>
 - 公开中文内容：`docs/zh/`
-- 私人原始资料：`docs/weiser/`（不会进入公开构建）
+- 非站点原始资料：`docs/weiser/`（不会进入网站构建，但当前仍受公开 Git 仓库跟踪）
 - 网站主题：`overrides/assets/`
 - 内容自动化：`tools/mkdocs_hooks.py`
 
@@ -17,9 +17,9 @@
 这个内容库已经配置：
 
 - 新链接使用相对 Markdown 链接，移动文件时自动更新；
-- `_templates` 提供通用、人物、地理、法则、历史与私人草稿模板；
-- `内容工作台.base` 汇总公开内容、缺少简介、缺少关联、私人草稿和最近修改；
-- 网站导航、条目索引和文末相关条目均自动生成，不需要在正文里写 UI HTML。
+- `_templates` 提供通用、人物、地理、法则、历史与非发布草稿模板；
+- `内容工作台.base` 汇总公开内容、缺少简介、缺少关联、非发布草稿和最近修改；
+- 侧栏导航由独立目录配置维护，条目索引和文末相关条目自动生成；正文不需要写 UI HTML。
 
 完整的新建流程见 Obsidian 库中的 `创作工作流.md`。
 
@@ -28,8 +28,8 @@
 1. 在 `docs/zh/` 的对应栏目中新建与条目同名的 Markdown 文件。
 2. 在命令面板执行“模板：插入模板”，选择最接近的条目模板。
 3. 填写 `description`，再开始写正文。
-4. 如需文末关联卡片，在 `related` 中添加条目名或带引号的 Obsidian 链接，例如 `"[[长域]]"`。
-5. 执行严格构建。新条目会自动加入左侧导航与条目索引。
+4. 为普通知识条目在 `related` 中精选 2～5 个前置、直接关系或延伸阅读，例如 `"[[长域]]"`；分类页不强制填写。
+5. 执行严格构建。新条目会自动加入条目索引；重要条目成熟后再加入经过策划的侧栏导航。
 
 日常写作不需要修改 `mkdocs.yml`、`docs/zh/索引/index.md`、HTML、CSS 或 JavaScript。
 
@@ -48,20 +48,25 @@ py -3 -m venv .venv
 发布前执行完整检查：
 
 ```powershell
+.\.venv\Scripts\python.exe tools\validate_content.py
 .\.venv\Scripts\python.exe -m mkdocs build --strict --clean --config-file mkdocs.yml
 .\.venv\Scripts\python.exe tools\validate_site.py site
+Start-Process .\.venv\Scripts\python.exe -ArgumentList "-m","http.server","8765","--directory","site"
+.\.venv\Scripts\python.exe tools\validate_layout.py --base-url http://127.0.0.1:8765/
 ```
+
+布局检查需要一个静态预览服务；检查结束后可在任务管理器或对应终端停止该 `http.server` 进程。平时使用 `mkdocs serve` 预览即可。
 
 ## 内容模型
 
-公开页至少需要 `title` 与 `description`。`status` 和栏目类型可由目录中的 `.meta.yml` 继承；模板仍会写入这些字段，方便在 Obsidian 的属性面板和 Base 中查看。
+公开页至少需要 `title` 与 `description`。网站发布边界由目录隔离：`docs/zh` 会发布，`docs/weiser` 不进入网站构建。栏目类型可由目录中的 `.meta.yml` 继承。
 
 ```yaml
 ---
 title: 条目名称
 description: 一句话说明该条目对陌生读者的价值。
 type: 人物
-status: 公开
+aliases: []
 tags:
   - 人物
 related:
@@ -70,13 +75,17 @@ related:
 ```
 
 - `tags` 是编辑与检索元数据，当前不在正文中展示。
+- `aliases` 用于人物别名、译名与常见简称，并自动加入站内搜索词。
 - `related` 会生成读者可见的文末关联卡片。
 - `description` 同时用于索引说明、搜索摘要和 SEO。
-- 公开内容放在 `zh`，私人草稿放在 `weiser`；不要只依赖 `status` 隔离私人内容。
+- 公开内容放在 `zh`，不准备放上网站的草稿可放在 `weiser`；不要使用 `status` 字段，它是 MkDocs Material 的导航保留字段。
+- 正文只写 Markdown，不写 HTML 或 `{: .class }` 网站样式标记。
 
-## 自动导航与索引
+注意：本 GitHub 仓库当前是公开仓库，因此 `docs/weiser` 只能视作“网站不发布”，不能视作保密。真正私密的草稿应放入仓库之外的独立 Obsidian 库；如需让既有资料退出公开 Git 历史，应另行执行隐私迁移与历史清理。
 
-根目录的 `docs/zh/.nav.yml` 只定义稳定的一级信息架构。栏目内部由 [Awesome Nav for MkDocs](https://lukasgeiter.github.io/mkdocs-awesome-nav/) 按文件结构生成，因此普通新增条目不再编辑站点配置。
+## 导航与自动索引
+
+`docs/zh/.nav.yml` 定义读者看到的精简信息架构，与作者的深层资料目录分离。普通新增条目无需立刻加入侧栏；当它成为主要入口或某一系列的成熟内容后，再把它加入该文件。这样可以防止地理归档路径直接泄漏为六七层导航。
 
 `docs/zh/索引/index.md` 只保留一个生成标记。构建时，`tools/mkdocs_hooks.py` 会读取所有公开 Markdown，按栏目生成完整索引，并解析每页的 `related`。
 
