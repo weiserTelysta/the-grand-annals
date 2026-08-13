@@ -178,10 +178,16 @@ def _enhance_markdown(markdown: str, page) -> str:
                 quote_lines.append(lines[quote_end])
                 quote_end += 1
             if quote_end < len(lines) and lines[quote_end].startswith("## "):
-                epigraph_class = "epigraph" if any("——" in item for item in quote_lines) else "character-epigraph"
-                # Python-Markdown's block-level attr_list form follows the
-                # block directly and uses ``{ .class }`` rather than ``{:``.
-                lines.insert(quote_end, f"{{ .{epigraph_class} }}")
+                # Only signed epigraphs need an extra class. Keep the injected
+                # attribute inside the quote so Python-Markdown applies it to
+                # the signature paragraph instead of rendering it as text.
+                if any("——" in item for item in quote_lines):
+                    last_quote = max(
+                        index
+                        for index in range(quote_start, quote_end)
+                        if lines[index].lstrip().startswith(">")
+                    )
+                    lines.insert(last_quote + 1, "> { .epigraph }")
 
     return "\n".join(lines)
 

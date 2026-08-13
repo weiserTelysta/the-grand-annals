@@ -25,6 +25,8 @@ ATTRIBUTE_ONLY = re.compile(r"(?m)^\s*\{\s*:?\s*\.[^}]+\}\s*$")
 PRESENTATION_HTML = re.compile(r"(?mi)^\s*</?(?:div|span|section|article|nav|button)(?:\s|>)")
 PUBLISHED_IMAGE_SUFFIXES = {".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
 RESERVED_KEYS = {"status"}
+UNORDERED_LIST_ITEM = re.compile(r"^(?P<indent>[ \t]*)[-+*]\s+\S")
+ATX_HEADING = re.compile(r"^#{1,6}\s+")
 
 
 def read_note(path: Path) -> tuple[dict[str, Any], str, str]:
@@ -72,6 +74,32 @@ def resolve_image(note: Path, raw_target: str) -> Path | None:
     return (note.parent / target).resolve()
 
 
+def tight_top_level_lists(body: str) -> list[int]:
+    """Find list starts Python-Markdown would keep inside the preceding paragraph."""
+    lines = body.splitlines()
+    errors: list[int] = []
+    block_start = 0
+    for index, line in enumerate(lines):
+        if not line.strip():
+            block_start = index + 1
+            continue
+        match = UNORDERED_LIST_ITEM.match(line)
+        if not match or match.group("indent") or index == 0:
+            continue
+        previous = lines[index - 1]
+        if not previous.strip() or ATX_HEADING.match(previous) or UNORDERED_LIST_ITEM.match(previous):
+            continue
+        # A list item can follow an indented continuation line inside an existing list.
+        if any(
+            (candidate := UNORDERED_LIST_ITEM.match(block_line))
+            and not candidate.group("indent")
+            for block_line in lines[block_start:index]
+        ):
+            continue
+        errors.append(index + 1)
+    return errors
+
+
 def validate(docs_dir: Path) -> list[str]:
     errors: list[str] = []
     notes: dict[Path, tuple[dict[str, Any], str, str]] = {}
@@ -112,6 +140,11 @@ def validate(docs_dir: Path) -> list[str]:
             errors.append(f"{relative}: embedded images must use Markdown links, not Obsidian embeds")
         if WIKILINK.search(body):
             errors.append(f"{relative}: body links must use portable Markdown links, not Obsidian wikilinks")
+        for line_number in tight_top_level_lists(body):
+            errors.append(
+                f"{relative}:{line_number}: add a blank line before this unordered list "
+                "so MkDocs renders semantic list items"
+            )
 
         related = metadata.get("related") or []
         if isinstance(related, str):

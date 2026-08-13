@@ -2,6 +2,8 @@
 site/
 .layout-artifacts/
 .layout-artifacts-final/
+.layout-artifacts-*/
+.artifacts/
 site-*/
 
 # Python tooling

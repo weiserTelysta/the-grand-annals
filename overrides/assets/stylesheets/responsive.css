@@ -26,7 +26,7 @@
   }
 
   .md-typeset h1 {
-    font-size: clamp(1.55rem, 7vw, 1.78rem);
+    font-size: clamp(1.58rem, 7vw, 1.76rem);
     line-height: 1.28;
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -146,5 +146,9 @@
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+
+  .annals-toc-cursor[data-ready="true"] {
+    transition: none;
   }
 }

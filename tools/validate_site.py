@@ -36,6 +36,7 @@ class PageParser(HTMLParser):
         self.has_glightbox_asset = False
         self.breadcrumb_links: list[tuple[str, str]] = []
         self.breadcrumb_current_count = 0
+        self.author_links: list[dict[str, str]] = []
         self._in_breadcrumb = False
         self._current_breadcrumb_href: str | None = None
         self._current_breadcrumb_text: list[str] = []
@@ -68,6 +69,8 @@ class PageParser(HTMLParser):
                 self.has_glightbox_asset = True
         elif tag == "a" and data.get("href"):
             self.links.append(data["href"])
+            if "md-copyright__author" in data.get("class", "").split():
+                self.author_links.append(data)
             if self._in_breadcrumb:
                 self._current_breadcrumb_href = data["href"]
                 self._current_breadcrumb_text = []
@@ -151,13 +154,25 @@ def validate(site_dir: Path) -> list[str]:
         return [f"No HTML files found in {site_dir}"]
 
     for path in pages:
+        html = path.read_text(encoding="utf-8")
         parser = PageParser()
-        parser.feed(path.read_text(encoding="utf-8"))
+        parser.feed(html)
         route = route_for(path, site_dir)
         label = path.relative_to(site_dir).as_posix()
 
+        if re.search(r"<p>\s*\{\s*:?\s*\.[^}<]+\}\s*</p>", html, re.IGNORECASE):
+            errors.append(f"{label}: presentation attribute syntax leaked into rendered content")
+
         if not parser.title:
             errors.append(f"{label}: missing <title>")
+        if len(parser.author_links) != 1:
+            errors.append(f"{label}: expected one footer author link, found {len(parser.author_links)}")
+        else:
+            author_link = parser.author_links[0]
+            if author_link.get("href") != "https://telysta.com/":
+                errors.append(f"{label}: invalid footer author URL {author_link.get('href')!r}")
+            if author_link.get("target") != "_blank" or "noopener" not in author_link.get("rel", "").split():
+                errors.append(f"{label}: footer author link must open safely in a new tab")
         is_not_found = label == "404.html"
         is_homepage = label == "index.html"
         if not is_not_found and not parser.description:

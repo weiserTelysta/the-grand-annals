@@ -190,21 +190,21 @@ html[data-annals-lead-page="true"] .md-content__inner {
 .md-typeset details[class] {
   background: color-mix(in srgb, var(--annals-surface-container) 22%, transparent);
   border: 0;
-  border-left: 3px solid color-mix(in srgb, var(--annals-primary) 62%, transparent);
+  border-inline-start: 3px solid color-mix(in srgb, var(--annals-primary) 62%, transparent);
   border-radius: 0 var(--annals-radius-sm) var(--annals-radius-sm) 0;
   box-shadow: none;
   font-size: inherit;
   inline-size: 100%;
   max-inline-size: none;
   overflow: hidden;
-  padding: 0 0.9rem 0 0.85rem;
+  padding-block: 0;
+  padding-inline: var(--annals-component-inset);
   transition: background-color var(--annals-motion-fast) var(--annals-ease-standard), border-color var(--annals-motion-fast) var(--annals-ease-standard);
 }
 
-.md-typeset .admonition[class]:focus-within,
-.md-typeset details[class]:focus-within {
+.md-typeset .admonition[class]:focus-within {
   background: color-mix(in srgb, var(--annals-primary-container) 38%, transparent);
-  border-left-color: var(--annals-primary);
+  border-inline-start-color: var(--annals-primary);
 }
 
 .md-typeset .admonition[class] > .admonition-title,
@@ -217,7 +217,7 @@ html[data-annals-lead-page="true"] .md-content__inner {
   font-weight: 600;
   margin: 0;
   min-height: 2.2rem;
-  padding: 0.55rem 1.8rem 0.55rem 2rem;
+  padding: 0.55rem 0;
   transition: border-color var(--annals-motion-fast) var(--annals-ease-standard), color var(--annals-motion-fast) var(--annals-ease-standard);
 }
 
@@ -242,20 +242,48 @@ html[data-annals-lead-page="true"] .md-content__inner {
   color: var(--annals-primary-hover);
 }
 
+.md-typeset details[class] > summary {
+  cursor: pointer;
+  padding-inline-end: 1.55rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.md-typeset details[class] > summary::before {
+  content: none;
+  display: none;
+}
+
 .md-typeset details[class] > summary::after {
   color: var(--annals-text-muted);
   opacity: 0.68;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    color var(--annals-motion-fade) var(--annals-ease-standard),
+    opacity var(--annals-motion-fade) var(--annals-ease-standard),
+    transform var(--annals-motion-moderate) var(--annals-ease-standard);
 }
 
-.md-typeset .admonition[class] > .admonition-title::before,
-.md-typeset details[class] > summary::before {
-  background-color: var(--annals-primary);
-  opacity: 0.9;
+.md-typeset details[class][open] > summary::after {
+  transform: translateY(-50%) rotate(90deg);
 }
 
 .md-typeset details[class] > summary:is(:focus-visible, .focus-visible) {
-  box-shadow: inset 2px 0 var(--annals-primary);
+  box-shadow: none;
+  outline: 2px solid var(--annals-primary);
+  outline-offset: 3px;
+}
+
+.md-typeset details[class] > summary:focus:not(:focus-visible) {
+  box-shadow: none;
   outline: 0;
+}
+
+.md-typeset details[class] > summary:active {
+  color: var(--annals-primary);
+  transition-duration: var(--annals-motion-instant);
 }
 
 .md-typeset :is(.admonition[class], details[class]) :is(p, li) {

@@ -15,25 +15,32 @@
   --annals-font-cover: "Annals Cover Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
   --annals-font-latin: "Segoe UI", Arial, sans-serif;
 
-  /* Crimson Archive — light roles. */
-  --annals-canvas: #f8f4e8;
-  --annals-surface: #fffdf7;
-  --annals-chrome: #f3ede3;
-  --annals-chrome-field: #ebe3da;
-  --annals-surface-container: #f1e9e1;
-  --annals-surface-container-high: #eae0da;
-  --annals-text: #332a2a;
-  --annals-text-strong: #291f20;
-  --annals-text-muted: #6c6060;
-  --annals-primary: #8b2428;
-  --annals-primary-hover: #a33330;
-  --annals-primary-container: #f7dedc;
-  --annals-on-primary-container: #3a090c;
-  --annals-ceremonial: #816718;
-  --annals-ceremonial-soft: #c6a85d;
-  --annals-outline: #d2c4be;
-  --annals-outline-soft: rgba(82, 65, 65, 0.14);
-  --annals-shadow-soft: 0 10px 30px rgba(51, 42, 42, 0.07);
+  /* Telysta Archive — rose paper, crimson identity and a quiet moonlight secondary. */
+  --annals-canvas: #f7f1ed;
+  --annals-surface: #fcf8f5;
+  --annals-chrome: #f1e8e6;
+  --annals-chrome-field: #eadfdd;
+  --annals-search-icon: #66595c;
+  --annals-surface-container: #f0e6e3;
+  --annals-surface-container-high: #e8dcda;
+  --annals-text: #554848;
+  --annals-text-strong: #3d3033;
+  --annals-text-muted: #766969;
+  --annals-heading-1: #6f2d35;
+  --annals-heading-2: #453438;
+  --annals-heading-3: #554044;
+  --annals-heading-4: #634d50;
+  --annals-primary: #922f37;
+  --annals-primary-hover: #aa3f45;
+  --annals-primary-container: #f5dddd;
+  --annals-on-primary-container: #481116;
+  --annals-secondary: #657590;
+  --annals-tertiary: #8b6a80;
+  --annals-ceremonial: #7c6528;
+  --annals-ceremonial-soft: #bea45d;
+  --annals-outline: #d3c4c1;
+  --annals-outline-soft: rgba(89, 69, 72, 0.14);
+  --annals-shadow-soft: 0 10px 30px rgba(76, 53, 57, 0.07);
 
   /* Layout and interaction tokens. */
   --annals-radius-xs: 0.2rem;
@@ -43,12 +50,18 @@
   --annals-content-width: 46rem;
   --annals-reading-size: 0.85rem;
   --annals-reading-leading: 1.8;
-  --annals-sticky-offset: 5.2rem;
+  --annals-header-height: 2.3rem;
+  --annals-tabs-height: 0rem;
+  --annals-sticky-offset: calc(var(--annals-header-height) + 1px);
+  --annals-component-inset: 0.8rem;
   --annals-gutter: clamp(1rem, 2.2vw, 1.6rem);
   --annals-control-size: 2.2rem;
+  --annals-motion-instant: 70ms;
+  --annals-motion-fade: 110ms;
   --annals-motion-fast: 140ms;
+  --annals-motion-moderate: 180ms;
   --annals-motion-content: 200ms;
-  --annals-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --annals-ease-standard: cubic-bezier(0.2, 0, 0.38, 0.9);
   --annals-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
   /* Compatibility aliases used by the existing templates. */
@@ -70,46 +83,53 @@
   --md-code-font: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   --md-default-bg-color: var(--annals-canvas);
   --md-default-fg-color: var(--annals-text);
-  --md-default-fg-color--light: rgba(51, 42, 42, 0.68);
-  --md-default-fg-color--lighter: rgba(51, 42, 42, 0.45);
-  --md-default-fg-color--lightest: rgba(51, 42, 42, 0.12);
+  --md-default-fg-color--light: rgba(85, 72, 72, 0.68);
+  --md-default-fg-color--lighter: rgba(85, 72, 72, 0.45);
+  --md-default-fg-color--lightest: rgba(85, 72, 72, 0.12);
   --md-primary-fg-color: var(--annals-primary);
-  --md-primary-fg-color--dark: #641a1d;
+  --md-primary-fg-color--dark: #6f2026;
   --md-accent-fg-color: var(--annals-primary);
   --md-typeset-a-color: var(--annals-primary);
   --md-typeset-color: var(--annals-text);
   --md-code-bg-color: rgba(234, 224, 218, 0.72);
   --md-code-fg-color: #443637;
   --md-footer-bg-color: #291f20;
-  --md-footer-fg-color: #e9e0dc;
+  --md-footer-fg-color: #d8ceca;
   --md-sidebar-width: 16rem;
 }
 
 html[data-annals-scheme="default"] {
-  --annals-canvas: #f8f4e8;
+  --annals-canvas: #f7f1ed;
 }
 
 [data-md-color-scheme="slate"],
 html[data-annals-scheme="slate"] {
   color-scheme: dark;
-  --annals-canvas: #1d191a;
-  --annals-surface: #252122;
-  --annals-chrome: #242021;
-  --annals-chrome-field: #302b2c;
-  --annals-surface-container: #302b2c;
-  --annals-surface-container-high: #3a3435;
-  --annals-text: #e9e0dc;
-  --annals-text-strong: #fff7f3;
-  --annals-text-muted: #b3a6a3;
-  --annals-primary: #e58a86;
-  --annals-primary-hover: #f1a19c;
-  --annals-primary-container: #642225;
+  --annals-canvas: #1b1819;
+  --annals-surface: #242021;
+  --annals-chrome: #211e1f;
+  --annals-chrome-field: #2d292a;
+  --annals-search-icon: #c8bcba;
+  --annals-surface-container: #2d292a;
+  --annals-surface-container-high: #373132;
+  --annals-text: #d8ceca;
+  --annals-text-strong: #e7dcd7;
+  --annals-text-muted: #a99b99;
+  --annals-heading-1: #e7aaa8;
+  --annals-heading-2: #e2d6d1;
+  --annals-heading-3: #d3c4c0;
+  --annals-heading-4: #c1b2af;
+  --annals-primary: #df7f7d;
+  --annals-primary-hover: #ed9894;
+  --annals-primary-container: #5f2428;
   --annals-on-primary-container: #ffdad7;
+  --annals-secondary: #9cc7e8;
+  --annals-tertiary: #d6a7c8;
   --annals-ceremonial: #d6bc76;
   --annals-ceremonial-soft: #e3cc90;
-  --annals-outline: #514748;
-  --annals-outline-soft: rgba(233, 224, 220, 0.13);
-  --annals-moonlight: #8793b2;
+  --annals-outline: #504647;
+  --annals-outline-soft: rgba(216, 206, 202, 0.13);
+  --annals-moonlight: var(--annals-secondary);
   --annals-shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.26);
 
   --annals-paper: var(--annals-canvas);
@@ -127,9 +147,9 @@ html[data-annals-scheme="slate"] {
 
   --md-default-bg-color: var(--annals-canvas);
   --md-default-fg-color: var(--annals-text);
-  --md-default-fg-color--light: rgba(233, 224, 220, 0.74);
-  --md-default-fg-color--lighter: rgba(233, 224, 220, 0.5);
-  --md-default-fg-color--lightest: rgba(233, 224, 220, 0.13);
+  --md-default-fg-color--light: rgba(216, 206, 202, 0.74);
+  --md-default-fg-color--lighter: rgba(216, 206, 202, 0.5);
+  --md-default-fg-color--lightest: rgba(216, 206, 202, 0.13);
   --md-primary-fg-color: var(--annals-primary);
   --md-primary-fg-color--dark: #b85f5e;
   --md-accent-fg-color: var(--annals-primary);
@@ -146,4 +166,13 @@ html[data-annals-page="home"] {
   --annals-cover-accent: #d5b66e;
   --annals-cover-text: #fff8e9;
   --annals-cover-title: #f4dfb7;
+}
+
+@media screen and (min-width: 76.25em) {
+  :root,
+  [data-md-color-scheme="default"],
+  [data-md-color-scheme="slate"] {
+    --annals-tabs-height: 2rem;
+    --annals-sticky-offset: calc(var(--annals-header-height) + var(--annals-tabs-height) + 1px);
+  }
 }

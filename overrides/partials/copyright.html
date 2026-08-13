@@ -1,6 +1,13 @@
 <div class="md-copyright">
   <div class="md-copyright__highlight">
-    {{ config.copyright or "© 2026 Weiser · The Grand Annals" }}
+    ©
+    <a class="md-copyright__author"
+       href="{{ config.extra.author_url or 'https://telysta.com/' }}"
+       target="_blank"
+       rel="me noopener noreferrer"
+       aria-label="访问 {{ config.site_author or 'Weiser' }} 的个人网站（在新标签页打开）">{{ config.site_author or "Weiser" }}</a>
+    <span aria-hidden="true">·</span>
+    {{ config.copyright or "The Grand Annals" }}
   </div>
   <div class="md-copyright__license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">

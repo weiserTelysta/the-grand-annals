@@ -80,6 +80,7 @@ related:
 - `description` 同时用于索引说明、搜索摘要和 SEO。
 - 公开内容放在 `zh`，不准备放上网站的草稿可放在 `weiser`；不要使用 `status` 字段，它是 MkDocs Material 的导航保留字段。
 - 正文只写 Markdown，不写 HTML 或 `{: .class }` 网站样式标记。
+- 段落或提示语之后开始列表时，先留一个空行再写 `- 条目`；Obsidian 与 MkDocs 使用的 Markdown 解析器并不完全相同，缺少空行会让 MkDocs 把短横线当作普通正文。
 
 注意：本 GitHub 仓库当前是公开仓库，因此 `docs/weiser` 只能视作“网站不发布”，不能视作保密。真正私密的草稿应放入仓库之外的独立 Obsidian 库；如需让既有资料退出公开 Git 历史，应另行执行隐私迁移与历史清理。
 
