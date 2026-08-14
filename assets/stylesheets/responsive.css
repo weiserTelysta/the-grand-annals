@@ -1,0 +1,154 @@
+@media screen and (max-width: 48em) {
+  :root {
+    --annals-gutter: clamp(1rem, 5vw, 1.25rem);
+  }
+
+  .md-main,
+  .md-main__inner,
+  .md-content,
+  .md-content__inner,
+  .md-typeset,
+  article {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .md-content__inner {
+    margin-inline: auto;
+    padding-bottom: 3.5rem;
+    width: 100%;
+  }
+
+  .md-typeset {
+    font-size: var(--annals-reading-size);
+    line-height: var(--annals-reading-leading);
+  }
+
+  .md-typeset h1 {
+    font-size: clamp(1.58rem, 7vw, 1.76rem);
+    line-height: 1.28;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .md-typeset h2 {
+    margin-top: 2.1rem;
+  }
+
+  .md-typeset h1 + blockquote + h2 {
+    margin-top: 1.7rem;
+  }
+
+  .page-lead,
+  .entry-summary {
+    font-size: var(--annals-reading-size);
+    max-width: 100% !important;
+  }
+
+  .md-typeset .topic-heading + ul,
+  .related-entries,
+  .md-typeset .index-heading + ul {
+    grid-template-columns: 1fr;
+  }
+
+  .md-typeset .reading-heading + ol > li {
+    padding-left: 2.6rem;
+  }
+
+  .md-typeset .admonition[class],
+  .md-typeset details[class] {
+    inline-size: auto;
+    margin-inline: 0;
+  }
+
+  .hero-section {
+    padding:
+      max(0.9rem, env(safe-area-inset-top))
+      max(1rem, env(safe-area-inset-right))
+      max(1.2rem, env(safe-area-inset-bottom))
+      max(1rem, env(safe-area-inset-left));
+  }
+
+  .hero-section::before {
+    background-position: 38% center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-kicker {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .md-typeset .epic-title {
+    font-size: clamp(2.25rem, 11vw, 2.8rem);
+    letter-spacing: 0.055em;
+    max-width: 100%;
+    padding-left: 0.04em;
+  }
+
+  .epic-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 0.012em;
+    margin: 1.1rem 0 0.95rem !important;
+    max-width: min(21rem, 100%) !important;
+  }
+
+  .hero-actions {
+    gap: 1rem;
+  }
+
+  .hero-enter-link {
+    font-size: 0.94rem;
+  }
+}
+
+@media screen and (min-width: 48.01em) and (max-width: 76.234375em) {
+  :root {
+    --annals-gutter: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .md-content {
+    padding-inline:
+      max(var(--annals-gutter), env(safe-area-inset-left))
+      max(var(--annals-gutter), env(safe-area-inset-right));
+  }
+}
+
+@media screen and (max-width: 23.5em) {
+  .md-typeset .epic-title {
+    font-size: 2.08rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .has-js .hero-content {
+    opacity: 1;
+    transform: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  .annals-toc-cursor[data-ready="true"] {
+    transition: none;
+  }
+}

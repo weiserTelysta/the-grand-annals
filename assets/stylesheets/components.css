@@ -1,0 +1,292 @@
+.page-lead,
+.entry-summary,
+.annals-lead-page > h1 + p {
+  color: var(--annals-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.78;
+  margin: -0.1rem 0 1.9rem;
+  max-width: var(--annals-reading-measure) !important;
+}
+
+html[data-annals-lead-page="true"] .md-content__inner {
+  max-width: 38rem;
+}
+
+.md-typeset .reading-heading + ol {
+  counter-reset: reading-step;
+  list-style: none;
+  margin: 1rem 0 2.5rem;
+  max-width: none;
+  padding: 0;
+}
+
+.md-typeset .reading-heading + ol > li {
+  border-bottom: 1px solid var(--annals-outline-soft);
+  color: var(--annals-text-muted);
+  counter-increment: reading-step;
+  margin: 0;
+  max-width: none;
+  padding: 0.95rem 0.25rem 1rem 3rem;
+  position: relative;
+}
+
+.md-typeset .reading-heading + ol > li::before {
+  color: var(--annals-primary);
+  content: "0" counter(reading-step);
+  font-family: var(--annals-font-latin);
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  left: 0.25rem;
+  letter-spacing: 0.08em;
+  position: absolute;
+  top: 1.04rem;
+}
+
+.md-typeset .reading-heading + ol > li > p,
+.md-typeset .topic-heading + ul > li > p,
+.md-typeset .catalog-heading + ul > li > p {
+  color: var(--annals-text-muted);
+  margin: 0;
+}
+
+.md-typeset .reading-heading + ol strong,
+.md-typeset .topic-heading + ul strong,
+.md-typeset .catalog-heading + ul strong {
+  display: block;
+  font-size: 0.87rem;
+  font-weight: 650;
+  margin-bottom: 0.1rem;
+}
+
+.md-typeset .reading-heading + ol strong a,
+.md-typeset .topic-heading + ul strong a,
+.md-typeset .catalog-heading + ul strong a {
+  color: var(--annals-primary);
+  font-weight: 650;
+  text-decoration-color: transparent;
+}
+
+.md-typeset .reading-heading + ol strong a:hover,
+.md-typeset .topic-heading + ul strong a:hover,
+.md-typeset .catalog-heading + ul strong a:hover {
+  color: var(--annals-primary-hover);
+  text-decoration-color: currentColor;
+}
+
+.md-typeset .topic-heading + ul {
+  display: grid;
+  gap: 0 1.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 1rem 0 2.5rem;
+  max-width: none;
+  padding: 0;
+}
+
+.md-typeset .topic-heading + ul > li {
+  border-bottom: 1px solid var(--annals-outline-soft);
+  color: var(--annals-text-muted);
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  padding: 0.9rem 0.2rem 0.95rem 0;
+}
+
+.md-typeset .catalog-heading + ul {
+  list-style: none;
+  margin: 1rem 0 2.5rem;
+  max-width: none;
+  padding: 0;
+}
+
+.md-typeset .catalog-heading + ul > li {
+  border-bottom: 1px solid var(--annals-outline-soft);
+  color: var(--annals-text-muted);
+  margin: 0;
+  max-width: none;
+  padding: 0.9rem 0.2rem;
+}
+
+.related-entries {
+  border-top: 1px solid var(--annals-outline-soft);
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 4rem;
+  padding-top: 1.3rem;
+}
+
+.related-entries__heading {
+  color: var(--annals-text-muted);
+  font-size: 0.68rem;
+  font-weight: 500;
+  grid-column: 1 / -1;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.15rem !important;
+}
+
+.related-entry {
+  background: color-mix(in srgb, var(--annals-surface-container) 35%, transparent);
+  border: 1px solid transparent;
+  border-radius: var(--annals-radius-md);
+  color: var(--annals-text) !important;
+  display: grid;
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  text-decoration: none !important;
+  transition: background-color var(--annals-motion-fast) var(--annals-ease-standard), border-color var(--annals-motion-fast) var(--annals-ease-standard), transform var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+.related-entry:hover {
+  background: var(--annals-primary-container);
+  border-color: color-mix(in srgb, var(--annals-primary) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+.related-entry__type {
+  color: var(--annals-text-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+}
+
+.related-entry__title {
+  color: var(--annals-text-strong);
+  font-family: var(--annals-font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.16rem;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .index-heading + ul {
+  display: grid;
+  gap: 0.35rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0.75rem 0 2.5rem !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.md-typeset .index-heading + ul > li {
+  border-bottom: 1px solid var(--annals-outline-soft);
+  margin: 0 !important;
+  max-width: none !important;
+  padding: 0.65rem 0 !important;
+}
+
+.md-typeset .index-heading + ul strong {
+  display: block;
+  margin-bottom: 0.08rem;
+}
+
+.md-typeset .index-heading + ul a {
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.md-typeset .admonition[class],
+.md-typeset details[class] {
+  background: color-mix(in srgb, var(--annals-surface-container) 22%, transparent);
+  border: 0;
+  border-inline-start: 3px solid color-mix(in srgb, var(--annals-primary) 62%, transparent);
+  border-radius: 0 var(--annals-radius-sm) var(--annals-radius-sm) 0;
+  box-shadow: none;
+  font-size: inherit;
+  inline-size: 100%;
+  max-inline-size: none;
+  overflow: hidden;
+  padding-block: 0;
+  padding-inline: var(--annals-component-inset);
+  transition: background-color var(--annals-motion-fast) var(--annals-ease-standard), border-color var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+.md-typeset .admonition[class]:focus-within {
+  background: color-mix(in srgb, var(--annals-primary-container) 38%, transparent);
+  border-inline-start-color: var(--annals-primary);
+}
+
+.md-typeset .admonition[class] > .admonition-title,
+.md-typeset details[class] > summary {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  color: var(--annals-text-strong);
+  font-weight: 600;
+  margin: 0;
+  min-height: 2.2rem;
+  padding: 0.55rem 0;
+  transition: border-color var(--annals-motion-fast) var(--annals-ease-standard), color var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+/* The left rail already communicates a static note; the Material icon is redundant. */
+.md-typeset .admonition[class] > .admonition-title {
+  line-height: 1.55;
+  min-height: 0;
+  padding: 0.6rem 0 0.28rem;
+}
+
+.md-typeset .admonition[class] > .admonition-title::before {
+  content: none;
+  display: none;
+}
+
+.md-typeset details[class][open] > summary {
+  border-bottom-color: var(--annals-outline-soft);
+  margin-bottom: 0.55rem;
+}
+
+.md-typeset details[class] > summary:hover {
+  color: var(--annals-primary-hover);
+}
+
+.md-typeset details[class] > summary {
+  cursor: pointer;
+  padding-inline-end: 1.55rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.md-typeset details[class] > summary::before {
+  content: none;
+  display: none;
+}
+
+.md-typeset details[class] > summary::after {
+  color: var(--annals-text-muted);
+  opacity: 0.68;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    color var(--annals-motion-fade) var(--annals-ease-standard),
+    opacity var(--annals-motion-fade) var(--annals-ease-standard),
+    transform var(--annals-motion-moderate) var(--annals-ease-standard);
+}
+
+.md-typeset details[class][open] > summary::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.md-typeset details[class] > summary:is(:focus-visible, .focus-visible) {
+  box-shadow: none;
+  outline: 2px solid var(--annals-primary);
+  outline-offset: 3px;
+}
+
+.md-typeset details[class] > summary:focus:not(:focus-visible) {
+  box-shadow: none;
+  outline: 0;
+}
+
+.md-typeset details[class] > summary:active {
+  color: var(--annals-primary);
+  transition-duration: var(--annals-motion-instant);
+}
+
+.md-typeset :is(.admonition[class], details[class]) :is(p, li) {
+  max-inline-size: none;
+  max-width: none;
+}
