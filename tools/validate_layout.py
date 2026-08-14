@@ -24,6 +24,7 @@ CASES = (
     ("法则设定/", 360, 800, "default"),
     ("法则设定/", 1024, 768, "default"),
     ("法则设定/", 1440, 900, "slate"),
+    ("法则设定/", 2048, 1152, "default"),
     ("法则设定/魔法体系/魔法体系/", 360, 800, "slate"),
     ("法则设定/魔法体系/魔法体系/", 1024, 768, "default"),
     ("法则设定/魔法体系/魔法体系/", 1440, 900, "slate"),
@@ -71,7 +72,6 @@ def browser() -> webdriver.Chrome:
         options.binary_location = str(windows_chrome)
     options.add_argument("--headless=new")
     options.add_argument("--disable-gpu")
-    options.add_argument("--hide-scrollbars")
     options.add_argument("--no-first-run")
     options.add_argument("--force-device-scale-factor=1")
     options.page_load_strategy = "none"
@@ -94,6 +94,10 @@ def inspect(driver: webdriver.Chrome) -> dict[str, object]:
         const article = document.querySelector('.md-content__inner');
         const isHome = document.documentElement.dataset.annalsPage === 'home';
         const header = document.querySelector('.md-header');
+        const tabs = document.querySelector('.md-tabs');
+        const tabsList = tabs?.querySelector('.md-tabs__list');
+        const tabsStyles = tabs ? getComputedStyle(tabs) : null;
+        const tabsListStyles = tabsList ? getComputedStyle(tabsList) : null;
         const h1 = article?.querySelector('h1');
         const content = document.querySelector('.md-content');
         const toc = document.querySelector('.md-sidebar--secondary .md-nav--secondary');
@@ -164,6 +168,15 @@ def inspect(driver: webdriver.Chrome) -> dict[str, object]:
           scrollHeight: document.documentElement.scrollHeight,
           isHome,
           headerHeight: header?.getBoundingClientRect().height ?? 0,
+          tabsVisible: Boolean(tabs && getComputedStyle(tabs).display !== 'none' && tabs.offsetHeight),
+          tabsClientHeight: tabs?.clientHeight ?? 0,
+          tabsScrollHeight: tabs?.scrollHeight ?? 0,
+          tabsVerticalOverflow: Boolean(tabs && tabs.scrollHeight > tabs.clientHeight),
+          tabsOverflowY: tabsStyles?.overflowY ?? null,
+          tabsListClientHeight: tabsList?.clientHeight ?? 0,
+          tabsListScrollHeight: tabsList?.scrollHeight ?? 0,
+          tabsListVerticalOverflow: Boolean(tabsList && tabsList.scrollHeight > tabsList.clientHeight),
+          tabsListOverflowY: tabsListStyles?.overflowY ?? null,
           heroActions: article ? article.querySelectorAll('.hero-actions a').length : 0,
           articleLeft: rect?.left ?? -1,
           articleRightGap: rect ? window.innerWidth - rect.right : -1,
@@ -365,6 +378,15 @@ def main() -> int:
                 maximum_header_height = 90 if width >= 1220 else 50
                 if result["headerHeight"] > maximum_header_height:
                     errors.append(f"{label}: header consumes too much vertical space {result}")
+            if result["tabsVisible"]:
+                if result["tabsVerticalOverflow"]:
+                    errors.append(f"{label}: tabs wrapper has vertical overflow {result}")
+                if result["tabsListVerticalOverflow"]:
+                    errors.append(f"{label}: tabs list has vertical overflow {result}")
+                if result["tabsOverflowY"] not in ("hidden", "clip"):
+                    errors.append(f"{label}: tabs wrapper permits vertical scrolling {result}")
+                if result["tabsListOverflowY"] not in ("hidden", "clip"):
+                    errors.append(f"{label}: tabs list permits vertical scrolling {result}")
             if result["h1Left"] < result["articleLeft"] - 1:
                 errors.append(f"{label}: h1 escapes article {result}")
             if result["h1Right"] > result["viewport"] + 1:

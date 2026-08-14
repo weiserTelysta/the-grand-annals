@@ -94,11 +94,25 @@ html[data-annals-page="content"] .md-content {
 .md-header,
 .md-tabs {
   background: color-mix(in srgb, var(--annals-chrome) 94%, transparent);
-  border-bottom: 1px solid var(--annals-outline-soft);
   box-shadow: none;
   color: var(--annals-text);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
+}
+
+.md-header {
+  border-bottom: 1px solid var(--annals-outline-soft);
+}
+
+/*
+ * Material makes the tabs wrapper scrollable. Keep the separator inside the
+ * fixed-height box so a one-pixel border cannot create a vertical scrollbar.
+ * The list remains the sole horizontal scrolling surface.
+ */
+.md-tabs {
+  border-bottom: 0;
+  box-shadow: inset 0 -1px var(--annals-outline-soft);
+  overflow: hidden;
 }
 
 .md-header__button,
@@ -123,10 +137,18 @@ html[data-annals-page="content"] .md-content {
   line-height: var(--annals-header-height);
 }
 
-.md-tabs,
+.md-tabs {
+  height: var(--annals-tabs-height);
+}
+
 .md-tabs__list,
 .md-tabs__item {
-  height: var(--annals-tabs-height);
+  height: 100%;
+}
+
+.md-tabs__list {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .md-tabs__link {
@@ -535,18 +557,29 @@ html[data-annals-page="content"] .md-content {
   outline-offset: 3px;
 }
 
-::-webkit-scrollbar {
+html {
+  scrollbar-color: color-mix(in srgb, var(--annals-primary) 48%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+/* Do not inherit the viewport scrollbar treatment into local scroll regions. */
+body {
+  scrollbar-color: auto;
+  scrollbar-width: auto;
+}
+
+html::-webkit-scrollbar {
   height: 8px;
   width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--annals-primary) 48%, transparent);
   background-clip: padding-box;
   border: 2px solid transparent;
   border-radius: 999px;
 }
 
-::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track {
   background: transparent;
 }
