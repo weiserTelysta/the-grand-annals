@@ -5,8 +5,12 @@ html[data-annals-page="home"] body {
   overscroll-behavior: none;
 }
 
+html[data-annals-page="home"] {
+  scrollbar-gutter: auto;
+}
+
 html[data-annals-page="home"] body {
-  background: #0c1119;
+  background: var(--annals-canvas);
 }
 
 html[data-annals-page="home"] :is(.md-header, .md-tabs, .md-sidebar, .md-footer, .md-path) {
@@ -24,6 +28,16 @@ html[data-annals-page="home"] :is(.md-container, .md-main, .md-main__inner, .md-
   min-height: 0 !important;
   padding: 0 !important;
   width: 100% !important;
+}
+
+/* Content pages use a three-column reading grid. The cover is a viewport,
+   so it must explicitly leave that grid instead of merely filling its center column. */
+html[data-annals-page="home"] .md-main__inner {
+  display: block !important;
+}
+
+html[data-annals-page="home"] .md-content {
+  grid-column: 1 / -1 !important;
 }
 
 html[data-annals-page="home"] .md-content__inner::before {

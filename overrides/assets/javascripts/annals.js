@@ -102,6 +102,10 @@
       nav.removeAttribute("aria-labelledby");
       nav.setAttribute("aria-label", `导航分组：${titleText}`);
     });
+
+    document.querySelectorAll(".md-tabs__item--active > .md-tabs__link").forEach((link) => {
+      link.setAttribute("aria-current", "page");
+    });
   }
 
   function synchronizeColorScheme() {
@@ -109,14 +113,17 @@
       ? "slate"
       : "default";
     const isCover = document.documentElement.dataset.annalsPage === "home";
-    const canvas = isCover ? "#0c1119" : scheme === "slate" ? "#1b1819" : "#f7f1ed";
-    const chrome = isCover ? "#0c1119" : scheme === "slate" ? "#242021" : "#f3ede3";
     const themeColor = document.querySelector("meta[data-annals-theme-color]");
 
     document.documentElement.dataset.annalsScheme = scheme;
     document.documentElement.style.colorScheme = scheme === "slate"
       ? "dark"
       : "light";
+    const tokens = getComputedStyle(document.documentElement);
+    const canvas = tokens.getPropertyValue("--annals-canvas").trim();
+    const chrome = isCover
+      ? canvas
+      : tokens.getPropertyValue("--annals-header-bg").trim();
     document.documentElement.style.backgroundColor = canvas;
     if (themeColor) themeColor.content = chrome;
   }
@@ -131,6 +138,40 @@
     new MutationObserver(synchronizeColorScheme).observe(body, {
       attributes: true,
       attributeFilter: ["data-md-color-scheme"]
+    });
+  }
+
+  function restoreScrollPosition(left, top) {
+    const root = document.documentElement;
+    const previousBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo({ left, top, behavior: "auto" });
+    root.style.scrollBehavior = previousBehavior;
+  }
+
+  function initializePaletteContinuity() {
+    document.querySelectorAll('label.md-header__button[for^="__palette_"]').forEach((label) => {
+      if (label.dataset.annalsPaletteInitialized === "true") return;
+      label.dataset.annalsPaletteInitialized = "true";
+      let position = null;
+
+      label.addEventListener("pointerdown", () => {
+        position = { left: window.scrollX, top: window.scrollY };
+      }, { passive: true });
+
+      label.addEventListener("click", (event) => {
+        const saved = position || { left: window.scrollX, top: window.scrollY };
+        const input = document.getElementById(label.htmlFor);
+        const restore = () => restoreScrollPosition(saved.left, saved.top);
+
+        window.requestAnimationFrame(() => {
+          restore();
+          if (event.detail > 0 && input === document.activeElement) input.blur();
+          window.requestAnimationFrame(restore);
+        });
+        window.setTimeout(restore, 160);
+        position = null;
+      });
     });
   }
 
@@ -286,6 +327,7 @@
   function initializePage() {
     observeColorScheme();
     enhanceAccessibility();
+    initializePaletteContinuity();
     initializeHero();
     initializeTocCursor();
     initializeDisclosures();

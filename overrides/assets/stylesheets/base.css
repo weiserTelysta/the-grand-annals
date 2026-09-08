@@ -1,13 +1,14 @@
 html {
-  background: var(--annals-canvas, #f7f1ed);
+  background: var(--annals-canvas, #ede7e1);
   font-size: 125%;
   max-width: 100%;
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   scroll-padding-top: var(--annals-sticky-offset);
 }
 
 body {
-  background: var(--annals-canvas, #f7f1ed);
+  background: var(--annals-canvas, #ede7e1);
   color: var(--annals-text);
   font-family: var(--annals-font-body);
   max-width: 100%;
@@ -15,12 +16,12 @@ body {
 
 /* Keep the saved dark canvas in place during Material's early palette handoff. */
 html[data-annals-scheme="slate"] body {
-  background: #1b1819;
-  color: #d8ceca;
+  background: var(--annals-canvas);
+  color: var(--annals-text);
 }
 
 html[data-annals-page="home"] body {
-  background: #0c1119;
+  background: var(--annals-canvas);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -33,7 +34,7 @@ html[data-annals-page="home"] body {
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
-  background: var(--annals-canvas, #f7f1ed);
+  background: var(--annals-canvas, #ede7e1);
   mix-blend-mode: normal;
 }
 
@@ -81,9 +82,17 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-content {
+  background: transparent;
+  box-shadow: none;
   padding-inline:
     max(var(--annals-gutter), env(safe-area-inset-left))
     max(var(--annals-gutter), env(safe-area-inset-right));
+}
+
+@media screen and (max-width: 59.984375em) {
+  .md-content {
+    box-shadow: none;
+  }
 }
 
 /* The template keeps the TOC wrapper even when the TOC itself is suppressed. */
@@ -91,17 +100,71 @@ html[data-annals-page="content"] .md-content {
   display: none !important;
 }
 
+/* Keep the reading surface on one stable desktop track. Sidebar presence may
+   change the navigation around it, but must not resize or recenter the page. */
+@media screen and (min-width: 76.25em) {
+  .md-main__inner {
+    display: grid;
+    grid-template-columns:
+      minmax(9rem, var(--annals-navigation-track))
+      minmax(36rem, var(--annals-content-track))
+      minmax(9rem, var(--annals-navigation-track));
+    justify-content: center;
+    max-width: var(--annals-shell-width);
+    min-height: calc(100dvh - var(--annals-sticky-offset) - 4rem);
+    width: 100%;
+  }
+
+  .md-sidebar--primary {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .md-sidebar--primary > .md-sidebar__scrollwrap > .md-sidebar__inner > .md-nav {
+    box-sizing: border-box;
+    padding-inline: var(--annals-shell-inset) 0.85rem;
+  }
+
+  .md-content {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .md-sidebar--secondary {
+    grid-column: 3;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .md-sidebar--secondary > .md-sidebar__scrollwrap > .md-sidebar__inner > .md-nav {
+    box-sizing: border-box;
+    padding-inline: 0.85rem var(--annals-shell-inset);
+  }
+}
+
 .md-header,
 .md-tabs {
-  background: color-mix(in srgb, var(--annals-chrome) 94%, transparent);
   box-shadow: none;
-  color: var(--annals-text);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
 
+/* The brand bar, tabs and reading grid share one outer alignment system. */
+.md-header__inner,
+.md-tabs > .md-grid {
+  max-width: var(--annals-shell-width);
+}
+
+.md-header__inner {
+  padding-inline: var(--annals-shell-inset);
+}
+
 .md-header {
-  border-bottom: 1px solid var(--annals-outline-soft);
+  background: var(--annals-header-bg);
+  border-bottom: 0;
+  color: var(--annals-on-header);
 }
 
 /*
@@ -110,15 +173,44 @@ html[data-annals-page="content"] .md-content {
  * The list remains the sole horizontal scrolling surface.
  */
 .md-tabs {
+  background: var(--annals-header-bg);
   border-bottom: 0;
-  box-shadow: inset 0 -1px var(--annals-outline-soft);
+  box-shadow: none;
+  color: var(--annals-on-header);
   overflow: hidden;
 }
 
+.md-tabs > .md-grid {
+  height: 100%;
+}
+
 .md-header__button,
-.md-header__title,
-.md-tabs__link {
-  color: var(--annals-text);
+.md-header__title {
+  color: var(--annals-on-header);
+}
+
+.md-header__button.md-logo,
+.md-header__button[for="__drawer"],
+.md-header__button[for="__search"],
+.md-header__option .md-header__button {
+  color: var(--annals-header-gold);
+}
+
+.md-header__button:hover {
+  background: color-mix(in srgb, var(--annals-header-gold) 11%, transparent);
+  color: var(--annals-header-gold);
+}
+
+.md-header :focus-visible {
+  outline-color: var(--annals-on-header);
+}
+
+.md-header__option:has(.md-option:focus-visible) .md-header__button:not([hidden]) {
+  background: color-mix(in srgb, var(--annals-on-header) 10%, transparent);
+  border-radius: var(--annals-radius-sm);
+  box-shadow: none;
+  outline: 2px solid color-mix(in srgb, var(--annals-on-header) 68%, transparent);
+  outline-offset: -2px;
 }
 
 .md-header__inner {
@@ -126,15 +218,53 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-header__button {
-  margin-block: 0.05rem;
+  align-items: center;
+  border-radius: 999px;
+  height: var(--annals-control-size);
+  justify-content: center;
+  margin-block: calc((var(--annals-header-height) - var(--annals-control-size)) / 2);
   min-height: var(--annals-control-size);
   min-width: var(--annals-control-size);
+  padding: calc((var(--annals-control-size) - var(--annals-control-icon-size)) / 2);
+  width: var(--annals-control-size);
+}
+
+.md-header__button.md-logo,
+.md-header__option .md-header__button:not([hidden]) {
+  display: flex;
+}
+
+@media screen and (max-width: 76.234375em) {
+  .md-header__button[for="__drawer"] {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 59.984375em) {
+  .md-header__button[for="__search"] {
+    display: flex;
+  }
+}
+
+.md-header__button svg,
+.md-header__button.md-logo svg {
+  height: var(--annals-control-icon-size);
+  width: var(--annals-control-icon-size);
 }
 
 .md-header__title {
+  align-items: center;
+  display: flex;
   font-size: 0.85rem;
-  height: var(--annals-header-height);
-  line-height: var(--annals-header-height);
+  height: var(--annals-control-size);
+  line-height: 1.25;
+  margin-block: calc((var(--annals-header-height) - var(--annals-control-size)) / 2);
+}
+
+.md-header__topic {
+  align-items: center;
+  height: 100%;
+  line-height: 1.25;
 }
 
 .md-tabs {
@@ -147,25 +277,67 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-tabs__list {
+  box-sizing: border-box;
+  gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
+  padding-inline: var(--annals-shell-inset);
+  scrollbar-width: none;
+}
+
+.md-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.md-tabs__item {
+  flex: 0 0 auto;
+  padding-inline: 0;
 }
 
 .md-tabs__link {
-  font-size: 0.7rem;
+  align-items: center;
+  color: var(--annals-on-header-muted);
+  display: flex;
+  font-size: 0.74rem;
+  font-weight: 500;
+  height: 100%;
   letter-spacing: 0.02em;
-  margin-top: 0.52rem;
-  opacity: 0.72;
+  margin-top: 0;
+  opacity: 0.82;
   position: relative;
   transition: color var(--annals-motion-fast) var(--annals-ease-standard), opacity var(--annals-motion-fast) var(--annals-ease-standard);
 }
 
-.md-tabs__link--active,
-.md-tabs__link:hover {
-  color: var(--annals-primary);
+/* Material uses `hidden` as the transition state for non-sticky tabs. Our
+   category row lives in normal flow, so keep its labels readable while the
+   whole row naturally scrolls out of view. */
+.md-tabs[hidden] .md-tabs__link {
+  opacity: 0.82;
+  transform: none;
+}
+
+.md-tabs[hidden] .md-tabs__item--active > .md-tabs__link {
   opacity: 1;
 }
 
+/* Material disables pointer events while non-sticky tabs carry `hidden`.
+   This site intentionally keeps that row visible in normal flow on desktop,
+   so restore the matching interaction state as well as the visual state. */
+@media screen and (min-width: 76.25em) {
+  .md-tabs[hidden],
+  .md-tabs[hidden] .md-tabs__link {
+    pointer-events: auto;
+  }
+}
+
+.md-tabs__item--active > .md-tabs__link,
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--annals-on-header);
+  opacity: 1;
+}
+
+.md-tabs__item--active > .md-tabs__link,
 .md-tabs__link--active {
   font-weight: 600;
 }
@@ -177,6 +349,34 @@ html[data-annals-page="content"] .md-content {
   border-radius: var(--annals-radius-md);
   box-shadow: inset 0 -1px var(--annals-outline-soft);
   transition: background-color var(--annals-motion-fast) var(--annals-ease-standard), border-color var(--annals-motion-fast) var(--annals-ease-standard), box-shadow var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+.md-header .md-search__form,
+.md-header .md-search__input {
+  height: var(--annals-control-size);
+}
+
+.md-header .md-search__form {
+  align-items: center;
+  display: flex;
+}
+
+.md-header .md-search__icon[for="__search"] {
+  height: var(--annals-control-icon-size);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--annals-control-icon-size);
+}
+
+.md-header .md-search__icon[for="__search"] svg {
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (min-width: 60em) {
+  .md-header__option {
+    margin-inline-end: 0.3rem;
+  }
 }
 
 .md-search__form:hover {
@@ -212,7 +412,121 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-search__input::placeholder {
-  opacity: 0.58;
+  opacity: 0.72;
+}
+
+.md-search__input:focus-visible {
+  outline: none;
+}
+
+/* The search control stays inside the brand bar, while its result panel keeps
+   the reading-surface colors below. */
+.md-header .md-search__form {
+  background: var(--annals-header-field);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.md-header .md-search__form:hover {
+  background: color-mix(in srgb, var(--annals-header-field) 90%, var(--annals-on-header));
+}
+
+.md-header .md-search__form:focus-within {
+  background: var(--annals-header-field);
+  border-color: transparent;
+  box-shadow: inset 0 -2px color-mix(in srgb, var(--annals-on-header) 58%, transparent);
+}
+
+.md-header .md-search__input {
+  caret-color: var(--annals-header-gold);
+  color: var(--annals-on-header);
+}
+
+.md-header .md-search__input::placeholder {
+  color: var(--annals-on-header-muted);
+  opacity: 0.88;
+}
+
+.md-header .md-search__form .md-search__icon,
+.md-header .md-search__form .md-search__options {
+  color: var(--annals-header-gold);
+}
+
+/* Material moves the expanded search into a raised reading surface. Reset the
+   field roles with the same toggle state so text never inherits the pale
+   on-header color on an ivory surface. */
+#__search:checked ~ .md-header .md-search__form {
+  background: var(--annals-surface);
+  border-color: transparent;
+  box-shadow: inset 0 -2px color-mix(in srgb, var(--annals-primary) 54%, transparent);
+}
+
+#__search:checked ~ .md-header .md-search__input {
+  caret-color: var(--annals-primary);
+  color: var(--annals-text-strong);
+}
+
+#__search:checked ~ .md-header .md-search__input::placeholder {
+  color: var(--annals-text-muted);
+}
+
+#__search:checked ~ .md-header .md-search__form .md-search__icon,
+#__search:checked ~ .md-header .md-search__form .md-search__options {
+  color: var(--annals-primary);
+}
+
+@media screen and (max-width: 59.984375em) {
+  #__search:checked ~ .md-header .md-search__inner {
+    background: var(--annals-canvas);
+    box-sizing: border-box;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0.6rem 0.7rem 0.7rem;
+  }
+
+  #__search:checked ~ .md-header .md-search__form,
+  #__search:checked ~ .md-header .md-search__input {
+    height: 2.2rem;
+  }
+
+  #__search:checked ~ .md-header .md-search__form {
+    background: var(--annals-surface-container);
+    border: 0;
+    border-radius: 999px;
+    box-shadow: none;
+  }
+
+  #__search:checked ~ .md-header .md-search__form:focus-within {
+    background: color-mix(in srgb, var(--annals-primary-container) 42%, var(--annals-surface));
+    box-shadow: none;
+  }
+
+  #__search:checked ~ .md-header .md-search__input {
+    font-size: 0.85rem;
+    padding-inline: 2.5rem 2.2rem;
+  }
+
+  #__search:checked ~ .md-header .md-search__output {
+    background: var(--annals-surface);
+    border-radius: var(--annals-radius-md);
+    bottom: 0.7rem;
+    box-shadow: var(--annals-shadow-soft);
+    inset-inline: 0.7rem;
+    overflow: hidden;
+    top: 3.15rem;
+    width: auto;
+  }
+
+  #__search:checked ~ .md-header .md-search__scrollwrap,
+  #__search:checked ~ .md-header .md-search-result__list {
+    background: var(--annals-surface);
+  }
+
+  #__search:checked ~ .md-header .md-search-result__meta {
+    background: var(--annals-surface-container);
+    color: var(--annals-text-muted);
+    padding-block: 0.65rem;
+  }
 }
 
 .md-search__output,
@@ -235,9 +549,9 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-content__inner {
-  margin-inline: auto;
+  margin-inline: auto !important;
   max-width: var(--annals-content-width);
-  padding-bottom: clamp(3rem, 6vw, 4.5rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
   width: 100%;
 }
 
@@ -271,14 +585,14 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-typeset h2 {
-  border-bottom: 1px solid var(--annals-outline-soft);
+  border-bottom: 0;
   color: var(--annals-heading-2);
   font-size: clamp(1.28rem, 1.55vw, 1.36rem);
   font-weight: 625;
   line-height: 1.42;
   margin-bottom: 0.9rem;
   margin-top: 2.55rem;
-  padding-bottom: 0.42rem;
+  padding-bottom: 0;
 }
 
 .md-typeset h3 {
@@ -395,8 +709,23 @@ html[data-annals-page="content"] .md-content {
 
 .md-nav__link {
   color: var(--annals-text-muted);
-  line-height: 1.45;
+  font-size: 0.73rem;
+  font-weight: 500;
+  line-height: 1.55;
+  margin-top: 0.08rem;
+  padding-block: 0.22rem;
   transition: color var(--annals-motion-fast) var(--annals-ease-standard);
+}
+
+.md-sidebar .md-nav__title {
+  background: transparent;
+  box-shadow: none;
+  color: var(--annals-text-strong);
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.5;
+  padding-block: 0.3rem;
+  padding-inline: 0;
 }
 
 /* ``status`` is editorial metadata, never a public navigation decoration. */
@@ -414,29 +743,28 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-sidebar--secondary .md-nav__item > .md-nav {
-  border-inline-start: 1px solid var(--annals-outline-soft);
-  margin-inline-start: 0.2rem;
-  padding-inline-start: 0.35rem;
+  border-inline-start: 0;
+  margin-inline-start: 0.15rem;
+  padding-inline-start: 0.25rem;
 }
 
 .md-sidebar--secondary .md-nav__link {
-  border-inline-start: 2px solid transparent;
+  border-inline-start: 0;
   box-sizing: border-box;
   color: var(--annals-text-muted);
-  font-size: 0.69rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.55;
   opacity: 1;
-  padding-block: 0.18rem;
-  padding-inline-start: 0.2rem;
+  padding-block: 0.24rem;
+  padding-inline-start: 0.32rem;
   word-break: break-word;
 }
 
 .md-sidebar--secondary .md-nav__link--active {
-  border-inline-start-color: transparent;
   box-shadow: none;
   color: var(--annals-primary) !important;
-  font-weight: 500;
+  font-weight: 650;
   margin-inline-start: 0;
 }
 
@@ -445,7 +773,7 @@ html[data-annals-page="content"] .md-content {
 }
 
 .annals-toc-cursor {
-  background: var(--annals-primary);
+  background: var(--annals-tab-indicator);
   border-radius: 999px;
   height: var(--annals-toc-cursor-height, 1rem);
   left: 0;
@@ -496,9 +824,19 @@ html[data-annals-page="content"] .md-content {
 }
 
 .md-path {
+  box-sizing: border-box;
   color: var(--annals-text-muted);
   font-size: 0.68rem;
   letter-spacing: 0.02em;
+  margin-inline: auto !important;
+  max-width: var(--annals-content-width);
+  padding-inline: 0 !important;
+  width: 100%;
+}
+
+.md-path__list {
+  margin-inline: 0 !important;
+  padding-inline: 0 !important;
 }
 
 .md-path__link--section,
@@ -514,9 +852,7 @@ html[data-annals-page="content"] .md-content {
   max-width: min(16rem, 34vw);
 }
 
-.md-footer {
-  border-top: 1px solid var(--annals-outline-soft);
-}
+.md-footer { border-top: 0; }
 
 .md-footer-meta__inner {
   align-items: center;
@@ -543,7 +879,7 @@ html[data-annals-page="content"] .md-content {
 
 .md-copyright__author:hover,
 .md-copyright__author:focus-visible {
-  color: var(--annals-ceremonial-soft);
+  color: var(--md-footer-fg-color);
   opacity: 1;
 }
 
@@ -553,7 +889,7 @@ html[data-annals-page="content"] .md-content {
 }
 
 :focus-visible {
-  outline: 2px solid var(--annals-primary);
+  outline: 2px solid var(--annals-focus);
   outline-offset: 3px;
 }
 

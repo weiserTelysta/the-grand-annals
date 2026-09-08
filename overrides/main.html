@@ -19,13 +19,23 @@
   {% include "partials/related.html" %}
 {% endblock %}
 
+{% block footer %}
+  {% set is_annals_cover = page and page.meta and page.meta.annals_cover %}
+  {% if not is_annals_cover %}
+    <div class="annals-ornament" aria-hidden="true">
+      <span class="annals-ornament__mark"></span>
+    </div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   {% set is_annals_cover = page and page.meta and page.meta.annals_cover %}
   <meta name="color-scheme" content="light dark">
   <meta
     name="theme-color"
-    content="{{ '#0c1119' if is_annals_cover else '#f3ede3' }}"
+    content="{{ '#0c1119' if is_annals_cover else '#714048' }}"
     data-annals-theme-color
   >
   <script>
@@ -52,16 +62,11 @@
       root.dataset.annalsLeadPage = "{{ 'true' if annals_lead_page else 'false' }}";
       root.style.colorScheme = scheme === "slate" ? "dark" : "light";
       const pageIsCover = {% if is_annals_cover %}true{% else %}false{% endif %};
-      const resolvedCanvas = pageIsCover
-        ? "#0c1119"
-        : scheme === "slate"
-          ? "#1b1819"
-          : "#f7f1ed";
+      const themeTokens = getComputedStyle(root);
+      const resolvedCanvas = themeTokens.getPropertyValue("--annals-canvas").trim();
       const resolvedChrome = pageIsCover
-        ? "#0c1119"
-        : scheme === "slate"
-          ? "#242021"
-          : "#f3ede3";
+        ? resolvedCanvas
+        : themeTokens.getPropertyValue("--annals-header-bg").trim();
       root.style.backgroundColor = resolvedCanvas;
       const themeColor = document.querySelector("meta[data-annals-theme-color]");
       if (themeColor) themeColor.content = resolvedChrome;

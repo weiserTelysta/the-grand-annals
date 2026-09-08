@@ -6,6 +6,8 @@ site_description: "《龙冠枯荣》是一部以架空文明史、世界法则�
 docs_dir: docs/zh
 site_dir: site
 strict: true
+watch:
+  - overrides
 exclude_docs: |
   404.md
   assets/character art/Telysta/*.png
@@ -16,14 +18,16 @@ exclude_docs: |
   assets/images/social-card.png
 
 extra_css:
-  - assets/stylesheets/tokens.css
-  - assets/stylesheets/base.css
-  - assets/stylesheets/components.css
-  - assets/stylesheets/home.css
-  - assets/stylesheets/responsive.css
+  - assets/stylesheets/tokens.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/base.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/components.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/ambient.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/home.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/responsive.css?v=20260908-reading-layout-v21
 
 extra_javascript:
-  - assets/javascripts/annals.js
+  - assets/javascripts/annals.js?v=20260908-reading-layout-v21
+  - assets/javascripts/ambient.js?v=20260908-reading-layout-v21
 
 theme:
   name: material
@@ -32,7 +36,6 @@ theme:
   custom_dir: overrides
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.tracking
     - navigation.sections
     - navigation.path
