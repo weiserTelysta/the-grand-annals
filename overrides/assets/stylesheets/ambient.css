@@ -40,16 +40,19 @@ html[data-annals-page="content"] :is(.md-main, .md-footer) {
 }
 
 .annals-ornament {
+  --annals-ornament-size: 27rem;
+  --annals-ornament-viewport-cap: 54vmin;
+
   align-items: center;
   display: flex;
-  height: clamp(21rem, 29vw, 30rem);
+  height: min(var(--annals-ornament-size), var(--annals-ornament-viewport-cap));
   justify-content: center;
   left: 50%;
   pointer-events: none;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(21rem, 29vw, 30rem);
+  width: min(var(--annals-ornament-size), var(--annals-ornament-viewport-cap));
   z-index: 0;
 }
 
@@ -71,8 +74,8 @@ html[data-annals-page="content"] :is(.md-main, .md-footer) {
 
 @media screen and (max-width: 48em) {
   .annals-ornament {
-    height: clamp(13rem, 62vw, 18rem);
-    width: clamp(13rem, 62vw, 18rem);
+    --annals-ornament-size: 12rem;
+    --annals-ornament-viewport-cap: 50vmin;
   }
 }
 

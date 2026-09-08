@@ -18,16 +18,16 @@ exclude_docs: |
   assets/images/social-card.png
 
 extra_css:
-  - assets/stylesheets/tokens.css?v=20260908-reading-layout-v21
-  - assets/stylesheets/base.css?v=20260908-reading-layout-v21
-  - assets/stylesheets/components.css?v=20260908-reading-layout-v21
-  - assets/stylesheets/ambient.css?v=20260908-reading-layout-v21
-  - assets/stylesheets/home.css?v=20260908-reading-layout-v21
-  - assets/stylesheets/responsive.css?v=20260908-reading-layout-v21
+  - assets/stylesheets/tokens.css?v=20260908-reading-layout-v22
+  - assets/stylesheets/base.css?v=20260908-reading-layout-v22
+  - assets/stylesheets/components.css?v=20260908-reading-layout-v22
+  - assets/stylesheets/ambient.css?v=20260908-reading-layout-v22
+  - assets/stylesheets/home.css?v=20260908-reading-layout-v22
+  - assets/stylesheets/responsive.css?v=20260908-reading-layout-v22
 
 extra_javascript:
-  - assets/javascripts/annals.js?v=20260908-reading-layout-v21
-  - assets/javascripts/ambient.js?v=20260908-reading-layout-v21
+  - assets/javascripts/annals.js?v=20260908-reading-layout-v22
+  - assets/javascripts/ambient.js?v=20260908-reading-layout-v22
 
 theme:
   name: material

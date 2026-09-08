@@ -219,6 +219,7 @@ def inspect(driver: webdriver.Chrome) -> dict[str, object]:
           viewport: window.innerWidth,
           layoutViewportWidth: document.documentElement.clientWidth,
           viewportHeight: window.innerHeight,
+          rootFontSize: parseFloat(getComputedStyle(document.documentElement).fontSize),
           scrollWidth: document.documentElement.scrollWidth,
           scrollHeight: document.documentElement.scrollHeight,
           isHome,
@@ -317,7 +318,9 @@ def inspect(driver: webdriver.Chrome) -> dict[str, object]:
           dustParticleMix: dust?.dataset.annalsParticleMix ?? null,
           dustParticleShapes: dust?.dataset.annalsParticleShapes ?? null,
           dustFlowerMotion: dust?.dataset.annalsFlowerMotion ?? null,
+          dustFlowerFlip: dust?.dataset.annalsFlowerFlip ?? null,
           dustFlowerAngle: dust ? Number(dust.dataset.annalsFlowerAngle || 0) : null,
+          dustFlowerFlipPhase: dust ? Number(dust.dataset.annalsFlowerFlipPhase || 0) : null,
           dustReadingIntensity: dust ? Number(dust.dataset.annalsReadingIntensity || 0) : 0,
           dustPainted: dust?.dataset.annalsPainted === 'true',
           footerAuthorDecoration: footerAuthor ? getComputedStyle(footerAuthor).textDecorationLine : null,
@@ -543,6 +546,7 @@ def main() -> int:
     mobile_search_schemes_checked: set[str] = set()
     mobile_drawer_checked = False
     flower_rotation_checked = False
+    flower_tumble_checked = False
     wait_for_server(args.base_url)
     driver = browser()
     driver.set_page_load_timeout(8)
@@ -623,11 +627,15 @@ def main() -> int:
                 if result["ornamentCenterY"] is not None and abs(result["ornamentCenterY"] - result["viewportHeight"] / 2) > 2:
                     errors.append(f"{label}: watermark is not vertically centered in the viewport {result}")
                 if result["ornamentWidth"] is not None:
-                    minimum_ornament_width = 400 if width >= 1220 else 240
-                    if result["ornamentWidth"] < minimum_ornament_width:
-                        errors.append(f"{label}: centered watermark is too small {result}")
-                    if width >= 1220 and result["ornamentWidth"] > 605:
-                        errors.append(f"{label}: centered watermark is too large {result}")
+                    compact_ornament = result["layoutViewportWidth"] <= 768
+                    fixed_ornament_width = result["rootFontSize"] * (12 if compact_ornament else 27)
+                    viewport_ratio = 0.5 if compact_ornament else 0.54
+                    expected_ornament_width = min(
+                        fixed_ornament_width,
+                        min(result["layoutViewportWidth"], result["viewportHeight"]) * viewport_ratio,
+                    )
+                    if abs(result["ornamentWidth"] - expected_ornament_width) > 2:
+                        errors.append(f"{label}: centered watermark does not follow the fixed-size safety cap {result}")
                 if result["ornamentOpacity"] is not None and result["ornamentOpacity"] > 0.07:
                     errors.append(f"{label}: centered watermark is too visually strong {result}")
                 for size_key in ("primaryNavSize", "secondaryNavSize"):
@@ -660,6 +668,8 @@ def main() -> int:
                         errors.append(f"{label}: ambient field lost its literal flower glyph treatment {result}")
                     if result["dustFlowerMotion"] != "continuous-rotation":
                         errors.append(f"{label}: flower glyphs lost their continuous rotation {result}")
+                    if result["dustFlowerFlip"] != "continuous-tumble":
+                        errors.append(f"{label}: flower glyphs lost their front/back tumble {result}")
                     if abs(result["dustReadingIntensity"] - 0.2) > 0.001:
                         errors.append(f"{label}: ambient field reading attenuation changed {result}")
                     if not result["dustPainted"]:
@@ -672,6 +682,14 @@ def main() -> int:
                         if abs(next_angle - result["dustFlowerAngle"]) < 0.001:
                             errors.append(f"{label}: flower glyph angle is not changing {result}")
                         flower_rotation_checked = True
+                    if not flower_tumble_checked:
+                        time.sleep(0.2)
+                        next_flip_phase = driver.execute_script(
+                            "return Number(document.querySelector('.annals-dust')?.dataset.annalsFlowerFlipPhase || 0)"
+                        )
+                        if abs(next_flip_phase - result["dustFlowerFlipPhase"]) < 0.001:
+                            errors.append(f"{label}: flower glyph is not flipping front-to-back {result}")
+                        flower_tumble_checked = True
             if result["tabsVisible"]:
                 if result["headerBackground"] != result["tabsBackground"]:
                     errors.append(f"{label}: header and tabs are not one continuous color field {result}")

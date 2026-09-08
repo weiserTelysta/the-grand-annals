@@ -74,6 +74,11 @@
             : 0.055 + Math.random() * 0.035,
         color: kind === "flower" ? (index % 3 === 0 ? 2 : 0) : index % 4 === 0 ? 1 : 0,
         depth,
+        flipAxis: Math.random() < 0.5 ? "x" : "y",
+        flipPhase: Math.random() * Math.PI * 2,
+        flipSpeed: kind === "flower"
+          ? (Math.random() < 0.5 ? -1 : 1) * (0.00012 + Math.random() * 0.00008)
+          : 0,
         kind,
         phase: Math.random() * Math.PI * 2,
         phaseSpeed: 0.00016 + Math.random() * 0.0002,
@@ -147,10 +152,14 @@
 
   function drawFlower(context, particle, color, alpha) {
     const size = particle.size;
+    const facing = Math.cos(particle.flipPhase);
+    const foreshortening = Math.sign(facing || 1) * Math.max(0.08, Math.abs(facing));
     context.save();
     context.translate(particle.x, particle.y);
     context.rotate(particle.rotation);
-    context.fillStyle = `rgb(${color} / ${alpha})`;
+    if (particle.flipAxis === "x") context.scale(foreshortening, 1);
+    else context.scale(1, foreshortening);
+    context.fillStyle = `rgb(${color} / ${alpha * (0.72 + Math.abs(facing) * 0.28)})`;
     context.font = `${size * 2.8}px "Segoe UI Symbol", "Noto Sans Symbols 2", serif`;
     context.textAlign = "center";
     context.textBaseline = "middle";
@@ -178,6 +187,7 @@
     state.canvas.dataset.annalsParticleMix = `${mix.dust}/${mix.filament}/${mix.flower}`;
     state.canvas.dataset.annalsParticleShapes = "dust/filament/flower-u2740";
     state.canvas.dataset.annalsFlowerMotion = "continuous-rotation";
+    state.canvas.dataset.annalsFlowerFlip = "continuous-tumble";
     state.canvas.dataset.annalsReadingIntensity = "0.2";
   }
 
@@ -207,6 +217,7 @@
     for (const particle of state.particles) {
       particle.phase += particle.phaseSpeed * elapsed;
       particle.rotation += particle.rotationSpeed * elapsed;
+      particle.flipPhase += particle.flipSpeed * elapsed;
       particle.twinklePhase += particle.twinkleSpeed * elapsed;
       const curve = particle.kind === "flower" ? 0.01 : 0.008;
       particle.x += (particle.vx + Math.sin(particle.phase) * curve * particle.depth) * elapsed;
@@ -230,7 +241,10 @@
     }
 
     const flower = state.particles.find((particle) => particle.kind === "flower");
-    if (flower) state.canvas.dataset.annalsFlowerAngle = flower.rotation.toFixed(4);
+    if (flower) {
+      state.canvas.dataset.annalsFlowerAngle = flower.rotation.toFixed(4);
+      state.canvas.dataset.annalsFlowerFlipPhase = flower.flipPhase.toFixed(4);
+    }
     state.canvas.dataset.annalsPainted = "true";
     queueFrame();
   }
