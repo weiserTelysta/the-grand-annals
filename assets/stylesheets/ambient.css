@@ -1,0 +1,86 @@
+/* Quiet environmental layers for reading pages. They never participate in layout
+   and never sit above controls or article text. */
+html[data-annals-page="content"] .md-container {
+  isolation: isolate;
+  position: relative;
+}
+
+html[data-annals-page="content"] :is(.md-main, .md-footer) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Material's compact drawer must escape the main content stacking context so
+   it stays above its sibling overlay. The ambient layers never receive input. */
+@media screen and (max-width: 76.234375em) {
+  html[data-annals-page="content"] .md-container {
+    isolation: auto;
+  }
+
+  html[data-annals-page="content"] .md-main {
+    z-index: auto;
+  }
+
+  .md-sidebar--primary {
+    z-index: 6;
+  }
+}
+
+.annals-dust {
+  contain: strict;
+  display: block;
+  height: calc(100vh - var(--annals-sticky-offset));
+  height: calc(100dvh - var(--annals-sticky-offset));
+  inset: var(--annals-sticky-offset) 0 auto;
+  pointer-events: none;
+  position: fixed;
+  opacity: 1;
+  width: 100%;
+  z-index: 0;
+}
+
+.annals-ornament {
+  --annals-ornament-size: 27rem;
+  --annals-ornament-viewport-cap: 54vmin;
+
+  align-items: center;
+  display: flex;
+  height: min(var(--annals-ornament-size), var(--annals-ornament-viewport-cap));
+  justify-content: center;
+  left: 50%;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(var(--annals-ornament-size), var(--annals-ornament-viewport-cap));
+  z-index: 0;
+}
+
+.annals-ornament__mark {
+  background: var(--annals-ornament);
+  display: block;
+  height: 100%;
+  -webkit-mask: url("../images/ornament-vector.svg") center / contain no-repeat;
+  mask: url("../images/ornament-vector.svg") center / contain no-repeat;
+  opacity: var(--annals-ornament-opacity);
+  width: 100%;
+}
+
+@media screen and (max-width: 76.234375em) {
+  .annals-dust {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .annals-ornament {
+    --annals-ornament-size: 12rem;
+    --annals-ornament-viewport-cap: 50vmin;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .annals-dust {
+    display: none;
+  }
+}

@@ -1,0 +1,267 @@
+@font-face {
+  font-display: swap;
+  font-family: "Annals Cover Serif";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/noto-serif-sc-cover-600.woff2") format("woff2");
+  unicode-range: U+51A0, U+67AF, U+8363, U+9F99;
+}
+
+:root,
+[data-md-color-scheme="default"] {
+  /* Typography: reading stays sans-serif; the custom serif is reserved for the cover title. */
+  --annals-font-body: "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  --annals-font-display: var(--annals-font-body);
+  --annals-font-cover: "Annals Cover Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --annals-font-latin: "Segoe UI", Arial, sans-serif;
+
+  /*
+   * Radix-style role scale: 1–2 backgrounds, 3–5 components,
+   * 6–8 borders, 9–10 solid accents, 11–12 readable text.
+   * Hues come from Telysta's ivory lace, crimson dress and antique gold trim.
+   */
+  --annals-neutral-1: #f3eee9;
+  --annals-neutral-2: #ede7e1;
+  --annals-neutral-3: #e6ded8;
+  --annals-neutral-4: #ded4cd;
+  --annals-neutral-5: #d5c9c1;
+  --annals-neutral-6: #c7b9b0;
+  --annals-neutral-7: #b5a69e;
+  --annals-neutral-8: #9f8f88;
+  --annals-neutral-9: #82756f;
+  --annals-neutral-10: #756964;
+  --annals-neutral-11: #6b605c;
+  --annals-neutral-12: #302927;
+
+  --annals-red-1: #fcf7f6;
+  --annals-red-2: #f8efee;
+  --annals-red-3: #f1e2e0;
+  --annals-red-4: #e9d3d0;
+  --annals-red-5: #dec2be;
+  --annals-red-6: #d2aea9;
+  --annals-red-7: #c19490;
+  --annals-red-8: #ac7471;
+  --annals-red-9: #96504f;
+  --annals-red-10: #884244;
+  --annals-red-11: #79383b;
+  --annals-red-12: #442326;
+
+  --annals-gold-1: #fff9ed;
+  --annals-gold-2: #fff3d9;
+  --annals-gold-3: #fce9bd;
+  --annals-gold-4: #f4dca1;
+  --annals-gold-5: #e9cc82;
+  --annals-gold-6: #daba64;
+  --annals-gold-7: #c7a64c;
+  --annals-gold-8: #b18d38;
+  --annals-gold-9: #a47a31;
+  --annals-gold-10: #8d6626;
+  --annals-gold-11: #76551f;
+  --annals-gold-12: #3f2c13;
+
+  --annals-canvas: var(--annals-neutral-2);
+  --annals-surface: var(--annals-neutral-1);
+  --annals-chrome: var(--annals-neutral-3);
+  --annals-chrome-field: var(--annals-neutral-4);
+  --annals-search-icon: var(--annals-neutral-11);
+  --annals-header-bg: #714048;
+  --annals-header-field: #60363d;
+  --annals-on-header: #f8eee8;
+  --annals-on-header-muted: #dfcbc7;
+  --annals-header-gold: #d0b777;
+  --annals-header-rule: transparent;
+  --annals-tab-indicator: var(--annals-red-10);
+  --annals-focus: var(--annals-red-10);
+  --annals-surface-container: var(--annals-neutral-3);
+  --annals-surface-container-high: var(--annals-neutral-4);
+  --annals-text: #4a423e;
+  --annals-text-strong: var(--annals-neutral-12);
+  --annals-text-muted: var(--annals-neutral-11);
+  --annals-heading-1: #643940;
+  --annals-heading-2: #302927;
+  --annals-heading-3: #4b413d;
+  --annals-heading-4: #5c504b;
+  --annals-primary: #7d454a;
+  --annals-primary-hover: var(--annals-red-11);
+  --annals-primary-container: var(--annals-red-3);
+  --annals-on-primary-container: var(--annals-red-12);
+  --annals-secondary: #80612d;
+  --annals-tertiary: var(--annals-red-8);
+  --annals-ceremonial: #80612d;
+  --annals-ceremonial-soft: #a47f42;
+  --annals-outline: var(--annals-neutral-6);
+  --annals-outline-soft: rgba(72, 50, 42, 0.14);
+  --annals-shadow-soft: 0 12px 32px rgba(67, 43, 32, 0.07);
+  --annals-ornament: #76585a;
+  --annals-ornament-opacity: 0.042;
+  --annals-dust-primary: 126 82 72;
+  --annals-dust-secondary: 169 137 91;
+  --annals-dust-glint: 192 160 94;
+
+  /* Layout and interaction tokens. */
+  --annals-radius-xs: 0.2rem;
+  --annals-radius-sm: 0.4rem;
+  --annals-radius-md: 0.65rem;
+  --annals-reading-measure: 50ic;
+  --annals-content-width: 44rem;
+  --annals-content-track: 48rem;
+  --annals-navigation-track: 12rem;
+  --annals-shell-width: calc(
+    var(--annals-content-track) +
+    var(--annals-navigation-track) +
+    var(--annals-navigation-track)
+  );
+  --annals-reading-size: 0.85rem;
+  --annals-reading-leading: 1.8;
+  --annals-header-height: 2.2rem;
+  --annals-tabs-height: 0rem;
+  --annals-sticky-offset: calc(var(--annals-header-height) + 1px);
+  --annals-component-inset: 0.8rem;
+  --annals-shell-inset: 0.8rem;
+  --annals-gutter: clamp(1rem, 2.2vw, 1.6rem);
+  --annals-control-size: 1.7rem;
+  --annals-control-icon-size: 1.1rem;
+  --annals-motion-instant: 70ms;
+  --annals-motion-fade: 110ms;
+  --annals-motion-fast: 140ms;
+  --annals-motion-moderate: 180ms;
+  --annals-motion-content: 200ms;
+  --annals-ease-standard: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --annals-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  --md-text-font: var(--annals-font-body);
+  --md-code-font: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --md-default-bg-color: var(--annals-canvas);
+  --md-default-fg-color: var(--annals-text);
+  --md-default-fg-color--light: rgba(67, 58, 54, 0.7);
+  --md-default-fg-color--lighter: rgba(67, 58, 54, 0.46);
+  --md-default-fg-color--lightest: rgba(67, 58, 54, 0.13);
+  --md-primary-fg-color: var(--annals-primary);
+  --md-primary-fg-color--dark: var(--annals-red-12);
+  --md-accent-fg-color: var(--annals-primary);
+  --md-typeset-a-color: var(--annals-primary);
+  --md-typeset-color: var(--annals-text);
+  --md-code-bg-color: var(--annals-neutral-3);
+  --md-code-fg-color: var(--annals-neutral-12);
+  --md-footer-bg-color: #211b19;
+  --md-footer-fg-color: #ded4ca;
+  --md-sidebar-width: 16rem;
+}
+
+html[data-annals-scheme="default"] {
+  --annals-canvas: var(--annals-neutral-2);
+}
+
+[data-md-color-scheme="slate"],
+html[data-annals-scheme="slate"] {
+  color-scheme: dark;
+  --annals-neutral-1: #292527;
+  --annals-neutral-2: #2f2a2d;
+  --annals-neutral-3: #373033;
+  --annals-neutral-4: #3f373a;
+  --annals-neutral-5: #494044;
+  --annals-neutral-6: #584d50;
+  --annals-neutral-7: #685c60;
+  --annals-neutral-8: #7d7275;
+  --annals-neutral-9: #908789;
+  --annals-neutral-10: #a39a9b;
+  --annals-neutral-11: #aba2a0;
+  --annals-neutral-12: #eee7e3;
+
+  --annals-red-1: #25191b;
+  --annals-red-2: #2f1d20;
+  --annals-red-3: #3b2326;
+  --annals-red-4: #47282b;
+  --annals-red-5: #563036;
+  --annals-red-6: #693b40;
+  --annals-red-7: #824b50;
+  --annals-red-8: #a46264;
+  --annals-red-9: #bc7774;
+  --annals-red-10: #c9807b;
+  --annals-red-11: #d08d85;
+  --annals-red-12: #f0d7d2;
+
+  --annals-gold-1: #191711;
+  --annals-gold-2: #211d14;
+  --annals-gold-3: #302817;
+  --annals-gold-4: #3d311a;
+  --annals-gold-5: #4b3b1d;
+  --annals-gold-6: #5c4926;
+  --annals-gold-7: #725b31;
+  --annals-gold-8: #917541;
+  --annals-gold-9: #ad8d50;
+  --annals-gold-10: #bea05d;
+  --annals-gold-11: #d0ad67;
+  --annals-gold-12: #f4dfae;
+
+  --annals-canvas: var(--annals-neutral-1);
+  --annals-surface: var(--annals-neutral-2);
+  --annals-chrome: var(--annals-neutral-3);
+  --annals-chrome-field: var(--annals-neutral-4);
+  --annals-search-icon: var(--annals-neutral-11);
+  --annals-header-bg: #432c31;
+  --annals-header-field: #352327;
+  --annals-on-header: #f0e4df;
+  --annals-on-header-muted: #cbbab6;
+  --annals-header-gold: #c2a66b;
+  --annals-header-rule: transparent;
+  --annals-tab-indicator: var(--annals-red-11);
+  --annals-focus: var(--annals-red-11);
+  --annals-surface-container: var(--annals-neutral-3);
+  --annals-surface-container-high: var(--annals-neutral-4);
+  --annals-text: #d2c9c5;
+  --annals-text-strong: var(--annals-neutral-12);
+  --annals-text-muted: var(--annals-neutral-11);
+  --annals-heading-1: #e7ddd8;
+  --annals-heading-2: #f0e9e4;
+  --annals-heading-3: #d0c6c2;
+  --annals-heading-4: #bbb1ad;
+  --annals-primary: #d08a85;
+  --annals-primary-hover: var(--annals-red-10);
+  --annals-primary-container: var(--annals-red-3);
+  --annals-on-primary-container: var(--annals-red-12);
+  --annals-secondary: #c3a56b;
+  --annals-tertiary: var(--annals-red-8);
+  --annals-ceremonial: #c3a56b;
+  --annals-ceremonial-soft: #ad925f;
+  --annals-outline: var(--annals-neutral-6);
+  --annals-outline-soft: rgba(241, 236, 231, 0.13);
+  --annals-moonlight: var(--annals-secondary);
+  --annals-shadow-soft: 0 18px 52px rgba(0, 0, 0, 0.26);
+  --annals-ornament: #b59a6c;
+  --annals-ornament-opacity: 0.045;
+  --annals-dust-primary: 190 164 109;
+  --annals-dust-secondary: 154 91 86;
+  --annals-dust-glint: 218 190 119;
+
+  --md-default-bg-color: var(--annals-canvas);
+  --md-default-fg-color: var(--annals-text);
+  --md-default-fg-color--light: rgba(210, 201, 197, 0.74);
+  --md-default-fg-color--lighter: rgba(210, 201, 197, 0.5);
+  --md-default-fg-color--lightest: rgba(210, 201, 197, 0.13);
+  --md-primary-fg-color: var(--annals-primary);
+  --md-primary-fg-color--dark: var(--annals-red-9);
+  --md-accent-fg-color: var(--annals-primary);
+  --md-typeset-a-color: var(--annals-primary);
+  --md-typeset-color: var(--annals-text);
+  --md-code-bg-color: var(--annals-neutral-3);
+  --md-code-fg-color: var(--annals-neutral-12);
+  --md-footer-bg-color: #0f1013;
+  --md-footer-fg-color: #c7c2c0;
+}
+
+html[data-annals-page="home"] {
+  --annals-canvas: #0c1119;
+  --annals-cover-accent: #d5b66e;
+  --annals-cover-text: #fff8e9;
+  --annals-cover-title: #f4dfb7;
+}
+
+@media screen and (min-width: 76.25em) {
+  :root,
+  [data-md-color-scheme="default"],
+  [data-md-color-scheme="slate"] {
+    --annals-tabs-height: 1.8rem;
+    --annals-sticky-offset: calc(var(--annals-header-height) + 1px);
+  }
+}
