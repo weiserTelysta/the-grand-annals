@@ -627,12 +627,15 @@ def main() -> int:
                 if result["ornamentCenterY"] is not None and abs(result["ornamentCenterY"] - result["viewportHeight"] / 2) > 2:
                     errors.append(f"{label}: watermark is not vertically centered in the viewport {result}")
                 if result["ornamentWidth"] is not None:
-                    compact_ornament = result["layoutViewportWidth"] <= 768
+                    # CSS viewport units and media queries use window.innerWidth,
+                    # which includes a classic scrollbar gutter on Linux Chrome.
+                    # clientWidth is still the correct reference for visual centering.
+                    compact_ornament = result["viewport"] <= 768
                     fixed_ornament_width = result["rootFontSize"] * (12 if compact_ornament else 27)
                     viewport_ratio = 0.5 if compact_ornament else 0.54
                     expected_ornament_width = min(
                         fixed_ornament_width,
-                        min(result["layoutViewportWidth"], result["viewportHeight"]) * viewport_ratio,
+                        min(result["viewport"], result["viewportHeight"]) * viewport_ratio,
                     )
                     if abs(result["ornamentWidth"] - expected_ornament_width) > 2:
                         errors.append(f"{label}: centered watermark does not follow the fixed-size safety cap {result}")
